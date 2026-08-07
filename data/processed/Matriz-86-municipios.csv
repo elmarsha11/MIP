@@ -1,0 +1,87 @@
+ID_Municipio,Municipio,Sección Electoral,Pobl. Aprox,Portal y Transparencia,Turnos Digitales,Cobro Electrónico de Tasas,Expediente Digital (GDE),Reclamos Urbanos (147 / App),Sistema RAFAM,Ventanilla Única / Trámites,Sitio Web / Fuente
+MUN-BA-004,Navarro,Primera,19000,Implementado (noticias/licitaciones),Licencias y App Mi Navarro,App Mi Navarro / En desarrollo,Parcial (tickets),App Mi Navarro / Web,Operativo,Semipresencial,https://navarro.gob.ar/
+MUN-BA-005,Suipacha,Primera,11000,Implementado (Transparencia / SIBOM),Web Licencias,Portal Autogestión,Parcial,Formulario Web,Operativo,Semipresencial,https://suipacha.gob.ar/
+MUN-BA-006,General Las Heras,Primera,19000,Implementado (Balances Tesorería),Licencias y Salud,Suite RAFAM Tasas Web,Parcial,Canal Web,Operativo,Semipresencial,https://gobiernodelasheras.com/
+MUN-BA-007,Salto,Segunda,41000,Activo,Parcial,Módulo Web,Parcial,Formulario Web,Implementado,En desarrollo,https://salto.gob.ar/
+MUN-BA-008,Baradero,Segunda,41000,Activo (Gobierno Abierto),Activo,Botón Pago Virtual,Parcial,CAV,Implementado,Parcial,https://gobiernoabierto.baradero.gob.ar/
+MUN-BA-009,Exaltación de la Cruz,Segunda,41000,Activo (Cuentas Claras),Activo (Bot),Mis Deudas (Pago PIN),Parcial,Bot interactivo,Implementado,Guía unificada,https://www.exaltaciondelacruz.gob.ar/
+MUN-BA-010,Ramallo,Segunda,41000,Activo,Activo (Licencias/Habilitaciones),SIATSEH QR,Parcial,App/Sistema QR,Implementado,Activo,https://ramallo.gob.ar/
+MUN-BA-011,Arrecifes,Segunda,33000,Activo,Activo (Hospital/Licencias),Factura Única QR,Inicial,Línea 147,Implementado,Parcial,https://arrecifes.gob.ar/
+MUN-BA-012,Colón,Segunda,29000,Activo,Activo (Autogestión),Pago en línea QR,Parcial (Inergram Cloud),Módulo Web,Implementado,Activo,https://colon.gov.ar/
+MUN-BA-013,San Antonio de Areco,Segunda,28000,Activo (Transparencia),Activo (WhatsApp),Mis Tasas / Débito,Avanzado (Consulta Expedientes),CAV WhatsApp,Implementado,Parcial,https://areco.ar/
+MUN-BA-014,Rojas,Segunda,27000,Activo (Transparencia 100% ASAP),Activo,Red Link / Web,Parcial,CAV Web,Implementado,Activo,https://rojas.gov.ar/
+MUN-BA-015,San Andrés de Giles,Segunda,27000,Activo (Puntaje Ideal ASAP),Activo,Boleta Digital / Pago Web,Parcial,Recepción Web/Tel,Implementado,Parcial,https://www.sanandresdegiles.gob.ar/
+MUN-BA-016,Carmen de Areco,Segunda,18000,Activo (Transparencia),Activo,Consulta y Pago Web,Parcial,Centralizado,Implementado,Activo,https://carmendeareco.gob.ar/
+MUN-BA-017,Capitán Sarmiento,Segunda,17000,Activo (Desregulación),Activo,Pago Internet Simplificado,Avanzado (Agilización digital),Atención directa,Ajustado a tasa simplificada,Avanzado,http://tasasmunicsarmeinto.ddns.net/
+MUN-BA-003,Magdalena,Tercera,20000,Implementado,Salud y Licencias,Suite RAFAM Tasas Web,En proceso (SIBOM),Parcial,Implementado,Parcial,https://magdalena.gob.ar/
+MUN-BA-018,Lobos,Tercera,43000,Implementado (Gobierno Abierto),Trámites en línea,Impresión y Pago,En proceso,Portal Web,Implementado,Implementado,https://www.lobos.gob.ar/
+MUN-BA-019,Brandsen,Tercera,33000,Implementado (Gestión Pública),Parcial (WhatsApp),Cuenta DNI / Link,En proceso (SIBOM),Parcial,Implementado,Parcial,https://tasasbrandsen.gob.ar/
+MUN-BA-020,Punta Indio,Tercera,13000,Implementado (Boletín Digital),Turnos Salud / Licencias,Suite RAFAM Web,En proceso (SIBOM),Portal Web,Implementado,Parcial,https://puntaindio.gob.ar/
+MUN-BA-021,Chivilcoy,Cuarta,70000,Activo (Transparencia),Hospital / Licencias,Rentas E-Pagos,En proceso (Firma Digital),Línea 147 / CAV,Integrado,Guía Unificada,https://chivilcoy.gov.ar/
+MUN-BA-022,Chacabuco,Cuarta,54000,Activo (Gobierno Abierto),Licencias,Botón Web / Planes,Digitalización progresiva,Línea 147 / Web,Operativo,Guía Unificada,https://chacabuco.gob.ar/
+MUN-BA-023,9 de Julio,Cuarta,54000,Activo (SIBOM),Licencias / Web,Web Tributaria,SIBOM / Administrativo,CAV Telefónico,Operativo,Ventanilla Digital,https://wt.9dejulio.gov.ar/
+MUN-BA-024,Trenque Lauquen,Cuarta,50000,Activo (Gobierno Abierto),Salud / Centro Cívico,Suite RAFAM Web,Plan de Modernización / Firma,CAC Software,100% Integrado,Centro Cívico,https://www.trenquelauquen.gov.ar/
+MUN-BA-025,Bragado,Cuarta,47000,Activo (Transparencia ASAP),Salud / OMIC,Débito / CUIT,Decretos Digitales,Central Reclamos,Activo,Portal Unificado,https://www.bragado.gov.ar/
+MUN-BA-026,Pehuajó,Cuarta,46000,Activo (Web Tributaria),Presenciales,Suite RAFAM,Digitalización Contable,Atención presencial,Suite V1.0.0,Dirección Comercio,https://www.pehuajo.gob.ar/
+MUN-BA-027,Lincoln,Cuarta,46000,Activo (Transparencia),Hospital / Licencias,Link / PagoMisCuentas,Paulatino,Atención Telefónica,Operativo,Mesa Entradas,https://www.lincoln.gob.ar/
+MUN-BA-028,General Villegas,Cuarta,36000,Activo,CAPS / Licencias,Autogestión Net Pagos / QR,Procesos internos,Atención Ciudadana,Dirección Rentas,Autogestión,https://villegas.gob.ar/
+MUN-BA-029,General Viamonte,Cuarta,24000,Activo (Transparencia Fiscal),Agencia ARVI,ARVI Factura Electrónica,Digitalización ARVI,Canal ARVI,Activo,ARVI Agencia,https://www.generalviamonte.gob.ar/
+MUN-BA-030,Carlos Casares,Cuarta,24000,Activo (Gobierno Abierto),Licencias / Imágenes,Consulta Deuda Bapro,Recibos Sueldo Digitales,Reclamos Web/Tel,Implementado (ASAP),Guía Comercio,https://casares.gob.ar/
+MUN-BA-031,Rivadavia,Cuarta,21000,Activo (Gobierno Abierto),Centros Salud,Boleta Digital,Expediente Electrónico / Firma,Reportes Vecinales,Activo,Portal Trámites,https://munirivadavia.gob.ar/
+MUN-BA-032,General Arenales,Cuarta,18000,Activo,Recibo Sueldo Digital,Rentas Web Tributaria,Haberes / Decretos,Atención WhatsApp,Integrado,Oficina Rentas,https://www.generalarenales.gob.ar/
+MUN-BA-033,Leandro N. Alem,Cuarta,18000,Activo (Transparencia),Trámites / CAPS,Factura Electrónica,SIBOM,Canal Vecinal,Operativo,Compras / Rentas,https://municipioalem.gob.ar/
+MUN-BA-034,Carlos Tejedor,Cuarta,15000,Activo (Transparencia),Recaudación,Red Vial / Servicios Web,Decretos / Recibos,Servicios Públicos,Operativo,Recaudación,https://carlostejedor.gob.ar/
+MUN-BA-035,Alberti,Cuarta,14000,Activo (Transparencia),Licencias / Salud,Rentas Cuenta DNI,SIBOM,Formulario Web,Activo,Palacio Municipal,https://alberti.gov.ar/
+MUN-BA-036,General Pinto,Cuarta,14000,Activo (Transparencia),Trámites Admin,Suite RAFAM Web,Licitaciones Digitales,Centro Consultas,Suite Tasas Web,Autogestión,https://www.pinto.gob.ar/
+MUN-BA-037,Hipólito Yrigoyen,Cuarta,12000,Activo,CAPS / Licencias,Consulta Inmueble/Patente,SIBOM,Atención Telefónica,Operativo,Ingresos Públicos,https://www.hipolitoyrigoyen.gob.ar/
+MUN-BA-038,Florentino Ameghino,Cuarta,12000,Activo (Reconocimiento ASAP),Líneas Municipales,Cobro Digital / Transferencia,Expediente Compras,Mesa Entradas,Activo,Delegaciones,https://www.gba.gob.ar/economia/consulta_florentino_ameghino
+MUN-BA-001,Chascomús,Quinta,42000,Avanzado (Gobierno Abierto / ASAP),Turnos Web / 147,Pago Online / Boleta QR,Implementado,Plataforma 147,Sí,Sí,https://chascomus.gob.ar/
+MUN-BA-002,Rauch,Quinta,15000,Medio,Básico,UDIP Cupón Digital,En proceso,Mesa Entradas,Sí,Parcial (UDIP),http://www.rauch.mun.gba.gov.ar/web/
+MUN-BA-039,Balcarce,Quinta,49000,Medio-Alto,Medio,Botón Pago Web,En proceso (Firma),CAV,Sí,Parcial,https://balcarce.gob.ar/
+MUN-BA-040,General Alvarado,Quinta,46000,Medio,Básico,Consultas Tributarias Web,En proceso,Telefónico,Sí,Parcial,https://mga.gov.ar/
+MUN-BA-042,Pinamar,Quinta,41000,Avanzado (Datos Abiertos),Turnos Médicos / Comercio,Factura 100% Electrónica,Avanzado (Firmas),Línea 147 / Ojos Alerta,Sí,Avanzado,https://pinamar.gob.ar/
+MUN-BA-043,Villa Gesell,Quinta,38000,Medio-Alto,Medio,Portal Contribuyente Online,En proceso,App Reclamos VG,Sí,Medio,https://www.gesell.gob.ar/
+MUN-BA-044,Mar Chiquita,Quinta,35000,Medio,Oficina Virtual,Cuponera y Pago Online,Medio,Oficina Virtual,Sí,Medio-Alto,https://www.marchiquita.gob.ar/
+MUN-BA-045,Dolores,Quinta,33000,Medio-Alto (SIBOM),Medio,Consulta Tributaria Web,En proceso,Atención Reclamos,Sí,Parcial,https://dolores.gob.ar/
+MUN-BA-046,Las Flores,Quinta,28000,Medio-Alto,Medio,Suite RAFAM Tasas Web,Medio,Mesa Entradas,Sí,Medio,https://lasflores.gob.ar/
+MUN-BA-047,San Miguel del Monte,Quinta,25000,Medio,Básico,Boleta Digital / Redes,En proceso,Presencial/Tel,Sí,Parcial,https://www.gba.gob.ar/
+MUN-BA-048,General Madariaga,Quinta,24000,Avanzado (Líder Transparencia),Medio-Alto,Suite RAFAM Online/QR,Medio-Alto,Plataforma Reclamos,Sí,Medio-Alto,https://www.madariaga.gob.ar/
+MUN-BA-049,Ayacucho,Quinta,23000,Avanzado (Transparencia),Medio,Boleta Digital y Pago,Medio,Básico,Sí,Parcial,https://www.ayacucho.gob.ar/
+MUN-BA-050,General Belgrano,Quinta,21000,Medio-Alto,Autogestión,Consulta Deuda y Pago,Medio,Medio,Sí,Medio,https://generalbelgrano.gob.ar/
+MUN-BA-051,Lobería,Quinta,19000,Medio-Alto,Licencias / Trámites,Rentas y Pago Web,Medio,Medio,Sí,Medio,https://loberia.gov.ar/
+MUN-BA-053,General Paz,Quinta,15000,Medio,Básico,Factura Electrónica,En proceso,Básico,Sí,Parcial,https://municipalidaddegeneralpaz.gob.ar/
+MUN-BA-054,Maipú,Quinta,12000,Medio,Básico,Pago Web Redes,En proceso,Básico,Sí,Parcial,https://www.maipu-gba.gob.ar/
+MUN-BA-055,Castelli,Quinta,10000,Medio-Alto,Avanzado (Salud Online),Pasarela Pago en Línea,Medio,Avanzado (WhatsApp CAV),Sí,Medio-Alto,https://www.castelli.gob.ar/
+MUN-BA-056,San Cayetano,Quinta,10000,Avanzado (Líder Transparencia),Medio,NET Pagos / Web,En proceso,Básico,Sí,Parcial,https://sancayetano.gob.ar/
+MUN-BA-057,Lezama,Quinta,6300,Medio-Alto,Medio,Ingresos Públicos Web,Medio,Básico,Sí,Parcial,https://lezama.gov.ar/
+MUN-BA-058,General Lavalle,Quinta,5000,Medio,Básico,Consulta y Pago Online,Medio,Básico,Sí,Parcial,https://www.generallavalle.gob.ar/
+MUN-BA-059,Pila,Quinta,4800,Medio (Boletín),Básico,Provincia NET Pagos,En proceso,Básico,Sí,Parcial,https://pila.gob.ar/
+MUN-BA-060,General Guido,Quinta,3200,Medio,Básico,Emisión Web,Básico,Básico,Sí,Parcial,https://www.generalguido.gob.ar/
+MUN-BA-061,Tordillo,Quinta,2600,Medio (Boletín),Básico,Emisión Comprobantes,Básico,Básico,Sí,Básico,https://tordillomunicipio.org/
+MUN-BA-062,Coronel Rosales,Sexta,68000,Activo (SIBOM),Web Licencias,Portal Trámites Digitales,Mesa Digital,Atención Ciudadana,Sí,Portal Trámites,https://mcr.gob.ar/
+MUN-BA-063,Tres Arroyos,Sexta,64000,Activo,Web Licencias,Botón Pago Web,Módulos Digitales,Teléfono/Web,Sí,Portal Vecino,https://tresarroyos.movilparking.com/web/
+MUN-BA-064,Coronel Suárez,Sexta,43000,Activo,Oficina Virtual,Deudaweb / Tasas,Intranet Web,147 / Chatbot Tasas,Sí,Oficina Virtual,https://www.coronelsuarez.gob.ar/
+MUN-BA-065,Patagones,Sexta,39000,Activo,Web Salud/Licencias,Oficina Virtual Débito,Avanzado (GDE Patagones),Atención Ciudadana,Sí,Oficina Virtual,https://patagones.gob.ar/
+MUN-BA-066,Villarino,Sexta,34000,Activo,Turnero Licencias,Autogestión Villarino,Sistema Digital,Autogestión,Sí,Autogestión,http://www.villarino.gob.ar/
+MUN-BA-067,Coronel Pringles,Sexta,26000,Activo,Web,Tasas Pringles,Digitalización Interna,Atención Vecinal,Sí,Portal Tasas,https://www.coronelpringles.gov.ar/
+MUN-BA-068,Benito Juárez,Sexta,24000,Activo (SIBOM),Presencial/Tel,Boleta Digital BAPRO,Mixta,Atención Telefónica,Sí,Presencial/Web,https://sibom.slyt.gba.gob.ar/cities/15
+MUN-BA-069,Saavedra (Pigüé),Sexta,24000,Activo,Turnos MDSP,Rentas Saavedra,En implementación,Portal Informativo,Sí,Turnos & Rentas,https://portal.saavedra.gob.ar/
+MUN-BA-070,Adolfo Alsina,Sexta,19000,Activo (Gobierno Abierto),Turnos Médicos,Tasas Alsina,Proceso gradual,Atención Ciudadana,Sí,Web Municipal,https://www.adolfoalsina.gov.ar/
+MUN-BA-071,Daireaux,Sexta,19000,Activo,Turnos Daireaux,SIPAVI Pago Virtual,Circuito Digital,Líneas Directas,Sí,Portal Daireaux,https://daireaux.gob.ar/
+MUN-BA-072,Puán,Sexta,18000,Activo,Web Salud,WhatsApp / Banca Web,Digitalización,Mesa Entrada,Sí,Portal Unificado,https://www.puan.gob.ar/
+MUN-BA-073,Coronel Dorrego,Sexta,17000,Activo,App Hospital Dorrego,Botón Pago Web,Firma Digital,OMIC / Atención,Sí,Hacienda Digital,https://dorrego.gob.ar/
+MUN-BA-074,Tornquist,Sexta,16000,Activo,Turnos Web,Factura Digital,Portal Empleado,Atención Ciudadana,Sí,Gobierno Abierto,https://tornquist.gob.ar/
+MUN-BA-075,Gonzales Chaves,Sexta,14000,Activo,Salud Chaves,Pago Digital Tasas,Digitalización Interna,Secretaría Gobierno,Sí,Portal Chaves,https://gonzaleschaves.gob.ar/
+MUN-BA-076,Guaminí,Sexta,13000,Activo,Web,Servicios Web Guaminí,Boletín / Expedientes,Guía Servicios,Sí,Servicios Web,https://portal.guamini.gob.ar/
+MUN-BA-077,General La Madrid,Sexta,13000,Activo,Guía Trámites,Tasas Municipales,Dir Modernización,Atención Ciudadana,Sí,Atención Ciudadana,https://www.lamadrid.gob.ar/
+MUN-BA-078,Laprida,Sexta,13000,Activo,Licencias Laprida,Tasas Laprida,Proveedores / Sueldos,Mesa Entrada,Sí,Portal Laprida,https://www.laprida.gov.ar/
+MUN-BA-079,Salliqueló,Sexta,10000,Activo,Web Trámites,Boleta Email / Pago Web,Mesa Digital,Atención Telefónica,Sí,Gobierno Abierto,https://www.salliquelo.gob.ar/
+MUN-BA-080,Tres Lomas,Sexta,10000,Activo,Web / Presencial,Consulta / Descarga,En proceso,Jefatura Gobierno,Sí,Web Tres Lomas,https://www.treslomas.gob.ar/
+MUN-BA-081,Monte Hermoso,Sexta,9000,Activo (SIGMUW),MH App / Web,SIGMUW Hacienda,Sistema SIGMUW,MH App Reportes,Sí,MH App / SIGMUW,https://sigmuw.montehermoso.gov.ar/
+MUN-BA-082,Pellegrini,Sexta,8000,Activo,Licencias / Salud,Tasas Online,Convenio Min Gobierno,Mesa Entrada,Sí,Gobierno Abierto,https://www.pellegrini.gov.ar/
+MUN-BA-083,Bolívar,Séptima,38000,Activo,Licencias / Salud,Rentas Bolívar,Despapelización,Línea 147 / WhatsApp,Sí,Portal Trámites,https://www.bolivar.gob.ar/rentas/
+MUN-BA-084,Saladillo,Séptima,37000,Activo,Guía Trámites,Portal Tasas,Avanzado (GDE Saladillo),Autogestión Ciudadana,Sí,Autogestión,https://www.saladillo.gob.ar/
+MUN-BA-085,Veinticinco de Mayo,Séptima,37000,Activo,MUNI BOT 25 (MulitaBOT),MIS TASAS 25DM / Web,Gestiones Online,Chatbot MUNI BOT 25,Sí,Gestiones Online,https://25demayo.gob.ar/
+MUN-BA-086,Roque Pérez,Séptima,15000,Activo,Salud Digital,Calendario Fiscal,Digitalización Paulatina,Mesa Entradas,Sí,Sitio Oficial,https://roqueperez.gob.ar/
+MUN-BA-087,General Alvear,Séptima,14000,Activo (SIBOM),Mi Salud Digital,Tesorería Transferencia,Tramitación Analógica,Atención Telefónica,Sí,Mesa Entradas,https://sibom.slyt.gba.gob.ar/cities/45
+MUN-BA-088,Tapalqué,Séptima,12000,Activo,Salud / Licencias,Sistema Tributario / TISH DDJJ,Reforma Adm Financiera,Programa Mejor Tapalqué,Sí,Portal Contribuyente,https://www.municipiodetapalque.gob.ar/

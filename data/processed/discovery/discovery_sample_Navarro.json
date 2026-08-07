@@ -1,0 +1,30 @@
+{
+    "municipio": "Navarro",
+    "id_municipio": "MUN-BA-004",
+    "poblacion": 19000,
+    "fecha_descubrimiento": "2026-08-07T12:00:00Z",
+    "total_urls": 4,
+    "tiempo_ejecucion_segundos": 45,
+    "urls": [
+        {
+            "url": "https://navarro.gob.ar/",
+            "tipo": "sitio_oficial",
+            "fuente_query": "Municipalidad de Navarro Buenos Aires sitio oficial",
+            "titulo_fragmento": "Navarro tiene una nueva manera de hacer los trámites municipales",
+            "evidencia": "Navarro tiene una nueva manera de hacer los trámites municipales [L3-L6]",
+            "confianza": "Alta",
+            "estado_validacion": "validada",
+            "es_oficial": true
+        },
+        {
+            "url": "https://navarro.gob.ar/tramites-y-servicios/",
+            "tipo": "tramites",
+            "fuente_query": "Municipalidad de Navarro Buenos Aires sitio oficial",
+            "titulo_fragmento": "Tramites y Servicios – Navarro Municipalidad",
+            "evidencia": "Tramites y Servicios – Navarro Municipalidad [L38-L41]",
+            "confianza": "Alta",
+            "estado_validacion": "validada",
+            "es_oficial": true
+        }
+    ]
+}

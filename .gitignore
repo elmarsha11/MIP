@@ -1,0 +1,39 @@
+# ---------------------------------------------------------------------------
+# SECRETOS - nunca versionar
+# ---------------------------------------------------------------------------
+credenciales.txt
+credenciales*.txt
+!credenciales.ejemplo.txt
+.env
+.env.*
+*.key
+*.pem
+
+# ---------------------------------------------------------------------------
+# Python
+# ---------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+
+# ---------------------------------------------------------------------------
+# Derivados regenerables
+# ---------------------------------------------------------------------------
+# Cache de consultas a buscadores y registros. Se regenera solo; la evidencia
+# que importa vive en titulo_fragmento dentro de la base, no aca.
+data/processed/discovery/cache/
+progreso_municipios.json
+
+# ---------------------------------------------------------------------------
+# Basura de sistema y Office
+# ---------------------------------------------------------------------------
+Thumbs.db
+desktop.ini
+.DS_Store
+~$*.xlsx
+~$*.docx
+*.tmp

@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c \"import pydantic; print\\('pydantic', pydantic.VERSION\\)\")",
+      "Bash(python -c ' *)",
+      "Bash(python -c \"import pytest;print\\('pytest',pytest.__version__\\)\")",
+      "Bash(python src/discovery/discovery_engine.py --municipio Navarro)",
+      "Bash(python -m unittest discover -s tests -v)",
+      "Bash(python src/discovery/discovery_engine.py --listar-municipios)",
+      "Bash(python src/discovery/discovery_engine.py --municipio \"9 de Julio\" --json \"C:/Users/julia/AppData/Local/Temp/claude/C--Users-julia-OneDrive-Documentos-UDS-MIP/ffbca30e-8620-4f8c-9c25-c17c05867809/scratchpad/t.json\")",
+      "Bash(timeout 200 python src/discovery/discovery_engine.py --municipio Navarro --sin-busqueda)",
+      "Bash(python -m unittest discover -s tests)",
+      "Bash(python src/discovery/discovery_engine.py --all --sin-busqueda --workers 6)",
+      "Bash(timeout 200 python src/discovery/discovery_engine.py --municipio \"Villa Gesell\" --sin-busqueda)",
+      "Bash(python src/discovery/discovery_engine.py --all --sin-busqueda --workers 5)",
+      "Bash(timeout 120 python src/discovery/discovery_engine.py --municipio Navarro --sin-busqueda)",
+      "Bash(timeout 200 python src/discovery/discovery_engine.py --municipio \"San Antonio de Areco\" --sin-busqueda)",
+      "Bash(python -)",
+      "Bash(git init *)",
+      "Bash(git add *)"
+    ]
+  }
+}

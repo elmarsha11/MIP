@@ -1,0 +1,33 @@
+ID_Municipio,Municipio,Sección Electoral,Población Aprox.,Estado Actual (Año 0 %),Año 1 %,Año 2 %,Año 3 %,Año 4 %,Año 5 %,Brecha de Impacto %,Impacto Financiero Anual Proyectado ($ M ARS)
+MUN-BA-001,Chascomús,Quinta,42000,0.75,0.83,0.9,0.95,0.95,0.95,0.25,325.5
+MUN-BA-002,Rauch,Quinta,15000,0.45,0.64,0.78,0.89,0.94,0.95,0.55,255.75
+MUN-BA-003,Magdalena,Tercera,20000,0.6,0.74,0.84,0.92,0.95,0.95,0.4,248.0
+MUN-BA-004,Navarro,Primera,19000,0.55,0.7,0.82,0.91,0.95,0.95,0.45,264.93
+MUN-BA-005,Suipacha,Primera,11000,0.58,0.72,0.83,0.91,0.95,0.95,0.42,143.22
+MUN-BA-006,General Las Heras,Primera,19000,0.58,0.72,0.83,0.91,0.95,0.95,0.42,247.5
+MUN-BA-007,Salto,Segunda,41000,0.45,0.64,0.78,0.89,0.94,0.95,0.55,699.05
+MUN-BA-008,Baradero,Segunda,41000,0.45,0.64,0.78,0.89,0.94,0.95,0.55,699.05
+MUN-BA-009,Exaltación de la Cruz,Segunda,41000,0.45,0.64,0.78,0.89,0.94,0.95,0.55,699.05
+MUN-BA-010,Ramallo,Segunda,41000,0.45,0.64,0.78,0.89,0.94,0.95,0.55,699.05
+MUN-BA-011,Arrecifes,Segunda,33000,0.45,0.64,0.78,0.89,0.94,0.95,0.55,562.65
+MUN-BA-012,Colón,Segunda,29000,0.45,0.64,0.78,0.89,0.94,0.95,0.55,494.45
+MUN-BA-013,San Antonio de Areco,Segunda,28000,0.45,0.64,0.78,0.89,0.94,0.95,0.55,477.4
+MUN-BA-014,Rojas,Segunda,27000,0.8,0.87,0.92,0.95,0.95,0.95,0.2,167.4
+MUN-BA-015,San Andrés de Giles,Segunda,27000,0.76,0.84,0.9,0.95,0.95,0.95,0.24,200.88
+MUN-BA-016,Carmen de Areco,Segunda,18000,0.75,0.83,0.9,0.95,0.95,0.95,0.25,139.5
+MUN-BA-017,Capitán Sarmiento,Segunda,17000,0.72,0.81,0.88,0.94,0.95,0.95,0.28,147.56
+MUN-BA-018,Lobos,Tercera,43000,0.68,0.79,0.87,0.93,0.95,0.95,0.32,426.56
+MUN-BA-019,Brandsen,Tercera,33000,0.45,0.64,0.78,0.89,0.94,0.95,0.55,562.65
+MUN-BA-020,Punta Indio,Tercera,13000,0.45,0.64,0.78,0.89,0.94,0.95,0.55,221.65
+MUN-BA-021,Chivilcoy,Cuarta,70000,0.75,0.83,0.9,0.95,0.95,0.95,0.25,542.5
+MUN-BA-022,Chacabuco,Cuarta,54000,0.45,0.64,0.78,0.89,0.94,0.95,0.55,920.7
+MUN-BA-023,9 de Julio,Cuarta,54000,0.45,0.64,0.78,0.89,0.94,0.95,0.55,920.7
+MUN-BA-024,Trenque Lauquen,Cuarta,50000,0.78,0.85,0.91,0.95,0.95,0.95,0.22,341.0
+MUN-BA-025,Bragado,Cuarta,47000,0.72,0.81,0.88,0.94,0.95,0.95,0.28,408.36
+MUN-BA-042,Pinamar,Quinta,41000,0.8,0.87,0.92,0.95,0.95,0.95,0.2,254.2
+MUN-BA-048,General Madariaga,Quinta,24000,0.78,0.85,0.91,0.95,0.95,0.95,0.22,163.68
+MUN-BA-056,San Cayetano,Quinta,10000,0.82,0.88,0.92,0.95,0.95,0.95,0.18,55.8
+MUN-BA-065,Patagones,Sexta,39000,0.7,0.8,0.88,0.94,0.95,0.95,0.3,362.7
+MUN-BA-081,Monte Hermoso,Sexta,9000,0.75,0.83,0.9,0.95,0.95,0.95,0.25,69.75
+MUN-BA-084,Saladillo,Séptima,37000,0.75,0.83,0.9,0.95,0.95,0.95,0.25,286.75
+MUN-BA-085,Veinticinco de Mayo,Séptima,37000,0.72,0.81,0.88,0.94,0.95,0.95,0.28,321.44
