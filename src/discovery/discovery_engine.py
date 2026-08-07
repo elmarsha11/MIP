@@ -192,8 +192,12 @@ def cargar_municipios() -> List[Municipio]:
         nombre = (fila.get("Municipio") or "").strip()
         if not nombre:
             continue
+        # Desde 2026-08-07 el Gold Standard trae su propia columna de ID (ADR-0013).
+        # El cruce con la matriz en cuarentena queda solo como respaldo.
+        id_mun = (fila.get("ID_Municipio") or "").strip() or None
         slug = normalizar_slug(nombre)
-        id_mun = mapa_ids.get(slug)
+        if id_mun is None:
+            id_mun = mapa_ids.get(slug)
         if id_mun is None:
             alias = ALIAS_ID_MUNICIPIO.get(slug)
             if alias:
