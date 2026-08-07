@@ -1,0 +1,75 @@
+{
+  "hallazgos": [
+    {
+      "variable": "tramites_online",
+      "valor": "si",
+      "cita_literal": "1. Proveedores Inscripción, y consulta de movimientos. Accede haciendo click aquí. 2. Habilitacion Comercial Accede haciendo click aquí. 3. Formulario de Oficio para Escribanos Accede haciendo click aquí. 4. Regularización Dominial Accede haciendo click aquí. 5. Vencimientos Accede haciendo click aquí. 6. Consulta Estado e Deuda Accede haciendo click aquí. 7. Baja Automotor Accede haciendo click aquí. 8. Declaraciones Juradas Accede haciendo click aquí. 9. Licencia de Conducir Accede haciendo click aquí. 10. Adherite a Domicilio Fiscal Accede haciendo click aquí.",
+      "pagina": 2,
+      "detalle": "Proveedores Inscripción y consulta de movimientos, Habilitación Comercial, Formulario de Oficio para Escribanos, Regularización Dominial, Vencimientos, Consulta Estado de Deuda, Baja Automotor, Declaraciones Juradas, Licencia de Conducir, Adherite a Domicilio Fiscal"
+    },
+    {
+      "variable": "turnos_salud_online",
+      "valor": "no_verificable",
+      "cita_literal": "",
+      "pagina": 0,
+      "detalle": ""
+    },
+    {
+      "variable": "pago_online_tasas",
+      "valor": "si",
+      "cita_literal": "1. Tasas Municipales Consultá y Pagá haciendo click aquí ...",
+      "pagina": 4,
+      "detalle": "Link Pagos, Pago mis cuentas"
+    },
+    {
+      "variable": "sistema_rafam",
+      "valor": "no_verificable",
+      "cita_literal": "",
+      "pagina": 0,
+      "detalle": ""
+    },
+    {
+      "variable": "expediente_digital_gde",
+      "valor": "no_verificable",
+      "cita_literal": "",
+      "pagina": 0,
+      "detalle": ""
+    },
+    {
+      "variable": "reclamos_147",
+      "valor": "no_verificable",
+      "cita_literal": "",
+      "pagina": 0,
+      "detalle": ""
+    },
+    {
+      "variable": "transparencia_presupuesto",
+      "valor": "no_verificable",
+      "cita_literal": "",
+      "pagina": 0,
+      "detalle": ""
+    },
+    {
+      "variable": "boletin_oficial",
+      "valor": "si",
+      "cita_literal": "Boletin Oficial",
+      "pagina": 1,
+      "detalle": ""
+    },
+    {
+      "variable": "licitaciones",
+      "valor": "no_verificable",
+      "cita_literal": "",
+      "pagina": 0,
+      "detalle": ""
+    },
+    {
+      "variable": "app_municipal",
+      "valor": "no_verificable",
+      "cita_literal": "",
+      "pagina": 0,
+      "detalle": ""
+    }
+  ],
+  "_modelo": "gemini-flash-latest"
+}

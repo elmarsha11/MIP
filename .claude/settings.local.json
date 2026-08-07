@@ -20,7 +20,9 @@
       "Bash(git add *)",
       "Bash(git -c 'user.name=Juli Marshall' -c user.email=julimarshall64@gmail.com commit -q -m ' *)",
       "Bash(git count-objects *)",
-      "Bash(python src/discovery/discovery_engine.py --municipio Navarro --solo-heuristica)"
+      "Bash(python src/discovery/discovery_engine.py --municipio Navarro --solo-heuristica)",
+      "Bash(timeout 300 python src/extraction/extraction_engine.py --municipio Navarro)",
+      "Bash(timeout 600 python src/extraction/extraction_engine.py --all --limite 10)"
     ]
   }
 }

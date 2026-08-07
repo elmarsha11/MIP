@@ -1,0 +1,61 @@
+{
+  "hallazgos": [
+    {
+      "variable": "tramites_online",
+      "valor": "si",
+      "cita_literal": "Tramitá tu luz domiciliaria",
+      "pagina": 1,
+      "detalle": "Tramitá tu luz domiciliaria, Adherite al domicilio fiscal electrónico"
+    },
+    {
+      "variable": "turnos_salud_online",
+      "valor": "no_verificable",
+      "cita_literal": "",
+      "pagina": 0,
+      "detalle": ""
+    },
+    {
+      "variable": "pago_online_tasas",
+      "valor": "si",
+      "cita_literal": "Pagar a través de Pago mis cuentas",
+      "pagina": 1,
+      "detalle": "Pago mis cuentas"
+    },
+    {
+      "variable": "sistema_rafam",
+      "valor": "no_verificable",
+      "cita_literal": "",
+      "pagina": 0,
+      "detalle": ""
+    },
+    {
+      "variable": "reclamos_147",
+      "valor": "no_verificable",
+      "cita_literal": "",
+      "pagina": 0,
+      "detalle": ""
+    },
+    {
+      "variable": "transparencia_presupuesto",
+      "valor": "si",
+      "cita_literal": "Confección y publicación del cierre anual del ejercicio económico del Municipio donde quedan plasmados todos los ingresos y gastos que se efectuaron durante el año.",
+      "pagina": 4,
+      "detalle": ""
+    },
+    {
+      "variable": "licitaciones",
+      "valor": "no_verificable",
+      "cita_literal": "",
+      "pagina": 0,
+      "detalle": ""
+    },
+    {
+      "variable": "app_municipal",
+      "valor": "no_verificable",
+      "cita_literal": "",
+      "pagina": 0,
+      "detalle": ""
+    }
+  ],
+  "_modelo": "gemini-flash-latest"
+}

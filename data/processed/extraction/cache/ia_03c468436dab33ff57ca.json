@@ -1,0 +1,75 @@
+{
+  "hallazgos": [
+    {
+      "variable": "tramites_online",
+      "valor": "si",
+      "cita_literal": "Aquí encontrarás los trámites que podes hacer desde la comodidad de tu casa.",
+      "pagina": 2,
+      "detalle": "Solicitud de Alumbrado Público, Denuncias por pastizales, Solicitud de Libre Deuda, Consulta de Deuda Municipal, Presentación Declaración Jurada de Publicidad y Ocupación, Presentación Declaración Jurada Tasa de Seguridad e Higiene, Adhesión a Factura Electrónica"
+    },
+    {
+      "variable": "turnos_salud_online",
+      "valor": "no_verificable",
+      "cita_literal": "",
+      "pagina": 0,
+      "detalle": ""
+    },
+    {
+      "variable": "pago_online_tasas",
+      "valor": "no_verificable",
+      "cita_literal": "",
+      "pagina": 0,
+      "detalle": ""
+    },
+    {
+      "variable": "sistema_rafam",
+      "valor": "si",
+      "cita_literal": "R.A.F.A.M MUNICIPIO Ejercicio 2026 (1° semestre)",
+      "pagina": 5,
+      "detalle": ""
+    },
+    {
+      "variable": "expediente_digital_gde",
+      "valor": "si",
+      "cita_literal": "El sistema de Gestión Documental Electrónica es un sistema integrado de caratulación, numeración, seguimiento y registración de movimientos de todas las actuaciones y expedientes del Sector Público Nacional.",
+      "pagina": 2,
+      "detalle": ""
+    },
+    {
+      "variable": "reclamos_147",
+      "valor": "no_verificable",
+      "cita_literal": "",
+      "pagina": 0,
+      "detalle": ""
+    },
+    {
+      "variable": "transparencia_presupuesto",
+      "valor": "si",
+      "cita_literal": "PRESUPUESTO 2026 ADMINISTRACIÓN CENTRAL HOSPITAL SUBZONAL – ORGANISMO DESCENTRALIZADO",
+      "pagina": 3,
+      "detalle": ""
+    },
+    {
+      "variable": "boletin_oficial",
+      "valor": "si",
+      "cita_literal": "BOLETIN OFICIAL",
+      "pagina": 1,
+      "detalle": ""
+    },
+    {
+      "variable": "licitaciones",
+      "valor": "si",
+      "cita_literal": "COMPRAS Y LICITACIONES",
+      "pagina": 1,
+      "detalle": ""
+    },
+    {
+      "variable": "app_municipal",
+      "valor": "no_verificable",
+      "cita_literal": "",
+      "pagina": 0,
+      "detalle": ""
+    }
+  ],
+  "_modelo": "gemini-flash-latest"
+}

@@ -1,0 +1,75 @@
+{
+  "hallazgos": [
+    {
+      "variable": "tramites_online",
+      "valor": "si",
+      "cita_literal": "Registro de proveedores Ingresar Habilitación de Comercios Ingresar Escrituración de Inmuebles Ingresar Sistema de Obras Ingresar",
+      "pagina": 2,
+      "detalle": "Registro de proveedores, Habilitación de Comercios, Escrituración de Inmuebles, Sistema de Obras"
+    },
+    {
+      "variable": "turnos_salud_online",
+      "valor": "no_verificable",
+      "cita_literal": "",
+      "pagina": 0,
+      "detalle": ""
+    },
+    {
+      "variable": "pago_online_tasas",
+      "valor": "no_verificable",
+      "cita_literal": "",
+      "pagina": 0,
+      "detalle": ""
+    },
+    {
+      "variable": "sistema_rafam",
+      "valor": "no_verificable",
+      "cita_literal": "",
+      "pagina": 0,
+      "detalle": ""
+    },
+    {
+      "variable": "expediente_digital_gde",
+      "valor": "no_verificable",
+      "cita_literal": "",
+      "pagina": 0,
+      "detalle": ""
+    },
+    {
+      "variable": "reclamos_147",
+      "valor": "no_verificable",
+      "cita_literal": "",
+      "pagina": 0,
+      "detalle": ""
+    },
+    {
+      "variable": "transparencia_presupuesto",
+      "valor": "si",
+      "cita_literal": "Estado económico/financiero",
+      "pagina": 1,
+      "detalle": ""
+    },
+    {
+      "variable": "boletin_oficial",
+      "valor": "no_verificable",
+      "cita_literal": "",
+      "pagina": 0,
+      "detalle": ""
+    },
+    {
+      "variable": "licitaciones",
+      "valor": "si",
+      "cita_literal": "Licitaciones - Oficina de Compras Licitación LICITACIÓN PÚBLICA N°5/2025",
+      "pagina": 4,
+      "detalle": ""
+    },
+    {
+      "variable": "app_municipal",
+      "valor": "no_verificable",
+      "cita_literal": "",
+      "pagina": 0,
+      "detalle": ""
+    }
+  ],
+  "_modelo": "gemini-flash-latest"
+}

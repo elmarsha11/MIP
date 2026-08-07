@@ -1,0 +1,75 @@
+{
+  "hallazgos": [
+    {
+      "variable": "tramites_online",
+      "valor": "no_verificable",
+      "cita_literal": "",
+      "pagina": 1,
+      "detalle": ""
+    },
+    {
+      "variable": "turnos_salud_online",
+      "valor": "no_verificable",
+      "cita_literal": "",
+      "pagina": 1,
+      "detalle": ""
+    },
+    {
+      "variable": "pago_online_tasas",
+      "valor": "si",
+      "cita_literal": "Si abonaste por cuenta DNI no vuelvas a pagar por otro medio",
+      "pagina": 4,
+      "detalle": ""
+    },
+    {
+      "variable": "sistema_rafam",
+      "valor": "si",
+      "cita_literal": "Balance de Tesorería (Decreto Provincial 1555/22 - RAFAM 2)",
+      "pagina": 3,
+      "detalle": ""
+    },
+    {
+      "variable": "expediente_digital_gde",
+      "valor": "no_verificable",
+      "cita_literal": "",
+      "pagina": 1,
+      "detalle": ""
+    },
+    {
+      "variable": "reclamos_147",
+      "valor": "si",
+      "cita_literal": "147 Atención Ciudadana",
+      "pagina": 1,
+      "detalle": ""
+    },
+    {
+      "variable": "transparencia_presupuesto",
+      "valor": "si",
+      "cita_literal": "Presupuesto anual 2024 DESCARGAR",
+      "pagina": 3,
+      "detalle": ""
+    },
+    {
+      "variable": "boletin_oficial",
+      "valor": "si",
+      "cita_literal": "Boletín Oficial",
+      "pagina": 1,
+      "detalle": ""
+    },
+    {
+      "variable": "licitaciones",
+      "valor": "si",
+      "cita_literal": "Licitaciones",
+      "pagina": 1,
+      "detalle": ""
+    },
+    {
+      "variable": "app_municipal",
+      "valor": "no_verificable",
+      "cita_literal": "",
+      "pagina": 1,
+      "detalle": ""
+    }
+  ],
+  "_modelo": "gemini-flash-latest"
+}

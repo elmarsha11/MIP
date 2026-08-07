@@ -1,0 +1,54 @@
+{
+  "hallazgos": [
+    {
+      "variable": "tramites_online",
+      "valor": "si",
+      "cita_literal": "Podes tramitarlo en la Oficina de Recaudación y Fiscalización de la Municipalidad (Alem 1078 - 1er. Piso) o por medios digitales: Para tasa SIC – RED VIAL: al mail contribuyentes.ayacucho@gmail.com o hacienda.ayacucho@gmail.com o por WhatsApp al celular 249-4696304 Para patentes de vehículos o motovehículos: al mail desautosmotos@gmail.com o por WhatsApp al celular 249-4382728",
+      "pagina": 5,
+      "detalle": "Adhesión a la factura electrónica"
+    },
+    {
+      "variable": "turnos_salud_online",
+      "valor": "no_verificable",
+      "cita_literal": "",
+      "pagina": 0,
+      "detalle": ""
+    },
+    {
+      "variable": "pago_online_tasas",
+      "valor": "si",
+      "cita_literal": "MEDIOS DE PAGO DE LAS TASAS Y OBLIGACIONES MUNICIPALES DIGITALES Botón de pago online Ingresa al servicio tasas municipales - DEU consulta de deuda y abona con el número de cuenta municipal",
+      "pagina": 5,
+      "detalle": ""
+    },
+    {
+      "variable": "sistema_rafam",
+      "valor": "no_verificable",
+      "cita_literal": "",
+      "pagina": 0,
+      "detalle": ""
+    },
+    {
+      "variable": "reclamos_147",
+      "valor": "no_verificable",
+      "cita_literal": "",
+      "pagina": 0,
+      "detalle": ""
+    },
+    {
+      "variable": "transparencia_presupuesto",
+      "valor": "si",
+      "cita_literal": "Transparencia Boletín Oficial DDJJ de funcionarios Recibos de sueldo de funcionarios Rendición de cuentas Tarifaria Licitaciones Presupuesto Transparencia Fiscal Municipal",
+      "pagina": 1,
+      "detalle": ""
+    },
+    {
+      "variable": "app_municipal",
+      "valor": "no_verificable",
+      "cita_literal": "",
+      "pagina": 0,
+      "detalle": ""
+    }
+  ],
+  "_modelo": "gemini-flash-latest"
+}
