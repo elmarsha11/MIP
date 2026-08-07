@@ -22,7 +22,11 @@
       "Bash(git count-objects *)",
       "Bash(python src/discovery/discovery_engine.py --municipio Navarro --solo-heuristica)",
       "Bash(timeout 300 python src/extraction/extraction_engine.py --municipio Navarro)",
-      "Bash(timeout 600 python src/extraction/extraction_engine.py --all --limite 10)"
+      "Bash(timeout 600 python src/extraction/extraction_engine.py --all --limite 10)",
+      "Bash(python src/extraction/extraction_engine.py --all)",
+      "Bash(python src/extraction/extraction_engine.py --all --reanudar)",
+      "Bash(grep -c \"credenciales.txt$\")",
+      "Bash(git rm *)"
     ]
   }
 }

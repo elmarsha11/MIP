@@ -30,20 +30,37 @@ RUTA_CREDENCIAL = PROJECT_ROOT / "credenciales.txt"
 CACHE_DIR = PROJECT_ROOT / "data" / "processed" / "extraction" / "cache"
 RUTA_CONTADOR = CACHE_DIR / "consumo_diario.json"
 
-# Orden de preferencia. El primero que responda gana.
-# 'latest' antes que una version fija: las versiones fijas se retiran.
+# Orden de preferencia. El primero disponible gana.
+# 'latest' antes que una version fija: las versiones fijas se retiran sin aviso.
+#
+# La cuota del plan gratuito es POR MODELO, no por cuenta: verificado el
+# 2026-08-07, con gemini-2.0-flash agotado mientras los otros dos respondian.
+# Por eso la lista es larga: cuando uno se queda sin cuota, la corrida sigue.
 MODELOS = (
     "gemini-flash-latest",
+    "gemini-2.5-flash",
     "gemini-3.5-flash",
-    "gemini-2.0-flash",
     "gemini-flash-lite-latest",
+    "gemini-2.5-flash-lite",
+    "gemini-2.0-flash",
+    "gemini-2.0-flash-lite",
 )
 
-# Limites del plan gratuito. Conservadores a proposito: la consigna es no
-# excederse, no bloquearse y no generar cargos.
-RPM_MAX = 8
+# Limites propios, conservadores a proposito: la consigna es no excederse, no
+# bloquearse y no generar cargos. Los limites REALES del proveedor son mas
+# ajustados y no estan publicados por modelo, asi que ademas se reacciona al 429.
+RPM_MAX = 4
 RPD_MAX = 200
 TIMEOUT_SEGUNDOS = 90
+
+# Cuanto se espera antes de volver a probar un modelo que devolvio 429.
+# Los limites del plan gratuito son mayormente por minuto: un minuto de espera
+# suele alcanzar para que el modelo vuelva.
+ENFRIAMIENTO_429 = 65
+# Cuantos 429 seguidos hacen falta para dar un modelo por agotado hasta manana.
+MAX_429_POR_MODELO = 3
+# Cuanto se banca esperar cuando TODOS los modelos estan enfriandose.
+MAX_ESPERA_TOTAL = 140
 
 
 class CuotaAgotada(RuntimeError):
@@ -155,6 +172,10 @@ class ClienteGemini:
         self._cliente = None
         self._modelo_vivo: Optional[str] = None
         self._lock = threading.Lock()
+        # modelo -> momento en que vuelve a estar disponible tras un 429
+        self._enfriamiento: Dict[str, float] = {}
+        self._429_seguidos: Dict[str, int] = {}
+        self._agotados: set = set()
         self.llamadas_reales = 0
         self.aciertos_cache = 0
         if self.usar_cache:
@@ -197,38 +218,86 @@ class ClienteGemini:
         config = {"response_mime_type": "application/json", "response_schema": esquema}
         ultimo_error: Optional[Exception] = None
 
-        # El modelo que ya funciono se prueba primero.
-        orden = self.modelos
-        if self._modelo_vivo:
-            orden = [self._modelo_vivo] + [m for m in self.modelos if m != self._modelo_vivo]
+        # Dos vueltas: en la segunda ya vencieron los enfriamientos de la primera.
+        for _ in range(2):
+            for modelo in self._orden_de_intento():
+                try:
+                    self.limitador.esperar_turno()
+                except CuotaAgotada:
+                    raise
+                try:
+                    respuesta = self._obtener_cliente().models.generate_content(
+                        model=modelo, contents=prompt, config=config
+                    )
+                    datos = json.loads(respuesta.text)
+                    datos["_modelo"] = modelo
+                    self._modelo_vivo = modelo
+                    self._429_seguidos[modelo] = 0
+                    self.llamadas_reales += 1
+                    if self.usar_cache:
+                        self._escribir_cache(clave, datos)
+                    return datos
+                except Exception as exc:  # 429, modelo retirado, JSON roto...
+                    ultimo_error = exc
+                    mensaje = str(exc)
+                    if "RESOURCE_EXHAUSTED" in mensaje or "429" in mensaje:
+                        self._marcar_429(modelo)
+                    else:
+                        print(f"    [modelo {modelo} no responde] {mensaje[:100]}")
+                        self._agotados.add(modelo)  # retirado o roto: no insistir
 
-        for modelo in orden:
-            try:
-                self.limitador.esperar_turno()
-            except CuotaAgotada:
-                raise
-            try:
-                respuesta = self._obtener_cliente().models.generate_content(
-                    model=modelo, contents=prompt, config=config
-                )
-                datos = json.loads(respuesta.text)
-                datos["_modelo"] = modelo
-                self._modelo_vivo = modelo
-                self.llamadas_reales += 1
-                if self.usar_cache:
-                    self._escribir_cache(clave, datos)
-                return datos
-            except Exception as exc:  # modelo retirado, 429, JSON roto...
-                ultimo_error = exc
-                mensaje = str(exc)
-                if "RESOURCE_EXHAUSTED" in mensaje or "429" in mensaje:
-                    # Cuota del proveedor, no del limitador. Probar otro modelo
-                    # no ayuda: se corta.
-                    raise CuotaAgotada(f"La API rechazo por cuota: {mensaje[:160]}") from exc
-                print(f"    [modelo {modelo} no disponible] {mensaje[:110]}")
+            # Ningun modelo disponible. Si alguno esta por volver, se espera.
+            if not self._esperar_a_que_vuelva_alguno():
+                break
 
-        print(f"    [IA sin respuesta] ultimo error: {str(ultimo_error)[:140]}")
+        if all(m in self._agotados for m in self.modelos):
+            raise CuotaAgotada(
+                "Todos los modelos agotaron su cuota. Los municipios ya procesados "
+                "quedaron guardados: volve a correr con --reanudar mas tarde o "
+                "manana y sigue desde donde quedo."
+            )
+        print(f"    [IA sin respuesta] ultimo error: {str(ultimo_error)[:130]}")
         return None
+
+    # -- rotacion de modelos -----------------------------------------------
+
+    def _orden_de_intento(self) -> List[str]:
+        """Modelos disponibles ahora, con el que ya funciono primero."""
+        ahora = time.time()
+        disponibles = [
+            m
+            for m in self.modelos
+            if m not in self._agotados and self._enfriamiento.get(m, 0) <= ahora
+        ]
+        if self._modelo_vivo in disponibles:
+            disponibles.remove(self._modelo_vivo)
+            disponibles.insert(0, self._modelo_vivo)
+        return disponibles
+
+    def _marcar_429(self, modelo: str) -> None:
+        seguidos = self._429_seguidos.get(modelo, 0) + 1
+        self._429_seguidos[modelo] = seguidos
+        if seguidos >= MAX_429_POR_MODELO:
+            self._agotados.add(modelo)
+            print(f"    [cuota] {modelo} agotado por hoy, se descarta")
+        else:
+            self._enfriamiento[modelo] = time.time() + ENFRIAMIENTO_429
+            print(f"    [cuota] {modelo} sin cupo, se prueba otro modelo")
+
+    def _esperar_a_que_vuelva_alguno(self) -> bool:
+        """Espera a que venza el enfriamiento mas cercano. False si no vale la pena."""
+        ahora = time.time()
+        pendientes = [
+            t for m, t in self._enfriamiento.items() if m not in self._agotados and t > ahora
+        ]
+        if not pendientes:
+            return False
+        espera = min(pendientes) - ahora
+        if espera > MAX_ESPERA_TOTAL:
+            return False
+        print(f"    [cuota] esperando {espera:.0f}s a que se libere un modelo...")
+        time.sleep(max(1, espera))
+        return True
 
     # -- cache -------------------------------------------------------------
 

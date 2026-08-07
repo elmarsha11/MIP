@@ -26,6 +26,11 @@ venv/
 # Cache de consultas a buscadores y registros. Se regenera solo; la evidencia
 # que importa vive en titulo_fragmento dentro de la base, no aca.
 data/processed/discovery/cache/
+
+# Cache de respuestas de Gemini y contador de cuota diaria. Es estado local de
+# la maquina que corre el motor, no conocimiento del proyecto.
+data/processed/extraction/cache/
+
 progreso_municipios.json
 
 # ---------------------------------------------------------------------------

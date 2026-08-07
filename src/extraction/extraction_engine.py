@@ -80,6 +80,35 @@ COLUMNAS = (
 
 
 # ---------------------------------------------------------------------------
+# Reanudacion
+# ---------------------------------------------------------------------------
+
+
+def ya_extraidos(sqlite_path: Path = SQLITE_86) -> set:
+    """Municipios que ya tienen al menos una variable con evidencia.
+
+    La cuota gratuita no alcanza para los 86 de una sentada, asi que la corrida
+    tiene que poder retomarse. Un municipio procesado sin ningun hallazgo se
+    reintenta: pudo ser una corrida donde la IA no llego a responder.
+    """
+    if not Path(sqlite_path).exists():
+        return set()
+    con = sqlite3.connect(sqlite_path)
+    try:
+        return {
+            f[0]
+            for f in con.execute(
+                "SELECT municipio FROM hallazgos WHERE estado = 'verificado' "
+                "GROUP BY municipio"
+            )
+        }
+    except sqlite3.Error:
+        return set()
+    finally:
+        con.close()
+
+
+# ---------------------------------------------------------------------------
 # Orquestacion
 # ---------------------------------------------------------------------------
 
@@ -245,6 +274,11 @@ def main(argv: Optional[List[str]] = None) -> int:
     grupo.add_argument("--municipio", help="Nombre del municipio (ej: Navarro)")
     grupo.add_argument("--all", action="store_true", help="Los 86 municipios")
     parser.add_argument("--limite", type=int, help="Procesar solo los primeros N")
+    parser.add_argument(
+        "--reanudar",
+        action="store_true",
+        help="Saltear los municipios que ya tienen hallazgos y seguir desde ahi",
+    )
     parser.add_argument("--sin-ia", action="store_true", help="Solo leer paginas, sin llamar a Gemini")
     parser.add_argument("--sin-cache", action="store_true", help="Ignorar el cache de IA")
     parser.add_argument("--json", type=Path, default=JSON_86)
@@ -263,6 +297,13 @@ def main(argv: Optional[List[str]] = None) -> int:
         resultados = [resultado]
     else:
         municipios = cargar_municipios()
+        if args.reanudar:
+            hechos = ya_extraidos(args.sqlite)
+            municipios = [m for m in municipios if m.nombre not in hechos]
+            print(f"Reanudando: {len(hechos)} ya extraidos, quedan {len(municipios)}")
+            if not municipios:
+                print("Nada pendiente. Los 86 ya tienen hallazgos.")
+                return 0
         if args.limite:
             municipios = municipios[: args.limite]
         restantes = cliente.limitador.restantes_hoy() if cliente else 0
