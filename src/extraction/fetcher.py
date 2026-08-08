@@ -25,6 +25,7 @@ _DISCOVERY = PROJECT_ROOT / "src" / "discovery"
 if str(_DISCOVERY) not in sys.path:
     sys.path.insert(0, str(_DISCOVERY))
 
+from search_provider import _parece_slug_de_nota  # noqa: E402
 from validator import MAX_BYTES_HTML, _sesion  # noqa: E402
 
 try:
@@ -181,6 +182,78 @@ def descargar(candidata: URLCandidata, timeout: int = TIMEOUT) -> Optional[Pagin
         confianza_url=candidata.confianza,
         texto=texto[:MAX_CHARS_POR_PAGINA],
     )
+
+
+# Palabras que delatan una pagina de turnos, en orden de fuerza. "turno" apunta
+# al turnero; "salud" apunta a cualquier cosa, incluidas las notas de prensa.
+PISTAS_FUERTES = ("turno", "turnos", "cita previa", "pedir-cita", "shift")
+PISTAS_DEBILES = ("salud", "hospital", "caps", "sanidad", "consultorio", "atencion-medica")
+PISTAS_TURNOS = PISTAS_FUERTES + PISTAS_DEBILES
+
+
+def paginas_de_turnos(
+    municipio: str, sqlite_path: Path = SQLITE_DISCOVERY, maximo: int = 3
+) -> List[Pagina]:
+    """Cosecha dirigida: busca en el portal las paginas que hablan de turnos.
+
+    Existe porque leer una sola pagina por tipo dejaba afuera turneros que no
+    estan en la home ni en el primer nivel. El contraste contra el Gold Standard
+    mostro 4 municipios con turnos que MIP no veia por eso.
+
+    Solo elige que paginas leer. Lo que digan lo sigue decidiendo la IA con cita
+    verificada: la cosecha mejora el recall, no fabrica el dato.
+    """
+    from urllib.parse import urljoin, urlparse
+
+    candidatas = urls_de_municipio(municipio, sqlite_path)
+    home = next((c for c in candidatas if c.tipo == "sitio_oficial"), None)
+    if home is None:
+        return []
+
+    html = None
+    try:
+        import requests
+
+        resp = _sesion().get(home.url, timeout=TIMEOUT, allow_redirects=True, stream=True)
+        crudo = resp.raw.read(MAX_BYTES_HTML, decode_content=True) or b""
+        resp.close()
+        if resp.status_code < 400:
+            html = crudo.decode(resp.encoding or "utf-8", errors="replace")
+    except Exception:
+        return []
+    if not html:
+        return []
+
+    host = (urlparse(home.url).hostname or "").lower()
+    ya_leidas = {c.url.rstrip("/").lower() for c in candidatas}
+    enlaces: List[URLCandidata] = []
+    vistos = set()
+    for ancla in BeautifulSoup(html, "html.parser").find_all("a", href=True):
+        texto = ancla.get_text(" ", strip=True).lower()
+        destino = urljoin(home.url, ancla["href"]).split("#")[0]
+        if (urlparse(destino).hostname or "").lower() != host:
+            continue
+        clave = destino.rstrip("/").lower()
+        if clave in vistos or clave in ya_leidas:
+            continue
+        objetivo = destino.lower() + " " + texto
+        fuerte = any(p in objetivo for p in PISTAS_FUERTES)
+        debil = any(p in objetivo for p in PISTAS_DEBILES)
+        if not (fuerte or debil):
+            continue
+        # Una nota de prensa sobre salud no es la pagina de turnos. Arrecifes
+        # llenaba la cosecha con noticias y tapaba la evidencia real.
+        if _parece_slug_de_nota(urlparse(destino).path) and not fuerte:
+            continue
+        vistos.add(clave)
+        enlaces.append((0 if fuerte else 1, URLCandidata(destino, "salud_turnos", home.confianza)))
+
+    if not enlaces:
+        return []
+    # Primero las que nombran turnos; recien despues las de salud en general.
+    enlaces = [u for _, u in sorted(enlaces, key=lambda x: x[0])][:maximo]
+    with ThreadPoolExecutor(max_workers=min(WORKERS, len(enlaces))) as pool:
+        return [p for p in pool.map(descargar, enlaces) if p is not None]
 
 
 def leer_paginas(

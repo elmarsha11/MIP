@@ -33,7 +33,12 @@ from discovery_engine import buscar_municipio, cargar_municipios  # noqa: E402
 from schemas import ahora_iso  # noqa: E402
 
 from extractor import extraer  # noqa: E402
-from fetcher import SQLITE_DISCOVERY, leer_paginas, todas_las_urls  # noqa: E402
+from fetcher import (  # noqa: E402
+    SQLITE_DISCOVERY,
+    leer_paginas,
+    paginas_de_turnos,
+    todas_las_urls,
+)
 from gemini_client import ClienteGemini, CuotaAgotada  # noqa: E402
 from modelos import EstadoHallazgo, MunicipioExtraccion, Variable  # noqa: E402
 
@@ -128,6 +133,11 @@ def procesar(
     fecha = ahora_iso()
     urls_tipificadas = todas_las_urls(municipio, sqlite_discovery)
     paginas = leer_paginas(municipio, sqlite_discovery)
+    # Cosecha dirigida: los turneros suelen estar a un nivel de profundidad, no
+    # en la home. Sin esto se perdian 4 municipios que el Gold Standard marca
+    # con turnos online.
+    ya = {p.url for p in paginas}
+    paginas += [p for p in paginas_de_turnos(municipio, sqlite_discovery) if p.url not in ya]
     if verbose:
         print(f"  paginas leidas: {len(paginas)} ({sum(len(p.texto) for p in paginas)} chars)")
 
@@ -186,6 +196,42 @@ def procesar_todos(
 # ---------------------------------------------------------------------------
 
 
+def _fusionar_con_lo_verificado(con: sqlite3.Connection, r: MunicipioExtraccion) -> list:
+    """Un hallazgo ya verificado no se pisa con un vacio.
+
+    El modelo no es determinista: el mismo municipio con las mismas paginas puede
+    dar 'si' con cita en una corrida y 'no_verificable' en la siguiente. Sin esta
+    regla, cada re-corrida borraba evidencia que ya se habia probado (paso con
+    Arrecifes y Adolfo Alsina).
+
+    Es la misma regla de ADR-0013 aplicada a Fase 4: la base no se destruye a si
+    misma. Un dato verificado solo lo reemplaza otro dato verificado, y ahi gana
+    el nuevo porque es mas fresco.
+    """
+    previos = {
+        fila[0]: fila
+        for fila in con.execute(
+            f"SELECT {', '.join(COLUMNAS)} FROM hallazgos WHERE id_municipio = ?",
+            (r.id_municipio,),
+        )
+    }
+    indice_estado = COLUMNAS.index("estado")
+
+    filas = []
+    for h in r.hallazgos:
+        nueva = tuple(h.to_row()[c] for c in COLUMNAS)
+        vieja = previos.get(h.id)
+        if (
+            vieja is not None
+            and vieja[indice_estado] == EstadoHallazgo.VERIFICADO.value
+            and h.estado is not EstadoHallazgo.VERIFICADO
+        ):
+            filas.append(vieja)  # se conserva la evidencia que ya existia
+        else:
+            filas.append(nueva)
+    return filas
+
+
 def guardar_sqlite(resultados: Sequence[MunicipioExtraccion], path: Path = SQLITE_86) -> Path:
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -193,11 +239,12 @@ def guardar_sqlite(resultados: Sequence[MunicipioExtraccion], path: Path = SQLIT
     try:
         con.executescript(DDL)
         for r in resultados:
+            filas = _fusionar_con_lo_verificado(con, r)
             con.execute("DELETE FROM hallazgos WHERE id_municipio = ?", (r.id_municipio,))
             con.executemany(
                 f"INSERT INTO hallazgos ({', '.join(COLUMNAS)}) "
                 f"VALUES ({', '.join('?' for _ in COLUMNAS)})",
-                [tuple(h.to_row()[c] for c in COLUMNAS) for h in r.hallazgos],
+                filas,
             )
             con.execute(
                 "INSERT OR REPLACE INTO municipios_extraccion "

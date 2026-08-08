@@ -19,6 +19,8 @@ from typing import Dict, List, Optional, Sequence
 try:
     from .fetcher import Pagina
     from .modelos import (
+        DOMINIO_VALORES,
+        CanalTurnos,
         Confianza,
         EstadoHallazgo,
         Hallazgo,
@@ -30,6 +32,8 @@ try:
 except ImportError:  # ejecutado como script
     from fetcher import Pagina  # type: ignore[no-redef]
     from modelos import (  # type: ignore[no-redef]
+        DOMINIO_VALORES,
+        CanalTurnos,
         Confianza,
         EstadoHallazgo,
         Hallazgo,
@@ -52,9 +56,17 @@ PREGUNTAS: Dict[Variable, str] = {
         "informar horarios o requisitos). En 'detalle', listá los tramites nombrados."
     ),
     Variable.TURNOS_SALUD_ONLINE: (
-        "Existe un turnero de SALUD online: pedir turno medico, en CAPS u hospital, "
-        "por web, formulario, app o WhatsApp. Los turnos de licencia de conducir NO "
-        "cuentan. Un telefono o 'acercate al CAPS' es 'no'."
+        "Se puede pedir un turno medico (hospital, CAPS, especialidad) SIN ir "
+        "personalmente ni llamar por telefono: formulario web, turnero online, "
+        "app municipal, WhatsApp, Telegram o mail. Un numero de WhatsApp para "
+        "sacar turnos CUENTA como si. Los turnos de licencia de conducir NO "
+        "cuentan, son de transito. 'Acercate al CAPS' o solo un telefono fijo es 'no'."
+    ),
+    Variable.CANAL_TURNOS_SALUD: (
+        "Por que canal se pide el turno medico. Valores: web (formulario o "
+        "turnero propio), whatsapp, telegram, app, email, telefono (hay que "
+        "llamar), presencial (hay que ir). Si no se puede determinar, "
+        "no_verificable. En 'detalle', el numero o link si figura."
     ),
     Variable.PAGO_ONLINE_TASAS: (
         "Se pueden pagar tasas municipales por internet: boton de pago, homebanking, "
@@ -87,7 +99,10 @@ ESQUEMA_RESPUESTA = {
                 "type": "object",
                 "properties": {
                     "variable": {"type": "string", "enum": [v.value for v in Variable]},
-                    "valor": {"type": "string", "enum": [v.value for v in Valor]},
+                    # Sin enum fijo: cada variable tiene su propio dominio
+                    # (canal_turnos_salud admite whatsapp, telegram, web...).
+                    # El valor se valida contra DOMINIO_VALORES en el codigo.
+                    "valor": {"type": "string"},
                     "cita_literal": {
                         "type": "string",
                         "description": (
@@ -211,6 +226,17 @@ def verificar_respuesta(
 
         valor = (item.get("valor") or "").strip()
         cita = (item.get("cita_literal") or "").strip()
+
+        if valor not in DOMINIO_VALORES[variable]:
+            # El modelo invento un valor que no esta en el contrato ("parcial",
+            # "quizas"). No se traduce ni se interpreta: queda sin dato.
+            hallazgos.append(
+                _hallazgo_vacio(
+                    municipio, id_municipio, variable, fecha, modelo,
+                    EstadoHallazgo.NO_VERIFICABLE,
+                )
+            )
+            continue
 
         if valor == Valor.NO_VERIFICABLE.value or not cita:
             hallazgos.append(

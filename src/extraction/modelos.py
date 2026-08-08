@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import hashlib
 import re
+import unicodedata
 from enum import Enum
 from typing import List, Optional
 
@@ -36,6 +37,7 @@ class Variable(str, Enum):
     BOLETIN_OFICIAL = "boletin_oficial"
     LICITACIONES = "licitaciones"
     APP_MUNICIPAL = "app_municipal"
+    CANAL_TURNOS_SALUD = "canal_turnos_salud"
 
 
 class Valor(str, Enum):
@@ -49,6 +51,33 @@ class Valor(str, Enum):
     SI = "si"
     NO = "no"
     NO_VERIFICABLE = "no_verificable"
+
+
+class CanalTurnos(str, Enum):
+    """Por donde se pide un turno de salud.
+
+    El diccionario lo dice: "Turnos Digitales" es un formulario web en Suipacha,
+    un bot de WhatsApp en Exaltacion de la Cruz y una fila a las 5 AM en otros.
+    Son incomparables mientras el dato sea un si/no. Registrar el canal es lo que
+    los vuelve comparables, y es lo que le dice a UDS que se puede reemplazar.
+    """
+
+    WEB = "web"  # formulario o turnero propio en el portal
+    WHATSAPP = "whatsapp"
+    TELEGRAM = "telegram"
+    APP = "app"  # app municipal
+    EMAIL = "email"
+    TELEFONO = "telefono"  # hay que llamar
+    PRESENCIAL = "presencial"  # hay que ir
+    NO_VERIFICABLE = "no_verificable"
+
+
+# Canales que cuentan como turno online para el diccionario. Telefono y
+# presencial son justamente la ausencia del servicio digital.
+CANALES_DIGITALES = frozenset(
+    {CanalTurnos.WEB, CanalTurnos.WHATSAPP, CanalTurnos.TELEGRAM, CanalTurnos.APP,
+     CanalTurnos.EMAIL}
+)
 
 
 class TipoFuente(str, Enum):
@@ -72,6 +101,16 @@ class EstadoHallazgo(str, Enum):
     CITA_RECHAZADA = "cita_rechazada"  # el modelo cito algo que no esta en la fuente
 
 
+# Valores admitidos por variable. Casi todas son binarias; canal_turnos_salud
+# tiene su propio dominio porque la pregunta no es "si o no" sino "por donde".
+DOMINIO_VALORES: dict = {v: tuple(x.value for x in Valor) for v in Variable}
+DOMINIO_VALORES[Variable.CANAL_TURNOS_SALUD] = tuple(x.value for x in CanalTurnos)
+
+
+def valores_admitidos(variable: Variable) -> tuple:
+    return DOMINIO_VALORES[variable]
+
+
 # ---------------------------------------------------------------------------
 # Verificacion de citas
 # ---------------------------------------------------------------------------
@@ -80,11 +119,19 @@ class EstadoHallazgo(str, Enum):
 def normalizar_para_cotejo(texto: str) -> str:
     """Normaliza para comparar cita contra fuente.
 
-    Tolera diferencias de espaciado, mayusculas y comillas tipograficas, que el
-    modelo cambia sin alterar el contenido. No tolera palabras distintas: ahi
-    esta el limite entre citar y parafrasear.
+    Tolera lo que cambia la forma sin cambiar el contenido: mayusculas,
+    espaciado, comillas tipograficas, guiones largos y **tildes**.
+
+    Las tildes importan mas de lo que parece. Muchos portales municipales sirven
+    mal la codificacion y el modelo, al citar, escribe la palabra bien. Sin esta
+    tolerancia, "BOLETIN OFICIAL" no coincidia con "Boletin Oficial" y se
+    descartaban citas correctas como si fueran inventadas.
+
+    Lo que NO se tolera son palabras distintas: ahi esta el limite entre citar y
+    parafrasear, y ese limite es el que sostiene ADR-0014.
     """
-    t = texto.lower()
+    t = unicodedata.normalize("NFKD", texto.lower())
+    t = "".join(c for c in t if not unicodedata.combining(c))
     t = t.replace("“", '"').replace("”", '"').replace("’", "'")
     t = t.replace("‘", "'").replace("–", "-").replace("—", "-")
     t = re.sub(r"\s+", " ", t)
@@ -147,6 +194,21 @@ class Hallazgo(BaseModel):
     @classmethod
     def _fragmento_vacio_es_none(cls, v: Optional[str]) -> Optional[str]:
         return (v or "").strip() or None
+
+    @model_validator(mode="after")
+    def _valor_dentro_del_dominio(self) -> "Hallazgo":
+        """Cada variable admite su propio conjunto de valores.
+
+        Evita que un modelo devuelva 'quizas' o 'parcial' y eso entre a la base
+        como si fuera un valor del contrato.
+        """
+        admitidos = DOMINIO_VALORES[self.variable]
+        if self.valor not in admitidos:
+            raise ValueError(
+                f"{self.variable.value} no admite el valor {self.valor!r}. "
+                f"Admitidos: {admitidos}"
+            )
+        return self
 
     @model_validator(mode="after")
     def _adr_0009_sin_evidencia_no_hay_dato(self) -> "Hallazgo":
@@ -224,6 +286,9 @@ class MunicipioExtraccion(BaseModel):
 
 
 __all__ = [
+    "CANALES_DIGITALES",
+    "DOMINIO_VALORES",
+    "CanalTurnos",
     "Confianza",
     "EstadoHallazgo",
     "Hallazgo",
@@ -233,4 +298,5 @@ __all__ = [
     "Variable",
     "cita_esta_en_fuente",
     "normalizar_para_cotejo",
+    "valores_admitidos",
 ]

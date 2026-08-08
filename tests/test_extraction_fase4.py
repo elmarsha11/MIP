@@ -30,7 +30,9 @@ from extractor import (  # noqa: E402
 )
 from fetcher import Pagina, URLTipificada, limpiar_html  # noqa: E402
 from gemini_client import ClienteFalso, CuotaAgotada, LimitadorCuota  # noqa: E402
+import extraction_engine as engine  # noqa: E402
 from modelos import (  # noqa: E402
+    DOMINIO_VALORES,
     Confianza,
     EstadoHallazgo,
     Hallazgo,
@@ -39,6 +41,7 @@ from modelos import (  # noqa: E402
     Variable,
     cita_esta_en_fuente,
 )
+from modelos import MunicipioExtraccion  # noqa: E402
 
 FECHA = "2026-08-07T12:00:00Z"
 
@@ -233,9 +236,122 @@ class TestPrompt(unittest.TestCase):
         self.assertIn("turnos_salud_online:", p)
         self.assertNotIn("licitaciones:", p)
 
-    def test_el_esquema_admite_no_verificable(self):
-        valores = ESQUEMA_RESPUESTA["properties"]["hallazgos"]["items"]["properties"]["valor"]["enum"]
-        self.assertIn("no_verificable", valores)
+    def test_el_prompt_declara_los_valores_admitidos(self):
+        """El esquema ya no fija un enum unico: cada variable tiene su dominio."""
+        campos = ESQUEMA_RESPUESTA["properties"]["hallazgos"]["items"]["properties"]
+        self.assertNotIn("enum", campos["valor"])
+        p = construir_prompt("Navarro", [PAGINA], [Variable.CANAL_TURNOS_SALUD])
+        self.assertIn("whatsapp", p)
+        self.assertIn("no_verificable", p)
+
+
+class TestCanalDeTurnos(unittest.TestCase):
+    """El canal es lo que vuelve comparables municipios incomparables: un
+    formulario web, un bot de WhatsApp y una fila a las 5 AM no son lo mismo."""
+
+    def test_canal_admite_whatsapp_y_telegram(self):
+        for canal in ("web", "whatsapp", "telegram", "app", "telefono", "presencial"):
+            with self.subTest(canal=canal):
+                self.assertIn(canal, DOMINIO_VALORES[Variable.CANAL_TURNOS_SALUD])
+
+    def test_variables_binarias_no_admiten_canales(self):
+        self.assertNotIn("whatsapp", DOMINIO_VALORES[Variable.TURNOS_SALUD_ONLINE])
+
+    def test_valor_fuera_del_dominio_no_entra(self):
+        with self.assertRaises(ValidationError):
+            Hallazgo(
+                municipio="X", id_municipio="MUN-BA-001",
+                variable=Variable.TURNOS_SALUD_ONLINE, valor="parcial",
+                url="https://x.gob.ar/", fecha=FECHA, fragmento="Turnos parciales",
+                confianza=Confianza.ALTA, estado=EstadoHallazgo.VERIFICADO,
+            )
+
+    def test_el_modelo_inventa_un_valor_y_queda_sin_dato(self):
+        h = {x.variable: x for x in verificar_respuesta(
+            respuesta(Variable.CANAL_TURNOS_SALUD, "carta_documento", "Solicita tu turno medico online"),
+            "Navarro", "MUN-BA-004", [PAGINA], FECHA,
+        )}[Variable.CANAL_TURNOS_SALUD]
+        self.assertIs(h.estado, EstadoHallazgo.NO_VERIFICABLE)
+
+    def test_canal_presencial_es_un_hallazgo_no_un_vacio(self):
+        """Pinamar: 'acercarse a la mesa de admision' es una ausencia probada,
+        y es justamente el municipio al que hay que venderle."""
+        pagina = Pagina(
+            url="https://pinamar.gob.ar/salud/", tipo="salud_turnos", confianza_url="Alta",
+            texto="Para obtener el turno acercarse a la mesa de admision del Centro de Salud.",
+        )
+        h = {x.variable: x for x in verificar_respuesta(
+            respuesta(Variable.CANAL_TURNOS_SALUD, "presencial",
+                      "acercarse a la mesa de admision del Centro de Salud"),
+            "Pinamar", "MUN-BA-001", [pagina], FECHA,
+        )}[Variable.CANAL_TURNOS_SALUD]
+        self.assertIs(h.estado, EstadoHallazgo.VERIFICADO)
+        self.assertEqual(h.valor, "presencial")
+
+
+class TestTildes(unittest.TestCase):
+    """Los portales municipales sirven mal la codificacion y el modelo cita
+    bien. Sin tolerar tildes se descartaban citas correctas."""
+
+    def test_cita_sin_tildes_coincide_con_fuente_acentuada(self):
+        self.assertTrue(
+            cita_esta_en_fuente("BOLETIN OFICIAL MUNICIPAL", "Acceda al Boletín Oficial Municipal")
+        )
+
+    def test_sigue_sin_tolerar_palabras_distintas(self):
+        self.assertFalse(
+            cita_esta_en_fuente("Boletines Oficiales Municipales", "Acceda al Boletín Oficial Municipal")
+        )
+
+
+class TestNoDestruirEvidencia(unittest.TestCase):
+    """ADR-0013 aplicado a Fase 4: un dato verificado no se pisa con un vacio.
+
+    El modelo no es determinista: el mismo municipio dio 'si' con cita en una
+    corrida y 'no_verificable' en la siguiente. Sin esta regla, re-correr
+    borraba evidencia ya probada."""
+
+    def _guardar(self, db, valor, estado, fragmento, url):
+        r = MunicipioExtraccion(
+            municipio="Arrecifes", id_municipio="MUN-BA-010", fecha=FECHA,
+            hallazgos=[Hallazgo(
+                municipio="Arrecifes", id_municipio="MUN-BA-010",
+                variable=Variable.TURNOS_SALUD_ONLINE, valor=valor, url=url,
+                fecha=FECHA, fragmento=fragmento, confianza=(
+                    Confianza.ALTA if estado is EstadoHallazgo.VERIFICADO else Confianza.CERO),
+                estado=estado,
+            )],
+        )
+        engine.guardar_sqlite([r], db)
+
+    def test_una_corrida_peor_no_borra_la_evidencia(self):
+        import tempfile, sqlite3 as sq
+        with tempfile.TemporaryDirectory() as tmp:
+            db = Path(tmp) / "h.sqlite"
+            self._guardar(db, "si", EstadoHallazgo.VERIFICADO, "HOSPITAL - TURNOS WEB",
+                          "https://arrecifes.gob.ar/")
+            self._guardar(db, "no_verificable", EstadoHallazgo.NO_VERIFICABLE, None, None)
+            con = sq.connect(db)
+            valor, estado, frag = con.execute(
+                "select valor, estado, fragmento from hallazgos").fetchone()
+            con.close()
+            self.assertEqual(valor, "si")
+            self.assertEqual(estado, "verificado")
+            self.assertEqual(frag, "HOSPITAL - TURNOS WEB")
+
+    def test_evidencia_nueva_si_reemplaza_a_la_vieja(self):
+        import tempfile, sqlite3 as sq
+        with tempfile.TemporaryDirectory() as tmp:
+            db = Path(tmp) / "h.sqlite"
+            self._guardar(db, "si", EstadoHallazgo.VERIFICADO, "cita vieja verificada",
+                          "https://a.gob.ar/")
+            self._guardar(db, "no", EstadoHallazgo.VERIFICADO, "cita nueva verificada",
+                          "https://a.gob.ar/nueva")
+            con = sq.connect(db)
+            valor, frag = con.execute("select valor, fragmento from hallazgos").fetchone()
+            con.close()
+            self.assertEqual(valor, "no")
+            self.assertEqual(frag, "cita nueva verificada")
 
 
 class TestCuota(unittest.TestCase):
