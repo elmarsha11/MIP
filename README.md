@@ -54,6 +54,6 @@ El diseño de MIP se rige estrictamente por los siguientes principios:
 ## 🛠️ Tecnologías Principales
 
 *   Lenguaje: **Python**
-*   IA Generativa & Modelos: **Gemini (Google GenAI) / Agnóstico de LLM**
+*   IA Generativa & Modelos: Gemnini 3.1 Pro & 3.5 flash - Google AI Studio // Claude Code // DeepSeek // Meta AI
 *   Extracción y Scraping: **Requests, BeautifulSoup**, frameworks de rendering.
 *   Manipulación de Datos: **Pandas**
