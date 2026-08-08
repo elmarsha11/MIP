@@ -1,0 +1,153 @@
+/* Tablero de MIP. Sin fuentes ni recursos externos: todo local. */
+
+:root {
+  --fondo: #0f1419;
+  --panel: #171d25;
+  --panel-alto: #1e262f;
+  --borde: #2a343f;
+  --texto: #e4e9ef;
+  --tenue: #8b98a8;
+  --acento: #4a9eda;
+  --ok: #3fb27f;
+  --alerta: #d99a3c;
+  --mal: #d9614c;
+  --radio: 8px;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --fondo: #f4f6f8; --panel: #ffffff; --panel-alto: #eef2f6;
+    --borde: #d5dde5; --texto: #1a2028; --tenue: #5d6b7a;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--fondo);
+  color: var(--texto);
+}
+
+header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 24px; background: var(--panel); border-bottom: 1px solid var(--borde);
+}
+.marca strong { font-size: 20px; letter-spacing: .5px; }
+.marca span { color: var(--tenue); margin-left: 10px; font-size: 13px; }
+.confidencial {
+  font-size: 11px; letter-spacing: 1px; color: var(--alerta);
+  border: 1px solid var(--alerta); padding: 3px 9px; border-radius: 20px;
+}
+
+nav {
+  display: flex; gap: 4px; padding: 0 16px;
+  background: var(--panel); border-bottom: 1px solid var(--borde);
+  overflow-x: auto;
+}
+nav button {
+  background: none; border: none; border-bottom: 2px solid transparent;
+  color: var(--tenue); padding: 11px 15px; cursor: pointer;
+  font-size: 14px; white-space: nowrap; font-family: inherit;
+}
+nav button:hover { color: var(--texto); }
+nav button.activa { color: var(--acento); border-bottom-color: var(--acento); }
+
+main { padding: 22px; max-width: 1400px; margin: 0 auto; }
+.oculta { display: none !important; }
+
+/* Tarjetas del panel */
+.tarjetas { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; }
+.tarjeta {
+  background: var(--panel); border: 1px solid var(--borde);
+  border-radius: var(--radio); padding: 16px;
+}
+.tarjeta .cifra { font-size: 30px; font-weight: 600; line-height: 1.1; }
+.tarjeta .rotulo { color: var(--tenue); font-size: 13px; margin-top: 5px; }
+.tarjeta .detalle { color: var(--tenue); font-size: 12px; margin-top: 8px; }
+.tarjeta.buena .cifra { color: var(--ok); }
+.tarjeta.alerta .cifra { color: var(--alerta); }
+
+/* Barras y controles */
+.barra { display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; align-items: center; }
+input[type="search"], select {
+  background: var(--panel); border: 1px solid var(--borde); color: var(--texto);
+  padding: 8px 11px; border-radius: 6px; font: inherit; font-size: 14px;
+}
+input[type="search"] { min-width: 230px; }
+.boton {
+  background: var(--panel-alto); border: 1px solid var(--borde); color: var(--texto);
+  padding: 8px 14px; border-radius: 6px; cursor: pointer;
+  text-decoration: none; font-size: 14px; display: inline-block; font-family: inherit;
+}
+.boton:hover { border-color: var(--acento); color: var(--acento); }
+.boton.primario { background: var(--acento); border-color: var(--acento); color: #fff; }
+.boton:disabled { opacity: .5; cursor: not-allowed; }
+
+/* Tablas */
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+thead th {
+  text-align: left; color: var(--tenue); font-weight: 500; font-size: 12px;
+  text-transform: uppercase; letter-spacing: .5px;
+  padding: 9px 11px; border-bottom: 1px solid var(--borde);
+}
+tbody td { padding: 9px 11px; border-bottom: 1px solid var(--borde); }
+tbody tr:hover { background: var(--panel); cursor: pointer; }
+.num { text-align: right; }
+
+/* Etiquetas */
+.etiqueta {
+  display: inline-block; padding: 2px 8px; border-radius: 12px;
+  font-size: 12px; border: 1px solid var(--borde); color: var(--tenue);
+}
+.etiqueta.ok { color: var(--ok); border-color: var(--ok); }
+.etiqueta.alerta { color: var(--alerta); border-color: var(--alerta); }
+.etiqueta.mal { color: var(--mal); border-color: var(--mal); }
+
+/* Bloques de evidencia: lo que distingue a MIP */
+.evidencia {
+  background: var(--panel); border-left: 3px solid var(--acento);
+  padding: 9px 13px; margin: 7px 0; border-radius: 0 6px 6px 0; font-size: 13px;
+}
+.evidencia .cita { font-style: italic; color: var(--texto); }
+.evidencia .origen { color: var(--tenue); font-size: 12px; margin-top: 5px; word-break: break-all; }
+.evidencia a { color: var(--acento); }
+
+.grupo { margin-bottom: 26px; }
+.grupo h3 { margin: 0 0 4px; font-size: 16px; }
+.grupo .subtitulo { color: var(--tenue); font-size: 13px; margin: 0 0 12px; }
+
+.nota, .pie { color: var(--tenue); font-size: 13px; }
+.aviso {
+  background: var(--panel); border: 1px solid var(--alerta);
+  border-radius: var(--radio); padding: 13px 16px; margin-bottom: 16px; font-size: 13px;
+}
+.aviso h4 { margin: 0 0 8px; color: var(--alerta); font-size: 13px; }
+.aviso ul { margin: 0; padding-left: 18px; }
+.aviso li { margin-bottom: 4px; }
+
+/* Cajón de ficha */
+.cajon {
+  position: fixed; top: 0; right: 0; width: min(720px, 94vw); height: 100vh;
+  background: var(--fondo); border-left: 1px solid var(--borde);
+  overflow-y: auto; z-index: 20; padding: 0 24px 60px;
+}
+.cajon-cabecera {
+  display: flex; justify-content: space-between; align-items: center;
+  position: sticky; top: 0; background: var(--fondo);
+  padding: 18px 0 12px; border-bottom: 1px solid var(--borde); margin-bottom: 16px;
+}
+.cajon-cabecera h2 { margin: 0; font-size: 21px; }
+#cerrar-ficha {
+  background: none; border: none; color: var(--tenue);
+  font-size: 27px; cursor: pointer; line-height: 1; padding: 0 6px;
+}
+#fondo { position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 10; }
+
+pre {
+  background: #000; color: #b8e0b8; padding: 13px; border-radius: 6px;
+  font-size: 12px; max-height: 340px; overflow: auto; white-space: pre-wrap;
+  border: 1px solid var(--borde);
+}
+h3 { margin: 22px 0 10px; font-size: 16px; }

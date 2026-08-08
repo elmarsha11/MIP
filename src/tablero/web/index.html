@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MIP — Municipal Intelligence Platform</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+<header>
+  <div class="marca">
+    <strong>MIP</strong>
+    <span>Municipal Intelligence Platform</span>
+  </div>
+  <div class="confidencial" title="Solo Juli y el equipo de UDS">CONFIDENCIAL — UDS</div>
+</header>
+
+<nav id="pestanas">
+  <button data-vista="panel" class="activa">Panel</button>
+  <button data-vista="municipios">Municipios</button>
+  <button data-vista="turnos">Mapa de turnos</button>
+  <button data-vista="impacto">Impacto</button>
+  <button data-vista="revision">Revisión</button>
+  <button data-vista="acciones">Acciones</button>
+</nav>
+
+<main>
+  <!-- PANEL -->
+  <section id="vista-panel" class="vista">
+    <div id="tarjetas" class="tarjetas"></div>
+    <p class="pie" id="pie-panel"></p>
+  </section>
+
+  <!-- MUNICIPIOS -->
+  <section id="vista-municipios" class="vista oculta">
+    <div class="barra">
+      <input type="search" id="buscar" placeholder="Buscar municipio…" autocomplete="off">
+      <select id="filtro-canal">
+        <option value="">Canal de turnos: todos</option>
+        <option value="digital">Con canal digital</option>
+        <option value="sin_digital">Sin canal digital (probado)</option>
+        <option value="sin_datos">Sin datos</option>
+      </select>
+      <select id="filtro-sitio">
+        <option value="">Sitio oficial: todos</option>
+        <option value="si">Con sitio</option>
+        <option value="no">Sin sitio</option>
+        <option value="sin_https">Sin HTTPS</option>
+      </select>
+      <a class="boton" href="/api/exportar/municipios.csv">Exportar CSV</a>
+    </div>
+    <table id="tabla-municipios">
+      <thead><tr>
+        <th>Municipio</th><th class="num">Habitantes</th><th>Sitio oficial</th>
+        <th class="num">URLs</th><th class="num">Variables</th><th>Canal turnos</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <!-- TURNOS -->
+  <section id="vista-turnos" class="vista oculta">
+    <p class="nota">
+      Cada fila trae la <strong>cita textual</strong> que lo prueba. Un dato sin evidencia
+      no aparece acá: queda en «sin datos».
+    </p>
+    <div class="barra"><a class="boton" href="/api/exportar/turnos.csv">Exportar CSV</a></div>
+    <div id="turnos-contenido"></div>
+  </section>
+
+  <!-- IMPACTO -->
+  <section id="vista-impacto" class="vista oculta">
+    <div id="impacto-contenido"></div>
+  </section>
+
+  <!-- REVISION -->
+  <section id="vista-revision" class="vista oculta">
+    <p class="nota">
+      Lo que necesita ojo humano antes de ir a una propuesta. La verificación frena
+      la alucinación, no el error de criterio.
+    </p>
+    <div class="barra"><a class="boton" href="/api/exportar/revision.csv">Exportar CSV</a></div>
+    <div id="revision-contenido"></div>
+  </section>
+
+  <!-- ACCIONES -->
+  <section id="vista-acciones" class="vista oculta">
+    <p class="nota">
+      Los botones lanzan los mismos comandos que se correrían a mano. El motor sigue
+      siendo la verdad; el tablero es una cara, no una implementación paralela.
+    </p>
+    <div id="acciones-contenido"></div>
+    <h3>Tareas</h3>
+    <div id="tareas-contenido"></div>
+    <pre id="salida-tarea" class="oculta"></pre>
+  </section>
+</main>
+
+<!-- Ficha de municipio -->
+<div id="panel-ficha" class="cajon oculta">
+  <div class="cajon-cabecera">
+    <h2 id="ficha-titulo"></h2>
+    <button id="cerrar-ficha" aria-label="Cerrar">×</button>
+  </div>
+  <div id="ficha-cuerpo"></div>
+</div>
+<div id="fondo" class="oculta"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
