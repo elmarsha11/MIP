@@ -38,7 +38,6 @@ RUTA_CONTADOR = CACHE_DIR / "consumo_diario.json"
 # Por eso la lista es larga: cuando uno se queda sin cuota, la corrida sigue.
 MODELOS = (
     "gemini-flash-latest",
-    "gemini-2.5-flash",
     "gemini-3.5-flash",
     "gemini-flash-lite-latest",
     "gemini-2.5-flash-lite",
@@ -51,7 +50,7 @@ MODELOS = (
 # ajustados y no estan publicados por modelo, asi que ademas se reacciona al 429.
 RPM_MAX = 4
 RPD_MAX = 200
-TIMEOUT_SEGUNDOS = 90
+TIMEOUT_SEGUNDOS = 45  # colgarse 90s en un modelo lento sale mas caro que rotar
 
 # Cuanto se espera antes de volver a probar un modelo que devolvio 429.
 # Los limites del plan gratuito son mayormente por minuto: un minuto de espera
@@ -155,6 +154,16 @@ class LimitadorCuota:
             self._guardar_contador()
 
 
+def _es_falla_permanente(mensaje: str) -> bool:
+    """Distingue "este modelo no existe" de "esta vez no contesto".
+
+    Importa: dar por muerto un modelo que solo tuvo un timeout achica la cadena
+    de respaldo justo cuando mas se la necesita.
+    """
+    m = mensaje.lower()
+    return any(s in m for s in ("404", "not_found", "no longer available", "not supported"))
+
+
 class ClienteGemini:
     """Genera contenido estructurado, con cache en disco y respaldo de modelos."""
 
@@ -187,8 +196,17 @@ class ClienteGemini:
         with self._lock:
             if self._cliente is None:
                 from google import genai  # import diferido: solo si se usa IA
+                from google.genai import types
 
-                self._cliente = genai.Client(api_key=leer_api_key())
+                # El timeout es obligatorio, no decorativo. Sin el, una conexion
+                # colgada deja el proceso esperando para siempre: paso el
+                # 2026-08-07, una corrida quedo 5 horas dormida sin avanzar ni
+                # fallar. Un motor que tiene que andar solo no puede colgarse en
+                # silencio.
+                self._cliente = genai.Client(
+                    api_key=leer_api_key(),
+                    http_options=types.HttpOptions(timeout=TIMEOUT_SEGUNDOS * 1000),
+                )
             return self._cliente
 
     def _path_cache(self, clave: str) -> Path:
@@ -242,9 +260,16 @@ class ClienteGemini:
                     mensaje = str(exc)
                     if "RESOURCE_EXHAUSTED" in mensaje or "429" in mensaje:
                         self._marcar_429(modelo)
+                    elif _es_falla_permanente(mensaje):
+                        # Modelo retirado o inexistente para esta cuenta: no
+                        # tiene sentido volver a probarlo en toda la corrida.
+                        print(f"    [modelo {modelo} no existe] {mensaje[:90]}")
+                        self._agotados.add(modelo)
                     else:
-                        print(f"    [modelo {modelo} no responde] {mensaje[:100]}")
-                        self._agotados.add(modelo)  # retirado o roto: no insistir
+                        # Timeout o corte de red: puede ser pasajero. Se enfria
+                        # y se rota, pero sigue siendo candidato.
+                        print(f"    [modelo {modelo} no respondio] {mensaje[:90]}")
+                        self._enfriamiento[modelo] = time.time() + ENFRIAMIENTO_429
 
             # Ningun modelo disponible. Si alguno esta por volver, se espera.
             if not self._esperar_a_que_vuelva_alguno():
