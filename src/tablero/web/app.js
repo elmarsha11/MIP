@@ -2,7 +2,27 @@
 
 const $ = (s) => document.querySelector(s);
 const $$ = (s) => Array.from(document.querySelectorAll(s));
-const api = (r) => fetch("/api/" + r).then((x) => x.json());
+/* El tablero corre de dos formas con el MISMO codigo:
+   - contra el servidor local, pidiendo datos por HTTP
+   - dentro de un HTML autonomo, leyendo los datos incrustados en la pagina
+   Una sola funcion decide cual. Duplicar el frontend seria garantizar que las
+   dos versiones diverjan. */
+const ESTATICO = typeof window.DATOS_MIP !== "undefined";
+const api = (r) =>
+  ESTATICO ? Promise.resolve(leerIncrustado(r)) : fetch("/api/" + r).then((x) => x.json());
+
+function leerIncrustado(ruta) {
+  const D = window.DATOS_MIP;
+  if (ruta.startsWith("municipio/")) {
+    const nombre = decodeURIComponent(ruta.slice("municipio/".length));
+    return D.fichas[nombre] || { error: "Municipio inexistente" };
+  }
+  return {
+    resumen: D.resumen, municipios: D.municipios, turnos: D.turnos,
+    "costo-turnos": D.costo_turnos, revision: D.revision,
+    parametros: D.parametros, acciones: [], tareas: [],
+  }[ruta] ?? [];
+}
 const esc = (t) =>
   String(t ?? "").replace(/[&<>"']/g, (c) =>
     ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -120,10 +140,14 @@ async function abrirFicha(nombre) {
     <h3>URLs descubiertas (${f.urls_detalle.length})</h3>
     ${f.urls_detalle.map(fichaUrl).join("")}
 
-    <div class="barra" style="margin-top:20px">
-      <button class="boton primario" data-accion="descubrir_municipio" data-m="${esc(nombre)}">Redescubrir URLs</button>
-      <button class="boton" data-accion="extraer_municipio" data-m="${esc(nombre)}">Volver a extraer (usa IA)</button>
-    </div>`;
+    ${ESTATICO ? `
+      <p class="nota" style="margin-top:20px">Esta es una foto fechada. Para volver a
+        investigar este municipio hay que abrir el tablero con el servidor.</p>`
+    : `
+      <div class="barra" style="margin-top:20px">
+        <button class="boton primario" data-accion="descubrir_municipio" data-m="${esc(nombre)}">Redescubrir URLs</button>
+        <button class="boton" data-accion="extraer_municipio" data-m="${esc(nombre)}">Volver a extraer (usa IA)</button>
+      </div>`}`;
 
   $$("#ficha-cuerpo [data-accion]").forEach((b) =>
     b.addEventListener("click", () => lanzarAccion(b.dataset.accion, b.dataset.m))
@@ -335,6 +359,44 @@ async function seguirTarea(id) {
   };
   await tic();
   temporizador = setInterval(tic, 1500);
+}
+
+if (ESTATICO) {
+  document.querySelector('[data-vista="acciones"]').remove();
+  document.body.classList.add("estatico");
+  descargasLocales();
+}
+
+/* Sin servidor, los CSV se arman en el navegador. Sigue funcionando sin internet. */
+function descargasLocales() {
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest('a[href^="/api/exportar/"]');
+    if (!a) return;
+    e.preventDefault();
+    const cual = a.getAttribute("href").split("/").pop().replace(".csv", "");
+    const D = window.DATOS_MIP;
+    const filas = {
+      municipios: D.municipios,
+      turnos: [...D.turnos.digitales.map((f) => ({ ...f, grupo: "con canal digital" })),
+               ...D.turnos.sin_digital.map((f) => ({ ...f, grupo: "sin canal digital (probado)" }))],
+      revision: D.revision,
+      "costo-turnos": D.costo_turnos.municipios || [],
+    }[cual] || [];
+    if (!filas.length) return alert("Nada para exportar.");
+    const cols = Object.keys(filas[0]);
+    const csv = [cols.join(",")]
+      .concat(
+        filas.map((f) =>
+          cols.map((c) => `"${String(f[c] ?? "").replace(/"/g, '""')}"`).join(",")
+        )
+      )
+      .join("\n");
+    // BOM al principio para que Excel en Windows no rompa los acentos.
+    const url = URL.createObjectURL(new Blob(["﻿" + csv], { type: "text/csv" }));
+    const link = Object.assign(document.createElement("a"), { href: url, download: `mip_${cual}.csv` });
+    link.click();
+    URL.revokeObjectURL(url);
+  });
 }
 
 verPanel();

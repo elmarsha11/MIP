@@ -31,6 +31,7 @@ data/processed/discovery/cache/
 # la maquina que corre el motor, no conocimiento del proyecto.
 data/processed/extraction/cache/
 
+src/tablero/web/_prueba.html
 progreso_municipios.json
 
 # ---------------------------------------------------------------------------
