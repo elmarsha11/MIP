@@ -4,6 +4,7 @@
 credenciales.txt
 credenciales*.txt
 !credenciales.ejemplo.txt
+deepseek_key.txt
 .env
 .env.*
 *.key

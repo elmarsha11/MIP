@@ -28,7 +28,8 @@
       "Bash(grep -c \"credenciales.txt$\")",
       "Bash(git rm *)",
       "PowerShell(Get-Process python -ErrorAction SilentlyContinue | Select-Object Id, StartTime, CPU, @{n='Mins';e={[math]::Round\\(\\(\\(Get-Date\\)-$_.StartTime\\).TotalMinutes,1\\)}} | Format-Table -AutoSize)",
-      "Bash(python -u src/extraction/extraction_engine.py --all --reanudar)"
+      "Bash(python -u src/extraction/extraction_engine.py --all --reanudar)",
+      "Bash(python \"C:\\\\Users\\\\julia\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\C--Users-julia-OneDrive-Documentos-UDS-MIP\\\\8c7eaaca-45cd-4dab-bcae-8a708d39f644\\\\scratchpad\\\\test_llm_factory.py\")"
     ]
   }
 }
