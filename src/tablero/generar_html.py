@@ -56,6 +56,9 @@ def reunir_datos() -> dict:
         "territorio": consultas.resumen_territorio(),
         # Las fichas se precalculan: sin servidor no hay a quien preguntarle.
         "fichas": {m["municipio"]: consultas.ficha(m["municipio"]) for m in municipios},
+        "resumenes": {
+            m["municipio"]: consultas.ficha_resumida(m["municipio"]) for m in municipios
+        },
         # Los censos tambien se precalculan: sin servidor no hay a quien
         # preguntarle. Solo los municipios censados, para no inflar el archivo.
         "territorios": {

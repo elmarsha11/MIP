@@ -273,6 +273,115 @@ def territorio(municipio: str) -> dict:
     }
 
 
+NIVELES_EDUCATIVOS = {
+    "jardin": "Inicial / Jardín",
+    "escuela_primaria": "Primaria",
+    "escuela_secundaria": "Secundaria y técnica",
+    "escuela_especial": "Especial",
+    "educacion_superior": "Superior / Terciaria",
+    "escuela_sin_clasificar": "Sin nivel identificado",
+}
+
+# Como se lee cada variable de Fase 4 en la ficha resumida.
+FILA_VARIABLE = {
+    "sistema_rafam": "RAFAM",
+    "expediente_digital_gde": "Expediente digital (GDE/GEDO)",
+    "app_municipal": "App municipal",
+    "tramites_online": "Trámites online",
+    "pago_online_tasas": "Cobro de tasas online",
+    "reclamos_147": "Reclamos 147",
+    "transparencia_presupuesto": "Presupuesto publicado",
+    "boletin_oficial": "Boletín oficial",
+    "licitaciones": "Licitaciones",
+}
+
+
+def ficha_resumida(nombre: str) -> dict:
+    """La ficha de un municipio como la leería una persona, no una base.
+
+    Cruza las tres capas: poblacion del Gold Standard, variables de Fase 4 con
+    su evidencia, y el censo territorial de Fase 6.
+
+    Todo lo que no se sabe se dice. ADR-0009: un vacio se muestra como vacio,
+    con el motivo, y no se rellena.
+    """
+    base = ficha(nombre)
+    if not base:
+        return {}
+    ent = territorio(nombre)
+    hallazgos = {h["variable"]: h for h in base.get("hallazgos", [])}
+
+    def dato(variable: str) -> dict:
+        h = hallazgos.get(variable)
+        if not h or h["estado"] != "verificado":
+            return {"valor": None, "motivo": "No verificable en el portal oficial"}
+        return {
+            "valor": h["valor"], "detalle": h.get("detalle"),
+            "fragmento": h.get("fragmento"), "url": h.get("url"),
+            "confianza": h.get("confianza"),
+        }
+
+    conteo = ent["por_tipo"]
+    educacion = {
+        etiqueta: conteo.get(tipo, 0)
+        for tipo, etiqueta in NIVELES_EDUCATIVOS.items()
+        if conteo.get(tipo, 0)
+    }
+    hospitales = [e for e in ent["entidades"] if e["tipo"] == "hospital"]
+    caps = [e for e in ent["entidades"] if e["tipo"] == "caps"]
+    estaciones = [e for e in ent["entidades"] if e["tipo"] == "estacion_tren"]
+
+    canal = hallazgos.get("canal_turnos_salud")
+    canal_valor = canal["valor"] if canal and canal["estado"] == "verificado" else None
+
+    return {
+        "municipio": nombre,
+        "id_municipio": base["id_municipio"],
+        "poblacion": {
+            "total": base.get("poblacion"),
+            "fuente": "Gold Standard (relevamiento manual verificado)",
+            # INDEC publica la apertura por sexo; MIP todavia no la incorporo.
+            # Se declara faltante en vez de estimarla.
+            "mujeres": None,
+            "varones": None,
+            "viviendas": None,
+            "falta": "Apertura por sexo y viviendas: requiere censo INDEC, aún no incorporado",
+        },
+        "autoridades": {
+            "intendente": dato("intendente"),
+            "secretarias": dato("secretarias"),
+            "concejales": dato("concejales"),
+        },
+        "educacion": {
+            "total": sum(educacion.values()),
+            "por_nivel": educacion,
+            "fuente": "OpenStreetMap (cobertura parcial, colaborativa)",
+        },
+        "salud": {
+            "hospitales": [
+                {"nombre": h["nombre"], "direccion": h["direccion"], "url": h["url_fuente"]}
+                for h in hospitales
+            ],
+            "caps": len(caps),
+            "caps_nombrados": [c["nombre"] for c in caps if c["nombre"]],
+            "farmacias": conteo.get("farmacia", 0),
+            "turnos_canal": canal_valor,
+            "turnos_evidencia": canal.get("fragmento") if canal else None,
+            "turnos_url": canal.get("url") if canal else None,
+        },
+        "digital": {etiqueta: dato(v) for v, etiqueta in FILA_VARIABLE.items()},
+        "sitio_oficial": base.get("sitio_oficial"),
+        "sitio_sin_https": base.get("sitio_sin_https"),
+        "transporte": {
+            "estaciones_tren": [
+                {"nombre": e["nombre"], "url": e["url_fuente"]} for e in estaciones
+            ],
+            "colectivo": None,
+            "falta": "Líneas de colectivo urbano: no relevado todavía",
+        },
+    }
+
+
 def resumen_territorio() -> dict:
     """Cobertura del censo territorial sobre los 86."""
     filas = _filas(
@@ -356,6 +465,7 @@ def costo_turnos() -> dict:
 __all__ = [
     "CAPAS_MAPA",
     "cola_de_revision",
+    "ficha_resumida",
     "costo_turnos",
     "ficha",
     "mapa_turnos",

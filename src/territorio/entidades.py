@@ -51,6 +51,8 @@ class TipoEntidad(str, Enum):
     # Territorio
     BARRIO = "barrio"
     LOCALIDAD = "localidad"
+    # Transporte
+    ESTACION_TREN = "estacion_tren"
     # Cultura, deporte y comunidad
     BIBLIOTECA = "biblioteca"
     TEATRO = "teatro"
@@ -79,6 +81,7 @@ CAPAS = {
         TipoEntidad.POLICIA, TipoEntidad.BOMBEROS,
     ),
     "Territorio": (TipoEntidad.BARRIO, TipoEntidad.LOCALIDAD),
+    "Transporte": (TipoEntidad.ESTACION_TREN,),
     "Cultura y comunidad": (
         TipoEntidad.BIBLIOTECA, TipoEntidad.TEATRO, TipoEntidad.MUSEO,
         TipoEntidad.CENTRO_COMUNITARIO, TipoEntidad.CLUB_DEPORTIVO, TipoEntidad.PLAZA,

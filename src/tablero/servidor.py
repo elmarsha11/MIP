@@ -89,6 +89,9 @@ class Tablero(SimpleHTTPRequestHandler):
             if partes[1:2] == ["municipio"] and len(partes) == 3:
                 ficha = consultas.ficha(partes[2])
                 return self._json(ficha or {"error": "Municipio inexistente"}, 200 if ficha else 404)
+            if partes[1:2] == ["resumen-municipio"] and len(partes) == 3:
+                r = consultas.ficha_resumida(partes[2])
+                return self._json(r or {"error": "Municipio inexistente"}, 200 if r else 404)
             if partes[1:] == ["turnos"]:
                 return self._json(consultas.mapa_turnos())
             if partes[1:] == ["costo-turnos"]:

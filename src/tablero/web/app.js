@@ -17,6 +17,10 @@ function leerIncrustado(ruta) {
     const nombre = decodeURIComponent(ruta.slice("territorio/".length));
     return D.territorios[nombre] || { total: 0, ubicadas: 0, recuadro: null, entidades: [] };
   }
+  if (ruta.startsWith("resumen-municipio/")) {
+    const nombre = decodeURIComponent(ruta.slice("resumen-municipio/".length));
+    return (D.resumenes || {})[nombre] || {};
+  }
   if (ruta.startsWith("municipio/")) {
     const nombre = decodeURIComponent(ruta.slice("municipio/".length));
     return D.fichas[nombre] || { error: "Municipio inexistente" };
@@ -133,13 +137,20 @@ function etiquetaCanal(c) {
 
 /* -------------------------------------------------------------------- Ficha */
 async function abrirFicha(nombre) {
-  const f = await api("municipio/" + encodeURIComponent(nombre));
+  const [f, r] = await Promise.all([
+    api("municipio/" + encodeURIComponent(nombre)),
+    api("resumen-municipio/" + encodeURIComponent(nombre)),
+  ]);
   $("#ficha-titulo").textContent = nombre;
   $("#ficha-cuerpo").innerHTML = `
-    <p class="nota">${esc(f.id_municipio)} · ${numero(f.poblacion)} habitantes
-      ${f.sitio_oficial ? `· <a href="${esc(f.sitio_oficial)}" target="_blank" rel="noopener">${esc(f.sitio_oficial)}</a>` : "· sin sitio oficial"}</p>
+    <p class="nota">${esc(f.id_municipio)}
+      ${f.sitio_oficial ? `· <a href="${esc(f.sitio_oficial)}" target="_blank" rel="noopener">${esc(f.sitio_oficial)}</a>` : "· sin sitio oficial"}
+      ${f.sitio_sin_https === 1 ? ' · <span class="etiqueta alerta">sin HTTPS</span>' : ""}</p>
 
-    <h3>Variables (${f.hallazgos.filter((h) => h.estado === "verificado").length} con evidencia)</h3>
+    ${r && r.municipio ? resumenMunicipio(r) : ""}
+
+    <h3>Evidencia detallada</h3>
+    <p class="nota">Cada variable con su cita textual, verificada contra la fuente.</p>
     ${f.hallazgos.map(fichaHallazgo).join("")}
 
     <h3>URLs descubiertas (${f.urls_detalle.length})</h3>
@@ -159,6 +170,75 @@ async function abrirFicha(nombre) {
   );
   $("#panel-ficha").classList.remove("oculta");
   $("#fondo").classList.remove("oculta");
+}
+
+/* La ficha como la leeria una persona, no como la guarda una base.
+   Todo lo que no se sabe se dice, con el motivo. ADR-0009: el vacio se muestra. */
+function resumenMunicipio(r) {
+  const falta = (motivo) => `<span class="etiqueta">sin dato</span>
+    <span class="origen"> ${esc(motivo || "")}</span>`;
+
+  const conEvidencia = (d) =>
+    d.valor
+      ? `<strong>${esc(d.valor)}</strong>${d.detalle ? " · " + esc(d.detalle) : ""}
+         ${d.url ? `<div class="origen"><a href="${esc(d.url)}" target="_blank" rel="noopener">ver fuente</a>
+            ${d.fragmento ? `— <em>"${esc(d.fragmento.slice(0, 90))}"</em>` : ""}</div>` : ""}`
+      : falta(d.motivo);
+
+  const p = r.poblacion, s = r.salud, e = r.educacion, t = r.transporte;
+  const canalEtiqueta = s.turnos_canal
+    ? etiquetaCanal(s.turnos_canal)
+    : '<span class="etiqueta">sin dato</span>';
+
+  return `
+  <div class="resumen">
+    <h3>Población</h3>
+    <p><strong>${numero(p.total)}</strong> habitantes
+      <span class="origen">· ${esc(p.fuente)}</span></p>
+    <p class="origen">Mujeres / varones / viviendas: ${esc(p.falta)}</p>
+
+    <h3>Autoridades</h3>
+    <table><tbody>
+      <tr><td>Intendente</td><td>${conEvidencia(r.autoridades.intendente)}</td></tr>
+      <tr><td>Secretarías</td><td>${conEvidencia(r.autoridades.secretarias)}</td></tr>
+      <tr><td>Concejo Deliberante</td><td>${conEvidencia(r.autoridades.concejales)}</td></tr>
+    </tbody></table>
+
+    <h3>Educación — ${e.total} establecimientos</h3>
+    ${e.total
+      ? `<table><tbody>${Object.entries(e.por_nivel).map(([nivel, n]) =>
+          `<tr><td>${esc(nivel)}</td><td class="num"><strong>${n}</strong></td></tr>`).join("")}
+         </tbody></table><p class="origen">${esc(e.fuente)}</p>`
+      : `<p>${falta("El municipio no fue censado todavía")}</p>`}
+
+    <h3>Salud</h3>
+    <table><tbody>
+      <tr><td>Hospitales</td><td>${s.hospitales.length
+        ? s.hospitales.map((h) => `<strong>${esc(h.nombre || "(sin nombre)")}</strong>
+            ${h.direccion ? `<span class="origen"> · ${esc(h.direccion)}</span>` : ""}`).join("<br>")
+        : falta("Sin hospital registrado en OpenStreetMap")}</td></tr>
+      <tr><td>CAPS / salas</td><td><strong>${s.caps}</strong>
+        ${s.caps_nombrados.length ? `<div class="origen">${s.caps_nombrados.map(esc).join(" · ")}</div>` : ""}</td></tr>
+      <tr><td>Farmacias</td><td>${s.farmacias}</td></tr>
+      <tr><td><strong>Turnos médicos</strong></td><td>${canalEtiqueta}
+        ${s.turnos_evidencia ? `<div class="origen"><em>"${esc(s.turnos_evidencia.slice(0, 100))}"</em>
+          ${s.turnos_url ? `<a href="${esc(s.turnos_url)}" target="_blank" rel="noopener"> ver fuente</a>` : ""}</div>` : ""}</td></tr>
+    </tbody></table>
+
+    <h3>Gestión digital</h3>
+    <table><tbody>
+      ${Object.entries(r.digital).map(([etiqueta, d]) =>
+        `<tr><td>${esc(etiqueta)}</td><td>${conEvidencia(d)}</td></tr>`).join("")}
+    </tbody></table>
+
+    <h3>Transporte público</h3>
+    <table><tbody>
+      <tr><td>Tren</td><td>${t.estaciones_tren.length
+        ? t.estaciones_tren.map((x) => `<strong>${esc(x.nombre || "estación")}</strong>`).join(" · ")
+        : falta("Sin estación registrada en OpenStreetMap")}</td></tr>
+      <tr><td>Colectivo urbano</td><td>${falta(t.falta)}</td></tr>
+    </tbody></table>
+  </div>`;
 }
 
 function fichaHallazgo(h) {

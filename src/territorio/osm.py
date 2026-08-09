@@ -44,10 +44,13 @@ CACHE_DIR = PROJECT_ROOT / "data" / "processed" / "territorio" / "cache"
 # Cadena de servidores Overpass. El publico principal se satura seguido y
 # rechaza el primer intento; rotar a un espejo sale mas barato que esperar.
 # Mismo criterio que la cadena de modelos de Gemini en Fase 4.
+# OJO: solo espejos con cobertura MUNDIAL. overpass.osm.ch es suizo: responde
+# 200 con JSON valido y CERO elementos para Argentina. Al tomarlo como respuesta
+# autoritativa, el censo concluyo "sin limite administrativo" en 83 de 86
+# municipios. Un espejo regional no es una alternativa, es una fuente distinta.
 SERVIDORES = (
     "https://overpass-api.de/api/interpreter",
     "https://overpass.kumi.systems/api/interpreter",
-    "https://overpass.osm.ch/api/interpreter",
 )
 USER_AGENT = "MIP-relevamiento-municipal/0.1 (uso interno, contacto: UDS)"
 INTERVALO_MINIMO = 6.0  # segundos entre consultas: el servicio es gratuito
@@ -92,6 +95,8 @@ REGLAS: tuple = (
     ("place", "town", TipoEntidad.LOCALIDAD),
     ("place", "village", TipoEntidad.LOCALIDAD),
     ("place", "hamlet", TipoEntidad.LOCALIDAD),
+    ("railway", "station", TipoEntidad.ESTACION_TREN),
+    ("railway", "halt", TipoEntidad.ESTACION_TREN),
 )
 
 # Palabras del nombre que definen el tipo cuando la etiqueta OSM es ambigua.
@@ -196,7 +201,7 @@ def _esperar_turno() -> None:
         _ultima_consulta = time.time()
 
 
-def consultar(query: str) -> Optional[dict]:
+def consultar(query: str, exigir_elementos: bool = False) -> Optional[dict]:
     """Ejecuta una consulta Overpass rotando entre servidores.
 
     None si ninguno responde. El llamador lo traduce a "sin datos", nunca a un
@@ -217,8 +222,15 @@ def consultar(query: str) -> Optional[dict]:
                     headers={"User-Agent": USER_AGENT},
                 )
                 if "json" in (resp.headers.get("content-type") or ""):
+                    datos = resp.json()
+                    # Un espejo con cobertura parcial devuelve 200 y una lista
+                    # vacia. Para las consultas donde el vacio seria sospechoso
+                    # se prueba otro servidor antes de darlo por bueno.
+                    if exigir_elementos and not datos.get("elements"):
+                        print(f"    [OSM] {servidor.split('/')[2]} sin resultados, probando otro")
+                        continue
                     _servidor_vivo = servidor
-                    return resp.json()
+                    return datos
                 # Overpass devuelve HTML cuando esta saturado o limitando.
                 print(f"    [OSM] {servidor.split('/')[2]} saturado, probando otro")
             except requests.RequestException as exc:
@@ -256,7 +268,8 @@ def resolver_limite(municipio: str) -> Optional[int]:
     datos = consultar(
         f'[out:json][timeout:90];'
         f'relation["boundary"="administrative"]["admin_level"="8"]'
-        f'["name"~"^({filtro})$",i];out ids tags;'
+        f'["name"~"^({filtro})$",i];out ids tags;',
+        exigir_elementos=True,  # 0 resultados puede ser un espejo incompleto
     )
     encontrado = None
     if datos:
@@ -290,6 +303,8 @@ area({area})->.a;
   nwr["tourism"="museum"](area.a);
   nwr["leisure"~"^(sports_centre|stadium|park)$"](area.a);
   nwr["place"~"^(neighbourhood|suburb|quarter|town|village|hamlet)$"](area.a);
+  nwr["railway"~"^(station|halt)$"](area.a);
+  nwr["public_transport"="station"](area.a);
 );
 out center tags;
 """
