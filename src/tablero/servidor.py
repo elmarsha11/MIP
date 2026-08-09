@@ -93,6 +93,10 @@ class Tablero(SimpleHTTPRequestHandler):
                 return self._json(consultas.mapa_turnos())
             if partes[1:] == ["costo-turnos"]:
                 return self._json(consultas.costo_turnos())
+            if partes[1:] == ["territorio"]:
+                return self._json(consultas.resumen_territorio())
+            if partes[1:2] == ["territorio"] and len(partes) == 3:
+                return self._json(consultas.territorio(partes[2]))
             if partes[1:] == ["revision"]:
                 return self._json(consultas.cola_de_revision())
             if partes[1:] == ["parametros"]:
@@ -130,6 +134,11 @@ class Tablero(SimpleHTTPRequestHandler):
             filas = [{**f, "grupo": "con canal digital"} for f in mapa["digitales"]]
             filas += [{**f, "grupo": "sin canal digital (ausencia probada)"} for f in mapa["sin_digital"]]
             return self._csv(filas, "mip_turnos.csv")
+        if que == "territorio.csv":
+            filas = []
+            for m in consultas.resumen_territorio()["municipios"]:
+                filas += consultas.territorio(m["municipio"])["entidades"]
+            return self._csv(filas, "mip_territorio.csv")
         if que == "revision.csv":
             return self._csv(consultas.cola_de_revision(), "mip_revision.csv")
         if que == "costo-turnos.csv":

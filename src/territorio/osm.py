@@ -41,7 +41,14 @@ except ImportError:  # ejecutado como script
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 CACHE_DIR = PROJECT_ROOT / "data" / "processed" / "territorio" / "cache"
 
-OVERPASS = "https://overpass-api.de/api/interpreter"
+# Cadena de servidores Overpass. El publico principal se satura seguido y
+# rechaza el primer intento; rotar a un espejo sale mas barato que esperar.
+# Mismo criterio que la cadena de modelos de Gemini en Fase 4.
+SERVIDORES = (
+    "https://overpass-api.de/api/interpreter",
+    "https://overpass.kumi.systems/api/interpreter",
+    "https://overpass.osm.ch/api/interpreter",
+)
 USER_AGENT = "MIP-relevamiento-municipal/0.1 (uso interno, contacto: UDS)"
 INTERVALO_MINIMO = 6.0  # segundos entre consultas: el servicio es gratuito
 TIMEOUT = 240
@@ -50,6 +57,7 @@ ESPERA_TRAS_LIMITE = 45
 
 _lock = threading.Lock()
 _ultima_consulta = 0.0
+_servidor_vivo: Optional[str] = None
 
 
 class OverpassCaido(RuntimeError):
@@ -189,21 +197,34 @@ def _esperar_turno() -> None:
 
 
 def consultar(query: str) -> Optional[dict]:
-    """Ejecuta una consulta Overpass. None si el servicio no responde."""
-    for intento in range(1, MAX_REINTENTOS + 1):
-        _esperar_turno()
-        try:
-            resp = requests.post(
-                OVERPASS, data={"data": query}, timeout=TIMEOUT,
-                headers={"User-Agent": USER_AGENT},
-            )
-            if "json" in (resp.headers.get("content-type") or ""):
-                return resp.json()
-            # Overpass devuelve HTML cuando esta saturado o limitando.
-            print(f"    [OSM] respuesta no-JSON (intento {intento}), esperando...")
-        except requests.RequestException as exc:
-            print(f"    [OSM] {type(exc).__name__} (intento {intento})")
-        if intento < MAX_REINTENTOS:
+    """Ejecuta una consulta Overpass rotando entre servidores.
+
+    None si ninguno responde. El llamador lo traduce a "sin datos", nunca a un
+    dato inventado.
+    """
+    global _servidor_vivo
+    for vuelta in range(1, MAX_REINTENTOS + 1):
+        # El que ya funciono se prueba primero: evita reintentar contra el
+        # servidor saturado en cada municipio.
+        orden = ([_servidor_vivo] if _servidor_vivo else []) + [
+            s for s in SERVIDORES if s != _servidor_vivo
+        ]
+        for servidor in orden:
+            _esperar_turno()
+            try:
+                resp = requests.post(
+                    servidor, data={"data": query}, timeout=TIMEOUT,
+                    headers={"User-Agent": USER_AGENT},
+                )
+                if "json" in (resp.headers.get("content-type") or ""):
+                    _servidor_vivo = servidor
+                    return resp.json()
+                # Overpass devuelve HTML cuando esta saturado o limitando.
+                print(f"    [OSM] {servidor.split('/')[2]} saturado, probando otro")
+            except requests.RequestException as exc:
+                print(f"    [OSM] {servidor.split('/')[2]}: {type(exc).__name__}")
+        if vuelta < MAX_REINTENTOS:
+            print(f"    [OSM] todos ocupados, esperando {ESPERA_TRAS_LIMITE}s")
             time.sleep(ESPERA_TRAS_LIMITE)
     return None
 
@@ -247,11 +268,16 @@ def resolver_limite(municipio: str) -> Optional[int]:
         if elegido:
             encontrado = elegido["id"]
 
-    mapa[municipio] = encontrado
-    try:
-        path.write_text(json.dumps(mapa, ensure_ascii=False, indent=1), encoding="utf-8")
-    except OSError:
-        pass
+    if encontrado is not None:
+        # Solo se cachea el acierto. Un None puede ser "OSM no lo tiene" o
+        # "Overpass estaba saturado en esta corrida"; guardarlo congelaria el
+        # error para siempre y el municipio quedaria sin censar sin motivo real.
+        # Mismo criterio que las pistas de Wikidata en Fase 3.
+        mapa[municipio] = encontrado
+        try:
+            path.write_text(json.dumps(mapa, ensure_ascii=False, indent=1), encoding="utf-8")
+        except OSError:
+            pass
     return encontrado
 
 
@@ -335,4 +361,4 @@ def censar(municipio: str, id_municipio: str, fecha: str, refrescar: bool = Fals
     return entidades
 
 
-__all__ = ["OverpassCaido", "censar", "clasificar", "consultar", "resolver_limite"]
+__all__ = ["SERVIDORES", "OverpassCaido", "censar", "clasificar", "consultar", "resolver_limite"]

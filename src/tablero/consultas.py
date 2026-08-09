@@ -220,6 +220,80 @@ def resumen() -> dict:
     }
 
 
+SQLITE_TERRITORIO = PROJECT_ROOT / "data" / "processed" / "territorio" / "entidades_86.sqlite"
+
+# Capas del mapa. El orden define el orden de dibujado y el de la leyenda.
+CAPAS_MAPA = {
+    "Salud": ("hospital", "caps", "clinica_privada", "farmacia"),
+    "Educación": ("jardin", "escuela_primaria", "escuela_secundaria", "escuela_especial",
+                  "educacion_superior", "escuela_sin_clasificar"),
+    "Gobierno y seguridad": ("municipalidad", "delegacion", "concejo_deliberante",
+                             "policia", "bomberos"),
+    "Territorio": ("barrio", "localidad"),
+    "Cultura y comunidad": ("biblioteca", "teatro", "museo", "centro_comunitario",
+                            "club_deportivo", "plaza"),
+}
+CAPA_DE_TIPO = {t: capa for capa, tipos in CAPAS_MAPA.items() for t in tipos}
+
+
+def territorio(municipio: str) -> dict:
+    """Entidades del municipio, listas para dibujar en un mapa.
+
+    Devuelve tambien el recuadro que las contiene: es lo que permite hacer zoom
+    al municipio sin depender de un servicio de mapas externo.
+    """
+    filas = _filas(
+        SQLITE_TERRITORIO,
+        "SELECT tipo, nombre, latitud, longitud, direccion, telefono, web, "
+        "operador, url_fuente FROM entidades WHERE municipio = ? ORDER BY tipo, nombre",
+        (municipio,),
+    )
+    for f in filas:
+        f["capa"] = CAPA_DE_TIPO.get(f["tipo"], "Otros")
+
+    ubicadas = [f for f in filas if f["latitud"] is not None and f["longitud"] is not None]
+    recuadro = None
+    if ubicadas:
+        lats = [f["latitud"] for f in ubicadas]
+        lons = [f["longitud"] for f in ubicadas]
+        recuadro = {"lat_min": min(lats), "lat_max": max(lats),
+                    "lon_min": min(lons), "lon_max": max(lons)}
+
+    conteo: Dict[str, int] = {}
+    for f in filas:
+        conteo[f["tipo"]] = conteo.get(f["tipo"], 0) + 1
+
+    return {
+        "municipio": municipio,
+        "total": len(filas),
+        "ubicadas": len(ubicadas),
+        "recuadro": recuadro,
+        "por_tipo": conteo,
+        "entidades": filas,
+    }
+
+
+def resumen_territorio() -> dict:
+    """Cobertura del censo territorial sobre los 86."""
+    filas = _filas(
+        SQLITE_TERRITORIO,
+        "SELECT municipio, total_entidades, ubicadas FROM municipios_territorio",
+    )
+    por_tipo = _filas(
+        SQLITE_TERRITORIO, "SELECT tipo, COUNT(*) n FROM entidades GROUP BY tipo ORDER BY n DESC"
+    )
+    return {
+        "municipios_censados": len(filas),
+        "entidades": sum(f["total_entidades"] for f in filas),
+        "por_tipo": {f["tipo"]: f["n"] for f in por_tipo},
+        "por_capa": {
+            capa: sum(f["n"] for f in por_tipo if CAPA_DE_TIPO.get(f["tipo"]) == capa)
+            for capa in CAPAS_MAPA
+        },
+        "municipios": sorted(filas, key=lambda f: -f["total_entidades"]),
+    }
+
+
 def parametros_impacto() -> List[dict]:
     """Los parametros del modelo de impacto, con su procedencia."""
     from parametros import CATALOGO
@@ -280,6 +354,7 @@ def costo_turnos() -> dict:
 
 
 __all__ = [
+    "CAPAS_MAPA",
     "cola_de_revision",
     "costo_turnos",
     "ficha",
@@ -287,4 +362,6 @@ __all__ = [
     "municipios",
     "parametros_impacto",
     "resumen",
+    "resumen_territorio",
+    "territorio",
 ]

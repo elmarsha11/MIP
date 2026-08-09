@@ -13,6 +13,10 @@ const api = (r) =>
 
 function leerIncrustado(ruta) {
   const D = window.DATOS_MIP;
+  if (ruta.startsWith("territorio/")) {
+    const nombre = decodeURIComponent(ruta.slice("territorio/".length));
+    return D.territorios[nombre] || { total: 0, ubicadas: 0, recuadro: null, entidades: [] };
+  }
   if (ruta.startsWith("municipio/")) {
     const nombre = decodeURIComponent(ruta.slice("municipio/".length));
     return D.fichas[nombre] || { error: "Municipio inexistente" };
@@ -20,7 +24,7 @@ function leerIncrustado(ruta) {
   return {
     resumen: D.resumen, municipios: D.municipios, turnos: D.turnos,
     "costo-turnos": D.costo_turnos, revision: D.revision,
-    parametros: D.parametros, acciones: [], tareas: [],
+    parametros: D.parametros, territorio: D.territorio, acciones: [], tareas: [],
   }[ruta] ?? [];
 }
 const esc = (t) =>
@@ -45,7 +49,8 @@ $$("#pestanas button").forEach((b) =>
 
 function cargarVista(vista) {
   ({ panel: verPanel, municipios: verMunicipios, turnos: verTurnos,
-     impacto: verImpacto, revision: verRevision, acciones: verAcciones }[vista] || (() => {}))();
+     territorio: verTerritorio, impacto: verImpacto, revision: verRevision,
+     acciones: verAcciones }[vista] || (() => {}))();
 }
 
 /* -------------------------------------------------------------------- Panel */
@@ -218,6 +223,144 @@ const grupoTurnos = (titulo, subtitulo, filas) => `
       </div>`).join("") || '<p class="nota">Ninguno.</p>'}
   </div>`;
 
+/* ---------------------------------------------------------------- Territorio */
+/* El mapa se dibuja como SVG con las coordenadas reales, sin librerias ni tiles
+   externos. No hay callejero de fondo, pero se ve la distribucion territorial
+   —donde estan los CAPS respecto de los barrios— que es lo que sirve para
+   decidir. Y funciona sin internet, que es requisito del HTML autonomo. */
+
+const COLOR_CAPA = {
+  "Salud": "#d9614c",
+  "Educación": "#4a9eda",
+  "Gobierno y seguridad": "#d99a3c",
+  "Territorio": "#8b98a8",
+  "Cultura y comunidad": "#3fb27f",
+};
+let TERRITORIO = null;
+let CAPAS_VISIBLES = new Set(Object.keys(COLOR_CAPA));
+
+async function verTerritorio() {
+  const resumen = await api("territorio");
+  const selector = $("#territorio-municipio");
+
+  if (!resumen.municipios || !resumen.municipios.length) {
+    $("#mapa-caja").innerHTML =
+      '<p class="nota">Todavía no se censó ningún municipio. Corré: ' +
+      '<code>python src/territorio/censo.py --all</code></p>';
+    $("#territorio-lista").innerHTML = "";
+    return;
+  }
+
+  if (!selector.options.length) {
+    selector.innerHTML = resumen.municipios
+      .map((m) => `<option value="${esc(m.municipio)}">${esc(m.municipio)} — ${m.total_entidades} entidades</option>`)
+      .join("");
+    selector.addEventListener("change", () => pintarTerritorio(selector.value));
+  }
+  await pintarTerritorio(selector.value || resumen.municipios[0].municipio);
+}
+
+async function pintarTerritorio(municipio) {
+  TERRITORIO = await api("territorio/" + encodeURIComponent(municipio));
+  $("#territorio-cuenta").textContent =
+    `${TERRITORIO.total} entidades · ${TERRITORIO.ubicadas} ubicadas`;
+  dibujarMapa();
+  listarEntidades();
+}
+
+function dibujarMapa() {
+  const caja = TERRITORIO.recuadro;
+  if (!caja) {
+    $("#mapa-caja").innerHTML = '<p class="nota">Sin entidades ubicadas.</p>';
+    return;
+  }
+  const ANCHO = 900, ALTO = 520, MARGEN = 24;
+  // Corrige la deformacion por latitud: a -35° un grado de longitud mide
+  // bastante menos que uno de latitud. Sin esto el municipio sale estirado.
+  const latMedia = (caja.lat_min + caja.lat_max) / 2;
+  const factorLon = Math.cos((latMedia * Math.PI) / 180);
+  const anchoGeo = Math.max((caja.lon_max - caja.lon_min) * factorLon, 1e-6);
+  const altoGeo = Math.max(caja.lat_max - caja.lat_min, 1e-6);
+  const escala = Math.min((ANCHO - 2 * MARGEN) / anchoGeo, (ALTO - 2 * MARGEN) / altoGeo);
+  const desplX = (ANCHO - anchoGeo * escala) / 2;
+  const desplY = (ALTO - altoGeo * escala) / 2;
+
+  const px = (e) => desplX + (e.longitud - caja.lon_min) * factorLon * escala;
+  const py = (e) => desplY + (caja.lat_max - e.latitud) * escala;  // norte arriba
+
+  const visibles = TERRITORIO.entidades.filter(
+    (e) => e.latitud != null && CAPAS_VISIBLES.has(e.capa)
+  );
+  // Los barrios van al fondo: son el contexto sobre el que se leen los servicios.
+  visibles.sort((a, b) => (a.capa === "Territorio" ? -1 : 0) - (b.capa === "Territorio" ? -1 : 0));
+
+  const puntos = visibles.map((e, i) => {
+    const r = e.capa === "Territorio" ? 3 : 5;
+    return `<circle class="punto" cx="${px(e).toFixed(1)}" cy="${py(e).toFixed(1)}" r="${r}"
+      fill="${COLOR_CAPA[e.capa] || "#888"}" fill-opacity="${e.capa === "Territorio" ? 0.5 : 0.85}"
+      data-i="${i}"><title>${esc(e.nombre || e.tipo)}</title></circle>`;
+  }).join("");
+
+  $("#mapa-caja").innerHTML = `
+    <svg viewBox="0 0 ${ANCHO} ${ALTO}" role="img" aria-label="Mapa de ${esc(TERRITORIO.municipio)}">
+      <rect width="${ANCHO}" height="${ALTO}" fill="transparent"/>
+      ${puntos}
+    </svg>
+    <div class="leyenda">
+      ${Object.entries(COLOR_CAPA).map(([capa, color]) => `
+        <label class="${CAPAS_VISIBLES.has(capa) ? "activa" : ""}" data-capa="${esc(capa)}">
+          <span class="bolita" style="background:${color}"></span>${esc(capa)}
+        </label>`).join("")}
+    </div>
+    <div id="mapa-detalle">Pasá el mouse por un punto, o hacé click para ver su ficha.</div>`;
+
+  $$("#mapa-caja .leyenda label").forEach((l) =>
+    l.addEventListener("click", () => {
+      const capa = l.dataset.capa;
+      CAPAS_VISIBLES.has(capa) ? CAPAS_VISIBLES.delete(capa) : CAPAS_VISIBLES.add(capa);
+      dibujarMapa();
+    })
+  );
+  $$("#mapa-caja .punto").forEach((c) =>
+    c.addEventListener("click", () => mostrarEntidad(visibles[+c.dataset.i]))
+  );
+}
+
+function mostrarEntidad(e) {
+  $("#mapa-detalle").innerHTML = `
+    <strong>${esc(e.nombre || "(sin nombre)")}</strong> · ${esc(e.tipo)}
+    ${e.direccion ? " · " + esc(e.direccion) : ""}
+    ${e.telefono ? " · " + esc(e.telefono) : ""}
+    ${e.url_fuente ? ` · <a href="${esc(e.url_fuente)}" target="_blank" rel="noopener">verificar en OpenStreetMap</a>` : ""}`;
+}
+
+function listarEntidades() {
+  const porCapa = {};
+  for (const e of TERRITORIO.entidades) (porCapa[e.capa] ||= []).push(e);
+
+  $("#territorio-lista").innerHTML = Object.entries(porCapa)
+    .map(([capa, entidades]) => {
+      const porTipo = {};
+      for (const e of entidades) (porTipo[e.tipo] ||= []).push(e);
+      return `
+        <div class="grupo">
+          <h3><span class="bolita" style="background:${COLOR_CAPA[capa] || "#888"}"></span>
+            ${esc(capa)} (${entidades.length})</h3>
+          ${Object.entries(porTipo).sort((a, b) => b[1].length - a[1].length).map(([tipo, grupo]) => `
+            <p class="subtitulo">${esc(tipo)} (${grupo.length})</p>
+            ${grupo.slice(0, 40).map((e) => `
+              <div class="evidencia">
+                <div><strong>${esc(e.nombre || "(sin nombre)")}</strong>
+                  ${e.direccion ? `<span class="origen"> · ${esc(e.direccion)}</span>` : ""}</div>
+                ${e.telefono || e.web ? `<div class="origen">${esc(e.telefono || "")} ${esc(e.web || "")}</div>` : ""}
+                ${e.url_fuente ? `<div class="origen"><a href="${esc(e.url_fuente)}" target="_blank" rel="noopener">${esc(e.url_fuente)}</a></div>` : ""}
+              </div>`).join("")}
+            ${grupo.length > 40 ? `<p class="nota">… y ${grupo.length - 40} más (ver CSV)</p>` : ""}
+          `).join("")}
+        </div>`;
+    }).join("");
+}
+
 /* ------------------------------------------------------------------ Impacto */
 async function verImpacto() {
   const [c, params] = await Promise.all([api("costo-turnos"), api("parametros")]);
@@ -381,6 +524,7 @@ function descargasLocales() {
                ...D.turnos.sin_digital.map((f) => ({ ...f, grupo: "sin canal digital (probado)" }))],
       revision: D.revision,
       "costo-turnos": D.costo_turnos.municipios || [],
+      territorio: Object.values(D.territorios || {}).flatMap((t) => t.entidades || []),
     }[cual] || [];
     if (!filas.length) return alert("Nada para exportar.");
     const cols = Object.keys(filas[0]);

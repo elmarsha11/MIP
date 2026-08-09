@@ -20,6 +20,7 @@
   <button data-vista="panel" class="activa">Panel</button>
   <button data-vista="municipios">Municipios</button>
   <button data-vista="turnos">Mapa de turnos</button>
+  <button data-vista="territorio">Territorio</button>
   <button data-vista="impacto">Impacto</button>
   <button data-vista="revision">Revisión</button>
   <button data-vista="acciones">Acciones</button>
@@ -67,6 +68,21 @@
     </p>
     <div class="barra"><a class="boton" href="/api/exportar/turnos.csv">Exportar CSV</a></div>
     <div id="turnos-contenido"></div>
+  </section>
+
+  <!-- TERRITORIO -->
+  <section id="vista-territorio" class="vista oculta">
+    <p class="nota">
+      Qué hay adentro de cada municipio: hospitales, CAPS, escuelas, barrios, comisarías.
+      Fuente: OpenStreetMap. Cada entidad se puede abrir para verificarla.
+    </p>
+    <div class="barra">
+      <select id="territorio-municipio"></select>
+      <span id="territorio-cuenta" class="nota"></span>
+      <a class="boton" href="/api/exportar/territorio.csv">Exportar CSV</a>
+    </div>
+    <div id="mapa-caja"></div>
+    <div id="territorio-lista"></div>
   </section>
 
   <!-- IMPACTO -->
