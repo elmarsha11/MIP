@@ -31,6 +31,10 @@ data/processed/discovery/cache/
 # la maquina que corre el motor, no conocimiento del proyecto.
 data/processed/extraction/cache/
 
+# Respuestas crudas de Overpass. Se regeneran solas; lo que importa queda
+# normalizado en entidades_86.sqlite con su URL de origen.
+data/processed/territorio/cache/
+
 src/tablero/web/_prueba.html
 progreso_municipios.json
 
