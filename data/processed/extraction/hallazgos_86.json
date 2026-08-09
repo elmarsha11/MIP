@@ -4,10 +4,10 @@
     {
       "municipio": "Chascomús",
       "id_municipio": "MUN-BA-001",
-      "fecha": "2026-08-08T04:45:41Z",
+      "fecha": "2026-08-09T11:58:56Z",
       "paginas_leidas": 1,
       "caracteres_analizados": 393,
-      "llamadas_ia": 0,
+      "llamadas_ia": 1,
       "hallazgos": [
         {
           "id": "hal_3b22b1cc3dcb",
@@ -17,12 +17,12 @@
           "valor": "no_verificable",
           "detalle": null,
           "url": null,
-          "fecha": "2026-08-08T04:45:41Z",
+          "fecha": "2026-08-09T11:58:56Z",
           "fragmento": null,
           "tipo_fuente": null,
           "confianza": "0%",
           "estado": "no_verificable",
-          "modelo": "gemini-flash-lite-latest"
+          "modelo": "gemini-flash-latest"
         },
         {
           "id": "hal_6f4ca80b0641",
@@ -32,27 +32,27 @@
           "valor": "no_verificable",
           "detalle": null,
           "url": null,
-          "fecha": "2026-08-08T04:45:41Z",
+          "fecha": "2026-08-09T11:58:56Z",
           "fragmento": null,
           "tipo_fuente": null,
           "confianza": "0%",
           "estado": "no_verificable",
-          "modelo": "gemini-flash-lite-latest"
+          "modelo": "gemini-flash-latest"
         },
         {
           "id": "hal_07b9c2f4d2b4",
           "municipio": "Chascomús",
           "id_municipio": "MUN-BA-001",
           "variable": "pago_online_tasas",
-          "valor": "si",
+          "valor": "no_verificable",
           "detalle": null,
-          "url": "https://chascomus.gob.ar/",
-          "fecha": "2026-08-08T04:45:41Z",
-          "fragmento": "Pago de Tasas Nuevos Medios de Pago",
-          "tipo_fuente": "portal_oficial",
-          "confianza": "Media",
-          "estado": "verificado",
-          "modelo": "gemini-flash-lite-latest"
+          "url": null,
+          "fecha": "2026-08-09T11:58:56Z",
+          "fragmento": null,
+          "tipo_fuente": null,
+          "confianza": "0%",
+          "estado": "no_verificable",
+          "modelo": "gemini-flash-latest"
         },
         {
           "id": "hal_371195778758",
@@ -62,12 +62,12 @@
           "valor": "no_verificable",
           "detalle": null,
           "url": null,
-          "fecha": "2026-08-08T04:45:41Z",
+          "fecha": "2026-08-09T11:58:56Z",
           "fragmento": null,
           "tipo_fuente": null,
           "confianza": "0%",
           "estado": "no_verificable",
-          "modelo": "gemini-flash-lite-latest"
+          "modelo": "gemini-flash-latest"
         },
         {
           "id": "hal_63d23dc3a684",
@@ -77,12 +77,12 @@
           "valor": "no_verificable",
           "detalle": null,
           "url": null,
-          "fecha": "2026-08-08T04:45:41Z",
+          "fecha": "2026-08-09T11:58:56Z",
           "fragmento": null,
           "tipo_fuente": null,
           "confianza": "0%",
           "estado": "no_verificable",
-          "modelo": "gemini-flash-lite-latest"
+          "modelo": "gemini-flash-latest"
         },
         {
           "id": "hal_3c1936979b21",
@@ -90,14 +90,14 @@
           "id_municipio": "MUN-BA-001",
           "variable": "reclamos_147",
           "valor": "si",
-          "detalle": null,
+          "detalle": "#147",
           "url": "https://chascomus.gob.ar/",
-          "fecha": "2026-08-08T04:45:41Z",
+          "fecha": "2026-08-09T11:58:56Z",
           "fragmento": "#147 Atención al Vecino Ingresá tus reclamos directamente desde nuestra plataforma.",
           "tipo_fuente": "portal_oficial",
           "confianza": "Media",
           "estado": "verificado",
-          "modelo": "gemini-flash-lite-latest"
+          "modelo": "gemini-flash-latest"
         },
         {
           "id": "hal_ff16f0e46583",
@@ -107,12 +107,12 @@
           "valor": "no_verificable",
           "detalle": null,
           "url": null,
-          "fecha": "2026-08-08T04:45:41Z",
+          "fecha": "2026-08-09T11:58:56Z",
           "fragmento": null,
           "tipo_fuente": null,
           "confianza": "0%",
           "estado": "no_verificable",
-          "modelo": "gemini-flash-lite-latest"
+          "modelo": "gemini-flash-latest"
         },
         {
           "id": "hal_2602082b9d7e",
@@ -122,7 +122,7 @@
           "valor": "si",
           "detalle": null,
           "url": "https://sibom.slyt.gba.gob.ar/cities/31",
-          "fecha": "2026-08-08T04:45:41Z",
+          "fecha": "2026-08-09T11:58:56Z",
           "fragmento": "Sistema de Boletín Oficial Municipal | Buenos Aires Provincia",
           "tipo_fuente": "registro_provincial",
           "confianza": "Media",
@@ -137,12 +137,12 @@
           "valor": "no_verificable",
           "detalle": null,
           "url": null,
-          "fecha": "2026-08-08T04:45:41Z",
+          "fecha": "2026-08-09T11:58:56Z",
           "fragmento": null,
           "tipo_fuente": null,
           "confianza": "0%",
           "estado": "no_verificable",
-          "modelo": "gemini-flash-lite-latest"
+          "modelo": "gemini-flash-latest"
         },
         {
           "id": "hal_c33a4824b63a",
@@ -152,12 +152,12 @@
           "valor": "no_verificable",
           "detalle": null,
           "url": null,
-          "fecha": "2026-08-08T04:45:41Z",
+          "fecha": "2026-08-09T11:58:56Z",
           "fragmento": null,
           "tipo_fuente": null,
           "confianza": "0%",
           "estado": "no_verificable",
-          "modelo": "gemini-flash-lite-latest"
+          "modelo": "gemini-flash-latest"
         },
         {
           "id": "hal_909b452a07f9",
@@ -167,12 +167,147 @@
           "valor": "no_verificable",
           "detalle": null,
           "url": null,
-          "fecha": "2026-08-08T04:45:41Z",
+          "fecha": "2026-08-09T11:58:56Z",
           "fragmento": null,
           "tipo_fuente": null,
           "confianza": "0%",
           "estado": "no_verificable",
-          "modelo": "gemini-flash-lite-latest"
+          "modelo": "gemini-flash-latest"
+        },
+        {
+          "id": "hal_0d3d848dcac8",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "variable": "intendente",
+          "valor": "no_verificable",
+          "detalle": null,
+          "url": null,
+          "fecha": "2026-08-09T11:58:56Z",
+          "fragmento": null,
+          "tipo_fuente": null,
+          "confianza": "0%",
+          "estado": "no_verificable",
+          "modelo": "gemini-flash-latest"
+        },
+        {
+          "id": "hal_8bf5a30db1e1",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "variable": "secretarias",
+          "valor": "Subsecretaría de Cultura",
+          "detalle": null,
+          "url": "https://chascomus.gob.ar/",
+          "fecha": "2026-08-09T11:58:56Z",
+          "fragmento": "Subsecretaría de Cultura",
+          "tipo_fuente": "portal_oficial",
+          "confianza": "Media",
+          "estado": "verificado",
+          "modelo": "gemini-flash-latest"
+        },
+        {
+          "id": "hal_9e13c508c1ef",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "variable": "concejales",
+          "valor": "no_verificable",
+          "detalle": null,
+          "url": null,
+          "fecha": "2026-08-09T11:58:56Z",
+          "fragmento": null,
+          "tipo_fuente": null,
+          "confianza": "0%",
+          "estado": "no_verificable",
+          "modelo": "gemini-flash-latest"
+        },
+        {
+          "id": "hal_ce215c1aa155",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "variable": "poblacion",
+          "valor": "no_verificable",
+          "detalle": null,
+          "url": null,
+          "fecha": "2026-08-09T11:58:56Z",
+          "fragmento": null,
+          "tipo_fuente": null,
+          "confianza": "0%",
+          "estado": "no_verificable",
+          "modelo": "gemini-flash-latest"
+        },
+        {
+          "id": "hal_05cfba627b17",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "variable": "hospitales_caps",
+          "valor": "no_verificable",
+          "detalle": null,
+          "url": null,
+          "fecha": "2026-08-09T11:58:56Z",
+          "fragmento": null,
+          "tipo_fuente": null,
+          "confianza": "0%",
+          "estado": "no_verificable",
+          "modelo": "gemini-flash-latest"
+        },
+        {
+          "id": "hal_192423c8de37",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "variable": "instituciones_educativas",
+          "valor": "no_verificable",
+          "detalle": null,
+          "url": null,
+          "fecha": "2026-08-09T11:58:56Z",
+          "fragmento": null,
+          "tipo_fuente": null,
+          "confianza": "0%",
+          "estado": "no_verificable",
+          "modelo": "gemini-flash-latest"
+        },
+        {
+          "id": "hal_90df18169d96",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "variable": "medio_ambiente",
+          "valor": "Centro Ambiental de Chascomus",
+          "detalle": null,
+          "url": "https://chascomus.gob.ar/",
+          "fecha": "2026-08-09T11:58:56Z",
+          "fragmento": "Centro Ambiental de Chascomus",
+          "tipo_fuente": "portal_oficial",
+          "confianza": "Media",
+          "estado": "verificado",
+          "modelo": "gemini-flash-latest"
+        },
+        {
+          "id": "hal_d2130ebce251",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "variable": "seguridad_vigilancia",
+          "valor": "Cámaras Ciudadanas Formá parte de esta red de videovigilancia.",
+          "detalle": null,
+          "url": "https://chascomus.gob.ar/",
+          "fecha": "2026-08-09T11:58:56Z",
+          "fragmento": "Cámaras Ciudadanas Formá parte de esta red de videovigilancia.",
+          "tipo_fuente": "portal_oficial",
+          "confianza": "Media",
+          "estado": "verificado",
+          "modelo": "gemini-flash-latest"
+        },
+        {
+          "id": "hal_85710ced0f30",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "variable": "transporte_publico",
+          "valor": "no_verificable",
+          "detalle": null,
+          "url": null,
+          "fecha": "2026-08-09T11:58:56Z",
+          "fragmento": null,
+          "tipo_fuente": null,
+          "confianza": "0%",
+          "estado": "no_verificable",
+          "modelo": "gemini-flash-latest"
         }
       ]
     },

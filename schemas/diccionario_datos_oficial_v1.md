@@ -77,11 +77,22 @@ Definición operativa MIP - 2 sub-variables:
         Vacío: Sin mención. No Verificable.
 
 Métrica clave para UDS: Solo 11/86 (12,8%) con turnos online en Gold Standard. Ese es el dolor real.
-D) Educación / Medioambiente / Seguridad
+D) Educación / Medioambiente / Seguridad / Autoridades / Transporte
 
-Gold Standard actual: Texto libre descriptivo de programas.
+Gold Standard actual: Texto libre descriptivo de programas y nombres.
 
-Definición operativa MIP v1: Por ahora, campo de texto con hallazgos. No se calcula madurez numérica. Se guarda como lista de hallazgos con fuente. En v2 se normaliza a categorías.
+Definición operativa MIP v1: Por ahora, campo de texto con hallazgos para las siguientes variables adicionales:
+- intendente
+- secretarias
+- concejales
+- poblacion
+- hospitales_caps
+- instituciones_educativas
+- medio_ambiente
+- seguridad_vigilancia
+- transporte_publico
+
+No se calcula madurez numérica. Se guarda como lista de hallazgos con fuente. En v2 se normaliza a categorías.
 E) App Municipal
 
 Situación actual: 68/86 vacíos, 10 No, 4 Si, 4 Quizás.

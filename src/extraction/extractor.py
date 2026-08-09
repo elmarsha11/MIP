@@ -28,6 +28,8 @@ try:
         Valor,
         Variable,
         cita_esta_en_fuente,
+        es_texto_libre,
+        valor_respaldado_por_la_cita,
     )
 except ImportError:  # ejecutado como script
     from fetcher import Pagina  # type: ignore[no-redef]
@@ -41,6 +43,8 @@ except ImportError:  # ejecutado como script
         Valor,
         Variable,
         cita_esta_en_fuente,
+        es_texto_libre,
+        valor_respaldado_por_la_cita,
     )
 
 # ---------------------------------------------------------------------------
@@ -88,6 +92,15 @@ PREGUNTAS: Dict[Variable, str] = {
     Variable.APP_MUNICIPAL: (
         "El municipio tiene una app movil propia. En 'detalle', el nombre exacto de la app."
     ),
+    Variable.INTENDENTE: "Nombre completo del Intendente actual del municipio.",
+    Variable.SECRETARIAS: "Nombres de los secretarios y las secretarías a su cargo.",
+    Variable.CONCEJALES: "Información sobre los concejales o el Honorable Concejo Deliberante.",
+    Variable.POBLACION: "Datos demográficos, cantidad de habitantes, viviendas, etc.",
+    Variable.HOSPITALES_CAPS: "Nombres de hospitales, CAPS (Centros de Atención Primaria) o centros de salud.",
+    Variable.INSTITUCIONES_EDUCATIVAS: "Escuelas, jardines, polos educativos, o instituciones educativas mencionadas.",
+    Variable.MEDIO_AMBIENTE: "Planes ambientales, centros de reciclaje, o información sobre medio ambiente.",
+    Variable.SEGURIDAD_VIGILANCIA: "Cámaras de seguridad, centro de monitoreo, o aplicaciones de seguridad locales.",
+    Variable.TRANSPORTE_PUBLICO: "Líneas de colectivos locales, trenes o transporte público mencionado.",
 }
 
 ESQUEMA_RESPUESTA = {
@@ -136,7 +149,15 @@ def construir_prompt(
         bloques.append(f"--- PAGINA {i} | tipo: {p.tipo} | {p.url}\n{p.texto}")
     texto_paginas = "\n\n".join(bloques)
 
-    preguntas = "\n".join(f"- {v.value}: {PREGUNTAS[v]}" for v in variables)
+    # El esquema de respuesta no fija un enum (cada variable tiene su dominio),
+    # asi que los valores admitidos se declaran aca. Sin esto el modelo inventa
+    # etiquetas y el codigo se las rechaza despues, gastando una llamada al pedo.
+    def _linea(v: Variable) -> str:
+        admitidos = DOMINIO_VALORES[v]
+        dominio = "texto libre, copiado del texto" if admitidos is None else "/".join(admitidos)
+        return f"- {v.value} (valores: {dominio}): {PREGUNTAS[v]}"
+
+    preguntas = "\n".join(_linea(v) for v in variables)
 
     return f"""Sos un auditor de transformacion digital municipal. Tu unico trabajo es
 leer el texto que sigue y reportar QUE DICE, sin agregar nada de tu conocimiento
@@ -227,7 +248,8 @@ def verificar_respuesta(
         valor = (item.get("valor") or "").strip()
         cita = (item.get("cita_literal") or "").strip()
 
-        if valor not in DOMINIO_VALORES[variable]:
+        admitidos = DOMINIO_VALORES[variable]
+        if admitidos is not None and valor not in admitidos:
             # El modelo invento un valor que no esta en el contrato ("parcial",
             # "quizas"). No se traduce ni se interpreta: queda sin dato.
             hallazgos.append(
@@ -250,6 +272,17 @@ def verificar_respuesta(
         # --- el corazon de ADR-0014 ---------------------------------------
         # Se busca la cita en la pagina que el modelo indico y, si no esta, en
         # todas. Confundirse de numero de pagina es un desliz; inventar la cita no.
+        # En las variables de texto libre el valor es el dato, no una etiqueta
+        # de un dominio cerrado. Tiene que estar en la cita o no vale.
+        if es_texto_libre(variable) and not valor_respaldado_por_la_cita(valor, cita):
+            hallazgos.append(
+                _hallazgo_vacio(
+                    municipio, id_municipio, variable, fecha, modelo,
+                    EstadoHallazgo.CITA_RECHAZADA,
+                )
+            )
+            continue
+
         pagina = _buscar_pagina_con_la_cita(cita, paginas, item.get("pagina"))
         if pagina is None:
             hallazgos.append(
