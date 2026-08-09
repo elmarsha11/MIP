@@ -215,21 +215,43 @@ class ClienteDeepSeek(LLMProvider):
         return None
 
     def _llamar_api(self, modelo: str, prompt: str, esquema: dict) -> str:
-        """Llama la API de DeepSeek con timeout y manejo de errores."""
+        """Llama la API de DeepSeek con timeout y manejo de errores.
+
+        Dos diferencias con Gemini que hay que compensar aca, no en extractor.py:
+
+        1. DeepSeek NO acepta un `response_schema`: su modo JSON es solo
+           {"type": "json_object"}, que garantiza JSON sintacticamente valido pero
+           no su forma. Gemini si fuerza el esquema. Para que los dos devuelvan la
+           misma estructura, el esquema se inyecta como texto en un mensaje de
+           sistema.
+        2. DeepSeek exige la palabra "json" en los mensajes cuando se pide ese
+           modo; si falta, la API rechaza el pedido. El prompt de Fase 4 no la
+           tiene (habla de citas y variables), asi que la aporta el sistema.
+        """
         headers = {
             "Authorization": f"Bearer {self._api_key}",
             "Content-Type": "application/json",
         }
 
-        # DeepSeek espera los mensajes en formato "messages", no raw prompt
-        messages = [{"role": "user", "content": prompt}]
+        sistema = (
+            "Respondé unicamente con un objeto json que valide contra este "
+            "JSON Schema, sin texto alrededor ni bloques de codigo:\n"
+            + json.dumps(esquema, ensure_ascii=False)
+        )
+        messages = [
+            {"role": "system", "content": sistema},
+            {"role": "user", "content": prompt},
+        ]
 
         payload = {
             "model": modelo,
             "messages": messages,
-            "response_format": {"type": "json_object", "schema": esquema},
-            "temperature": 0.7,
-            "max_tokens": 4096,
+            "response_format": {"type": "json_object"},
+            # Fase 4 audita, no redacta: se quiere la lectura mas literal posible
+            # del texto. La temperatura alta solo agregaria parafraseo, y una cita
+            # parafraseada la tumba la verificacion de ADR-0014.
+            "temperature": 0.0,
+            "max_tokens": 8192,
         }
 
         resp = requests.post(
