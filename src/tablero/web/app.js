@@ -27,7 +27,7 @@ function leerIncrustado(ruta) {
   }
   return {
     resumen: D.resumen, municipios: D.municipios, turnos: D.turnos,
-    "costo-turnos": D.costo_turnos, revision: D.revision,
+    "costo-turnos": D.costo_turnos, revision: D.revision, comercial: D.comercial,
     parametros: D.parametros, territorio: D.territorio, acciones: [], tareas: [],
   }[ruta] ?? [];
 }
@@ -53,8 +53,8 @@ $$("#pestanas button").forEach((b) =>
 
 function cargarVista(vista) {
   ({ panel: verPanel, municipios: verMunicipios, turnos: verTurnos,
-     territorio: verTerritorio, impacto: verImpacto, revision: verRevision,
-     acciones: verAcciones }[vista] || (() => {}))();
+     territorio: verTerritorio, impacto: verImpacto, comercial: verComercial,
+     revision: verRevision, acciones: verAcciones }[vista] || (() => {}))();
 }
 
 /* -------------------------------------------------------------------- Panel */
@@ -495,6 +495,64 @@ async function verImpacto() {
           <span class="etiqueta ${p.afirmable ? "ok" : "alerta"}">${esc(p.tipo)}</span></div>
         <div class="origen">${esc(p.fuente)}</div>
       </div>`).join("")}`;
+}
+
+/* ---------------------------------------------------------------- Comercial */
+let COMERCIAL = null;
+
+async function verComercial() {
+  if (!COMERCIAL) COMERCIAL = await api("comercial");
+  const d = COMERCIAL;
+
+  if (!d.disponible) {
+    $("#comercial-contenido").innerHTML =
+      '<p class="nota">Todavía no se analizó. Corré <code>python src/oportunidades/motor.py --all</code>.</p>';
+    return;
+  }
+
+  const filtro = $("#comercial-producto");
+  if (!filtro.options.length) {
+    filtro.innerHTML =
+      `<option value="">Todos los productos (${d.total} oportunidades)</option>` +
+      d.productos.map((p) =>
+        `<option value="${esc(p.producto)}">${esc(p.producto)} — ${p.municipios} municipios</option>`
+      ).join("");
+    filtro.addEventListener("change", pintarComercial);
+  }
+  pintarComercial();
+}
+
+function pintarComercial() {
+  const d = COMERCIAL;
+  const producto = $("#comercial-producto").value;
+
+  // El filtro esconde las oportunidades de otros productos, pero NO recalcula el
+  // potencial: el orden sigue siendo el del municipio completo. Si se reordenara
+  // por el subconjunto filtrado, el ranking cambiaria segun lo que se esta
+  // mirando y dejaria de servir para decidir a quien visitar.
+  const municipios = d.municipios
+    .map((m) => ({
+      ...m,
+      visibles: producto ? m.oportunidades.filter((o) => o.producto === producto) : m.oportunidades,
+    }))
+    .filter((m) => m.visibles.length);
+
+  $("#comercial-cuenta").textContent =
+    `${municipios.reduce((n, m) => n + m.visibles.length, 0)} oportunidades en ${municipios.length} municipios`;
+
+  $("#comercial-contenido").innerHTML = municipios.map((m) => `
+    <div class="evidencia">
+      <div><strong>${esc(m.municipio)}</strong>
+        <span class="etiqueta">potencial ${m.puntaje}</span></div>
+      ${m.visibles.map((o) => `
+        <div style="margin-top:10px">
+          <div><span class="etiqueta ${o.friccion === "alta" ? "mal" : "alerta"}">${esc(o.friccion)}</span>
+            <strong>${esc(o.producto)}</strong></div>
+          <div class="origen">${esc(o.problema)}</div>
+          <div class="cita">“${esc(o.cita)}”</div>
+          <div class="origen"><a href="${esc(o.url)}" target="_blank" rel="noopener">${esc(o.url)}</a></div>
+        </div>`).join("")}
+    </div>`).join("");
 }
 
 /* ----------------------------------------------------------------- Revisión */

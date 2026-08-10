@@ -27,6 +27,7 @@ for _r in (PROJECT_ROOT / "src" / "discovery", PROJECT_ROOT / "src" / "impacto")
 
 SQLITE_DISCOVERY = PROJECT_ROOT / "data" / "processed" / "discovery" / "discovery_urls_86.sqlite"
 SQLITE_HALLAZGOS = PROJECT_ROOT / "data" / "processed" / "extraction" / "hallazgos_86.sqlite"
+SQLITE_OPORTUNIDADES = PROJECT_ROOT / "data" / "processed" / "oportunidades" / "oportunidades_86.sqlite"
 
 CANALES_DIGITALES = ("web", "whatsapp", "telegram", "app", "email")
 CANALES_SIN_DIGITAL = ("telefono", "presencial")
@@ -462,9 +463,66 @@ def costo_turnos() -> dict:
     }
 
 
+# ---------------------------------------------------------------------------
+# Comercial (src/oportunidades)
+# ---------------------------------------------------------------------------
+
+# Mismo peso que en comercial.py. Se repite a proposito en vez de importarlo:
+# el tablero no debe arrastrar el paquete de oportunidades solo para mostrar
+# numeros, y si el peso cambia alla, aca se ve como una discrepancia y no como
+# un cambio silencioso.
+_PESO = {"alta": 5, "media": 2, "baja": 1}
+
+
+def comercial() -> dict:
+    """Que le puede vender UDS a cada municipio, con la cita que lo prueba.
+
+    Es la unica vista del tablero que muestra INTERPRETACION y no solo evidencia.
+    Por eso cada fila viaja siempre con su cita y su URL: el que la lee tiene que
+    poder desconfiar del texto y verificar la fuente en un clic.
+    """
+    filas = _filas(
+        SQLITE_OPORTUNIDADES,
+        "SELECT municipio, area, producto, problema, friccion, cita, url "
+        "FROM oportunidades",
+    )
+    if not filas:
+        return {"disponible": False, "municipios": [], "productos": [], "total": 0}
+
+    por_municipio: dict = {}
+    for f in filas:
+        m = por_municipio.setdefault(
+            f["municipio"], {"municipio": f["municipio"], "oportunidades": [], "puntaje": 0}
+        )
+        m["oportunidades"].append(f)
+        m["puntaje"] += _PESO.get(f["friccion"], 1)
+
+    orden = {"alta": 0, "media": 1, "baja": 2}
+    for m in por_municipio.values():
+        m["oportunidades"].sort(key=lambda o: orden.get(o["friccion"], 9))
+
+    productos: dict = {}
+    for f in filas:
+        p = productos.setdefault(
+            f["producto"], {"producto": f["producto"], "area": f["area"], "municipios": 0}
+        )
+        p["municipios"] += 1
+
+    return {
+        "disponible": True,
+        "total": len(filas),
+        "municipios": sorted(
+            por_municipio.values(),
+            key=lambda m: (-m["puntaje"], -len(m["oportunidades"]), m["municipio"]),
+        ),
+        "productos": sorted(productos.values(), key=lambda p: -p["municipios"]),
+    }
+
+
 __all__ = [
     "CAPAS_MAPA",
     "cola_de_revision",
+    "comercial",
     "ficha_resumida",
     "costo_turnos",
     "ficha",

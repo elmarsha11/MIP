@@ -52,6 +52,7 @@ def reunir_datos() -> dict:
         "turnos": consultas.mapa_turnos(),
         "costo_turnos": consultas.costo_turnos(),
         "revision": consultas.cola_de_revision(),
+        "comercial": consultas.comercial(),
         "parametros": consultas.parametros_impacto(),
         "territorio": consultas.resumen_territorio(),
         # Las fichas se precalculan: sin servidor no hay a quien preguntarle.
