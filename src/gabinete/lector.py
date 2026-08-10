@@ -65,6 +65,13 @@ _RE_PISTAS = re.compile("|".join(PISTAS), re.IGNORECASE)
 # Secretaria de Seguridad Ciudadana (Y) y la Secretaria de Salud Publica (Z)".
 _RE_FIRMA = re.compile(r"refrendad[oa]\s+por\s+[^.]{10,400}", re.IGNORECASE)
 
+# La cita tiene que nombrar el cargo, no solo a la persona. "Sec." y "Sria."
+# entran porque los decretos abrevian en las firmas.
+_RE_CARGO = {
+    Cargo.INTENDENTE: re.compile(r"intendent", re.IGNORECASE),
+    Cargo.SECRETARIO: re.compile(r"secretari|\bsec\.|\bsria\.", re.IGNORECASE),
+}
+
 # Los decretos se encabezan "Chascomus, 29/06/2026". Es la fecha que decide quien
 # ocupa el cargo HOY: sin ella, dos citas literales y contradictorias no se
 # pueden ordenar.
@@ -311,6 +318,15 @@ def verificar_respuesta(
 
         # El nombre tiene que estar en la cita Y no puede estar bautizando algo.
         if not nombre_valido_en_cita(nombre, cita):
+            rechazadas += 1
+            continue
+
+        # Y la cita tambien tiene que nombrar el CARGO. Sin esto se colaba
+        # "Sergio F. Bordoni" —un nombre suelto de una pagina de gobierno
+        # abierto— como intendente de Tornquist: el modelo dedujo el cargo de
+        # como estaba maquetada la pagina, no del texto. Una cita que no dice
+        # "intendente" no prueba que alguien lo sea, por mas literal que sea.
+        if not _RE_CARGO[cargo].search(cita):
             rechazadas += 1
             continue
 

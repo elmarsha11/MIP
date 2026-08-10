@@ -188,8 +188,15 @@ class TestVerificacion(unittest.TestCase):
         self.assertEqual(r, 1)
 
     def test_el_intendente_no_lleva_area(self):
-        resp = self._resp(cargo="intendente", area="Gobierno")
-        a, _ = verificar_respuesta(resp, "X", "x-1", self.fuentes, "2026-08-09")
+        # La cita tiene que nombrar el cargo que se afirma: una firma de
+        # secretario no prueba a un intendente, y el guard la rechaza.
+        fuentes = [FuenteFalsa("Por ello el Intendente Municipal (Lucas Funes) resuelve")]
+        resp = self._resp(
+            cargo="intendente",
+            area="Gobierno",
+            cita_literal="el Intendente Municipal (Lucas Funes)",
+        )
+        a, _ = verificar_respuesta(resp, "X", "x-1", fuentes, "2026-08-09")
         self.assertEqual(len(a), 1)
         self.assertIsNone(a[0].area)
 
@@ -201,6 +208,39 @@ class TestVerificacion(unittest.TestCase):
         a, _ = verificar_respuesta(resp, "X", "x-1", self.fuentes, "2026-08-09")
         self.assertEqual(len(a), 1)
         self.assertEqual(a[0].nombre, "Lucas Funes")
+
+    def test_cita_que_no_nombra_el_cargo_se_rechaza(self):
+        """El agujero que dejo la segunda fuente.
+
+        Una pagina de gobierno abierto lista nombres sueltos. El modelo dedujo el
+        cargo de como estaba maquetada la pagina y entro "Sergio F. Bordoni" como
+        intendente de Tornquist. La cita es literal y contiene el nombre, pero no
+        dice "intendente": no prueba nada.
+        """
+        fuentes = [FuenteFalsa("Autoridades Sergio F. Bordoni Estefania Bordoni")]
+        resp = {
+            "autoridades": [{
+                "cargo": "intendente", "area": "", "nombre": "Sergio F. Bordoni",
+                "cita_literal": "Sergio F. Bordoni",
+            }],
+            "_modelo": "deepseek-chat",
+        }
+        a, r = verificar_respuesta(resp, "Tornquist", "t-1", fuentes, "2026-08-09")
+        self.assertEqual(a, [])
+        self.assertEqual(r, 1)
+
+    def test_cita_con_el_cargo_si_sobrevive(self):
+        fuentes = [FuenteFalsa("Por ello la Intendente Municipal Sra. Estefania Bordoni resuelve")]
+        resp = {
+            "autoridades": [{
+                "cargo": "intendente", "area": "", "nombre": "Estefania Bordoni",
+                "cita_literal": "la Intendente Municipal Sra. Estefania Bordoni",
+            }],
+            "_modelo": "deepseek-chat",
+        }
+        a, r = verificar_respuesta(resp, "Tornquist", "t-1", fuentes, "2026-08-09")
+        self.assertEqual(len(a), 1)
+        self.assertEqual(a[0].nombre, "Estefania Bordoni")
 
     def test_respuesta_vacia_es_valida(self):
         a, r = verificar_respuesta({"autoridades": []}, "X", "x-1", self.fuentes, "2026-08-09")
