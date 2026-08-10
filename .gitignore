@@ -36,6 +36,11 @@ data/processed/extraction/cache/
 # normalizado en entidades_86.sqlite con su URL de origen.
 data/processed/territorio/cache/
 
+# Texto de las paginas guardado para no re-crawlear en cada iteracion del motor
+# comercial. Es una copia de portales publicos: se regenera sola y no es la
+# evidencia (esa vive con su cita en oportunidades_86.sqlite).
+data/processed/oportunidades/cache/
+
 src/tablero/web/_prueba.html
 progreso_municipios.json
 
