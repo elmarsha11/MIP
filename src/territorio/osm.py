@@ -261,11 +261,30 @@ def _cache(nombre: str) -> Path:
 
 
 def resolver_limite(municipio: str) -> Optional[int]:
-    """ID de la relacion OSM del partido. Se cachea: no cambia.
+    """ID de la relacion OSM del PARTIDO. Se cachea: no cambia.
 
-    Los partidos bonaerenses estan en admin_level=8. Algunos figuran como
-    'Chascomus' y otros como 'Partido de Adolfo Alsina', asi que se prueban las
-    dos formas.
+    Los partidos bonaerenses estan en **admin_level=5**, no en 8. Medido el
+    2026-08-10 contra OSM: dentro de la provincia hay 135 relaciones de nivel 5
+    —exactamente la cantidad de partidos— y 563 de nivel 8, que son las
+    LOCALIDADES de adentro.
+
+    Pedir nivel 8 tuvo dos consecuencias, y la segunda es peor que la primera:
+
+      1. Los partidos cuya ciudad cabecera se llama distinto no aparecian. El
+         partido de Balcarce es 'Partido de Balcarce' (nivel 5) y su ciudad es
+         'San Jose de Balcarce' (nivel 8): no matcheaba por nombre y el
+         municipio quedaba sin censar. Fueron ~40 de 86.
+      2. Los que SI matcheaban devolvian el casco urbano en vez del partido.
+         Chascomus daba 201 entidades de la ciudad y da 235 del partido, con
+         las 7 localidades de adentro.
+
+    Lo que este arreglo NO explica: OSM sigue encontrando 5 de los 7 CAPS de
+    Chascomus. Se probo la hipotesis de que los 2 faltantes estuvieran fuera del
+    casco urbano y es falsa —a nivel partido siguen siendo 5— asi que es
+    incompletitud de OSM, que es colaborativo. Se declara y no se rellena.
+
+    El nombre en nivel 5 es siempre 'Partido de X', pero se prueba tambien el
+    nombre pelado por si algun partido esta cargado distinto.
     """
     path = _cache("limites.json")
     mapa: Dict[str, Optional[int]] = {}
@@ -277,7 +296,7 @@ def resolver_limite(municipio: str) -> Optional[int]:
     if municipio in mapa:
         return mapa[municipio]
 
-    nombres = [municipio, f"Partido de {municipio}"]
+    nombres = [f"Partido de {municipio}", municipio]
     filtro = "|".join(n.replace('"', "") for n in nombres)
     # La consulta se ACOTA a la provincia de Buenos Aires. Sin eso busca en todo
     # el mundo y hay homonimos: Ayacucho resolvia a relation/1930922, que es
@@ -290,15 +309,15 @@ def resolver_limite(municipio: str) -> Optional[int]:
         f'[out:json][timeout:90];'
         f'area["boundary"="administrative"]["admin_level"="4"]'
         f'["ISO3166-2"="AR-B"]->.prov;'
-        f'relation["boundary"="administrative"]["admin_level"="8"]'
+        f'relation["boundary"="administrative"]["admin_level"="5"]'
         f'["name"~"^({filtro})$",i](area.prov);out ids tags;',
         exigir_elementos=True,  # 0 resultados puede ser un espejo incompleto
     )
     encontrado = None
     if datos:
         elementos = datos.get("elements", [])
-        # Si hay varios, gana el que se llama "Partido de X": es el partido
-        # entero y no solo la ciudad cabecera.
+        # Si hay varios, gana el que se llama "Partido de X": es el nombre
+        # canonico del nivel 5.
         partidos = [e for e in elementos if str(e["tags"].get("name", "")).lower().startswith("partido")]
         elegido = (partidos or elementos or [None])[0]
         if elegido:

@@ -4,9 +4,57 @@
     {
       "municipio": "Chascomús",
       "id_municipio": "MUN-BA-001",
-      "osm_id": 5816495,
-      "fecha": "2026-08-09T12:39:03Z",
+      "osm_id": 2516826,
+      "fecha": "2026-08-10T14:21:09Z",
       "entidades": [
+        {
+          "id": "ent_f69a13a2c4e2",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "tipo": "localidad",
+          "nombre": "Libres del Sur",
+          "latitud": -35.7282847,
+          "longitud": -57.7260844,
+          "direccion": null,
+          "telefono": null,
+          "web": null,
+          "operador": null,
+          "fuente": "openstreetmap",
+          "id_en_fuente": "node/198397242",
+          "url_fuente": "https://www.openstreetmap.org/node/198397242",
+          "fecha": "2026-08-10T14:21:09Z",
+          "etiquetas_crudas": {
+            "name": "Libres del Sur",
+            "place": "hamlet",
+            "source_ref": "http://earth-info.nga.mil/gns/html/cntyfile/ar.zip"
+          }
+        },
+        {
+          "id": "ent_be29efc7e813",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "tipo": "localidad",
+          "nombre": "Adela",
+          "latitud": -35.6838939,
+          "longitud": -57.9535061,
+          "direccion": null,
+          "telefono": null,
+          "web": null,
+          "operador": null,
+          "fuente": "openstreetmap",
+          "id_en_fuente": "node/198437578",
+          "url_fuente": "https://www.openstreetmap.org/node/198437578",
+          "fecha": "2026-08-10T14:21:09Z",
+          "etiquetas_crudas": {
+            "fixme": "Poblacion estimada. Completar si se consigue el dato y borrar este fixme. Probe llamando al numero de la pulperia que esta a la vera de la ruta, pero no logre comunicarme.",
+            "name": "Adela",
+            "place": "village",
+            "population": "80",
+            "wikidata": "Q2878316",
+            "wikimedia_commons": "Category:Adela train station",
+            "wikipedia": "es:Estación Adela"
+          }
+        },
         {
           "id": "ent_09ec52539c7a",
           "municipio": "Chascomús",
@@ -22,7 +70,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/198443592",
           "url_fuente": "https://www.openstreetmap.org/node/198443592",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "name": "Chascomús",
             "place": "town",
@@ -31,6 +79,75 @@
             "source_ref": "http://earth-info.nga.mil/gns/html/cntyfile/ar.zip",
             "wikidata": "Q2677190",
             "wikipedia": "es:Chascomús"
+          }
+        },
+        {
+          "id": "ent_751077bb8e29",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "tipo": "localidad",
+          "nombre": "Comandante Giribone",
+          "latitud": -35.6182325,
+          "longitud": -57.6857658,
+          "direccion": null,
+          "telefono": null,
+          "web": null,
+          "operador": null,
+          "fuente": "openstreetmap",
+          "id_en_fuente": "node/198445706",
+          "url_fuente": "https://www.openstreetmap.org/node/198445706",
+          "fecha": "2026-08-10T14:21:09Z",
+          "etiquetas_crudas": {
+            "name": "Comandante Giribone",
+            "place": "hamlet",
+            "source_ref": "http://earth-info.nga.mil/gns/html/cntyfile/ar.zip"
+          }
+        },
+        {
+          "id": "ent_8b1e8dbd8a88",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "tipo": "localidad",
+          "nombre": "Don Cipriano",
+          "latitud": -35.4934236,
+          "longitud": -57.7702446,
+          "direccion": null,
+          "telefono": null,
+          "web": null,
+          "operador": null,
+          "fuente": "openstreetmap",
+          "id_en_fuente": "node/198447094",
+          "url_fuente": "https://www.openstreetmap.org/node/198447094",
+          "fecha": "2026-08-10T14:21:09Z",
+          "etiquetas_crudas": {
+            "name": "Don Cipriano",
+            "place": "hamlet",
+            "source_ref": "http://earth-info.nga.mil/gns/html/cntyfile/ar.zip"
+          }
+        },
+        {
+          "id": "ent_83109ad82ec2",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "tipo": "localidad",
+          "nombre": "Gándara",
+          "latitud": -35.4488634,
+          "longitud": -58.0926881,
+          "direccion": null,
+          "telefono": null,
+          "web": null,
+          "operador": null,
+          "fuente": "openstreetmap",
+          "id_en_fuente": "node/198450937",
+          "url_fuente": "https://www.openstreetmap.org/node/198450937",
+          "fecha": "2026-08-10T14:21:09Z",
+          "etiquetas_crudas": {
+            "name": "Gándara",
+            "place": "hamlet",
+            "source_ref": "http://earth-info.nga.mil/gns/html/cntyfile/ar.zip",
+            "wikidata": "Q5890321",
+            "wikimedia_commons": "Category:Gándara",
+            "wikipedia": "es:Gándara (Buenos Aires)"
           }
         },
         {
@@ -48,7 +165,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/573407446",
           "url_fuente": "https://www.openstreetmap.org/node/573407446",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "addr:city": "Chascomús",
             "addr:country": "AR",
@@ -59,6 +176,147 @@
             "amenity": "police",
             "name": "Comisaría No. 12",
             "phone": "+54 2241 422455; +54 2241 422752"
+          }
+        },
+        {
+          "id": "ent_bd94b388edfd",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "tipo": "escuela_sin_clasificar",
+          "nombre": "Escuela No. 4",
+          "latitud": -35.49874,
+          "longitud": -58.09793,
+          "direccion": null,
+          "telefono": null,
+          "web": null,
+          "operador": null,
+          "fuente": "openstreetmap",
+          "id_en_fuente": "node/2518949680",
+          "url_fuente": "https://www.openstreetmap.org/node/2518949680",
+          "fecha": "2026-08-10T14:21:09Z",
+          "etiquetas_crudas": {
+            "amenity": "school",
+            "name": "Escuela No. 4"
+          }
+        },
+        {
+          "id": "ent_08e907133906",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "tipo": "escuela_sin_clasificar",
+          "nombre": "Escuela No. 15",
+          "latitud": -35.6058425,
+          "longitud": -57.8917078,
+          "direccion": null,
+          "telefono": null,
+          "web": null,
+          "operador": null,
+          "fuente": "openstreetmap",
+          "id_en_fuente": "node/2520333260",
+          "url_fuente": "https://www.openstreetmap.org/node/2520333260",
+          "fecha": "2026-08-10T14:21:09Z",
+          "etiquetas_crudas": {
+            "amenity": "school",
+            "name": "Escuela No. 15"
+          }
+        },
+        {
+          "id": "ent_531fe9e7335b",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "tipo": "escuela_sin_clasificar",
+          "nombre": "Escuela No. 20",
+          "latitud": -35.4941901,
+          "longitud": -57.7725402,
+          "direccion": null,
+          "telefono": null,
+          "web": null,
+          "operador": null,
+          "fuente": "openstreetmap",
+          "id_en_fuente": "node/2520333261",
+          "url_fuente": "https://www.openstreetmap.org/node/2520333261",
+          "fecha": "2026-08-10T14:21:09Z",
+          "etiquetas_crudas": {
+            "amenity": "school",
+            "name": "Escuela No. 20"
+          }
+        },
+        {
+          "id": "ent_9a71365b0df7",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "tipo": "escuela_sin_clasificar",
+          "nombre": "Escuela No. 23",
+          "latitud": -35.6531196,
+          "longitud": -57.9043687,
+          "direccion": null,
+          "telefono": null,
+          "web": null,
+          "operador": null,
+          "fuente": "openstreetmap",
+          "id_en_fuente": "node/2520333262",
+          "url_fuente": "https://www.openstreetmap.org/node/2520333262",
+          "fecha": "2026-08-10T14:21:09Z",
+          "etiquetas_crudas": {
+            "amenity": "school",
+            "name": "Escuela No. 23"
+          }
+        },
+        {
+          "id": "ent_51dcd6aea40c",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "tipo": "escuela_sin_clasificar",
+          "nombre": "Escuela No. 30",
+          "latitud": -35.7291228,
+          "longitud": -57.7260482,
+          "direccion": null,
+          "telefono": null,
+          "web": null,
+          "operador": null,
+          "fuente": "openstreetmap",
+          "id_en_fuente": "node/2520333263",
+          "url_fuente": "https://www.openstreetmap.org/node/2520333263",
+          "fecha": "2026-08-10T14:21:09Z",
+          "etiquetas_crudas": {
+            "amenity": "school",
+            "name": "Escuela No. 30"
+          }
+        },
+        {
+          "id": "ent_4282b7374174",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "tipo": "escuela_primaria",
+          "nombre": "Escuela de Educación Primaria 11 \"Don José Bilbao\"",
+          "latitud": -35.4162859,
+          "longitud": -58.027081,
+          "direccion": "Ruta Provincial 59",
+          "telefono": "+54 02241 50-5722",
+          "web": null,
+          "operador": "Dirección General de Cultura y Educación",
+          "fuente": "openstreetmap",
+          "id_en_fuente": "node/2520589831",
+          "url_fuente": "https://www.openstreetmap.org/node/2520589831",
+          "fecha": "2026-08-10T14:21:09Z",
+          "etiquetas_crudas": {
+            "addr:city": "Chascomús",
+            "addr:full": "Cuartel VI S/N Villa Del Sur",
+            "addr:postcode": "7130",
+            "addr:street": "Ruta Provincial 59",
+            "amenity": "school",
+            "email": "primaria11chascomus@abc.gob.ar",
+            "isced:level": "1",
+            "name": "Escuela de Educación Primaria 11 \"Don José Bilbao\"",
+            "official_name": "Escuela de Educación Primaria Nº11 \"Don José Bilbao\"",
+            "opening_hours": "Mo-Fr 08:00-16:00",
+            "operator": "Dirección General de Cultura y Educación",
+            "operator:short": "DGCyE",
+            "operator:type": "public",
+            "operator:wikidata": "Q111467393",
+            "phone": "+54 02241 50-5722",
+            "ref:cue": "060040100",
+            "ref:cui": "602700262"
           }
         },
         {
@@ -76,11 +334,32 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/3287853851",
           "url_fuente": "https://www.openstreetmap.org/node/3287853851",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "amenity": "theatre",
             "name": "Teatro Municipal Brazzola",
             "operator": "Municipalidad de Chascomús"
+          }
+        },
+        {
+          "id": "ent_ad169e137051",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "tipo": "barrio",
+          "nombre": "Lomas Altas",
+          "latitud": -35.5833238,
+          "longitud": -58.0679666,
+          "direccion": null,
+          "telefono": null,
+          "web": null,
+          "operador": null,
+          "fuente": "openstreetmap",
+          "id_en_fuente": "node/3290925718",
+          "url_fuente": "https://www.openstreetmap.org/node/3290925718",
+          "fecha": "2026-08-10T14:21:09Z",
+          "etiquetas_crudas": {
+            "name": "Lomas Altas",
+            "place": "quarter"
           }
         },
         {
@@ -98,7 +377,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/3700985445",
           "url_fuente": "https://www.openstreetmap.org/node/3700985445",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "sports_centre",
             "name": "Club de Chascomús"
@@ -119,7 +398,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/3701017308",
           "url_fuente": "https://www.openstreetmap.org/node/3701017308",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "addr:city": "Chascomús",
             "addr:housenumber": "10",
@@ -149,7 +428,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/3701017309",
           "url_fuente": "https://www.openstreetmap.org/node/3701017309",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "amenity": "pharmacy",
             "healthcare": "pharmacy"
@@ -170,7 +449,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/3701017310",
           "url_fuente": "https://www.openstreetmap.org/node/3701017310",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "amenity": "clinic",
             "healthcare": "clinic",
@@ -192,7 +471,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/4215550013",
           "url_fuente": "https://www.openstreetmap.org/node/4215550013",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "addr:city": "Chascomús",
             "addr:housenumber": "14",
@@ -203,6 +482,141 @@
             "name": "Instituto Corazón de María",
             "operator:type": "private",
             "ref:cue": "60604300"
+          }
+        },
+        {
+          "id": "ent_f0b4c16f65f6",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "tipo": "estacion_tren",
+          "nombre": "Chascomús",
+          "latitud": -35.5790737,
+          "longitud": -57.9827276,
+          "direccion": null,
+          "telefono": null,
+          "web": null,
+          "operador": "Trenes Argentinos",
+          "fuente": "openstreetmap",
+          "id_en_fuente": "node/5002086159",
+          "url_fuente": "https://www.openstreetmap.org/node/5002086159",
+          "fecha": "2026-08-10T14:21:09Z",
+          "etiquetas_crudas": {
+            "amenity": "bus_station",
+            "bus": "yes",
+            "name": "Chascomús",
+            "network": "Roca",
+            "network:short": "FCGR",
+            "network:wikidata": "Q2962337",
+            "operator": "Trenes Argentinos",
+            "public_transport": "station",
+            "railway": "station",
+            "railway:position": "113.3",
+            "start_date": "2015-06-30",
+            "train": "yes",
+            "wikidata": "Q18203094",
+            "wikipedia": "es:Terminal FerroAutomotora de Chascomús"
+          }
+        },
+        {
+          "id": "ent_85852d2551fb",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "tipo": "estacion_tren",
+          "nombre": "Gándara",
+          "latitud": -35.4497905,
+          "longitud": -58.0939691,
+          "direccion": null,
+          "telefono": null,
+          "web": null,
+          "operador": "Trenes Argentinos",
+          "fuente": "openstreetmap",
+          "id_en_fuente": "node/5240087741",
+          "url_fuente": "https://www.openstreetmap.org/node/5240087741",
+          "fecha": "2026-08-10T14:21:09Z",
+          "etiquetas_crudas": {
+            "name": "Gándara",
+            "network": "Roca",
+            "network:short": "FCGR",
+            "network:wikidata": "Q2962337",
+            "operator": "Trenes Argentinos",
+            "public_transport": "station",
+            "railway": "station",
+            "railway:position": "98.6",
+            "start_date": "1865-12-14",
+            "train": "yes",
+            "wikidata": "Q5842643",
+            "wikipedia": "es:Estación Gándara"
+          }
+        },
+        {
+          "id": "ent_e5fc97d99283",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "tipo": "estacion_tren",
+          "nombre": "Adela",
+          "latitud": -35.683909,
+          "longitud": -57.953994,
+          "direccion": null,
+          "telefono": null,
+          "web": null,
+          "operador": "Trenes Argentinos",
+          "fuente": "openstreetmap",
+          "id_en_fuente": "node/5240238444",
+          "url_fuente": "https://www.openstreetmap.org/node/5240238444",
+          "fecha": "2026-08-10T14:21:09Z",
+          "etiquetas_crudas": {
+            "name": "Adela",
+            "network": "Roca",
+            "operator": "Trenes Argentinos",
+            "platforms": "1",
+            "railway": "halt",
+            "railway:position": "129.2",
+            "start_date": "1874-11-10",
+            "train": "yes",
+            "wikidata": "Q2878316",
+            "wikipedia": "es:Estación Adela"
+          }
+        },
+        {
+          "id": "ent_503b6bd379dc",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "tipo": "localidad",
+          "nombre": "Manantiales",
+          "latitud": -35.768626,
+          "longitud": -58.0694033,
+          "direccion": null,
+          "telefono": null,
+          "web": null,
+          "operador": null,
+          "fuente": "openstreetmap",
+          "id_en_fuente": "node/5653722744",
+          "url_fuente": "https://www.openstreetmap.org/node/5653722744",
+          "fecha": "2026-08-10T14:21:09Z",
+          "etiquetas_crudas": {
+            "name": "Manantiales",
+            "place": "hamlet"
+          }
+        },
+        {
+          "id": "ent_a5bf901d8b4e",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "tipo": "escuela_sin_clasificar",
+          "nombre": "Escuela Nº 41-Ceferino Namuncurá",
+          "latitud": -35.6734261,
+          "longitud": -58.1376046,
+          "direccion": null,
+          "telefono": null,
+          "web": null,
+          "operador": null,
+          "fuente": "openstreetmap",
+          "id_en_fuente": "node/5687666582",
+          "url_fuente": "https://www.openstreetmap.org/node/5687666582",
+          "fecha": "2026-08-10T14:21:09Z",
+          "etiquetas_crudas": {
+            "amenity": "school",
+            "name": "Escuela Nº 41-Ceferino Namuncurá"
           }
         },
         {
@@ -220,7 +634,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/5766231451",
           "url_fuente": "https://www.openstreetmap.org/node/5766231451",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "addr:city": "Chascomús",
             "addr:housenumber": "347",
@@ -248,7 +662,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/5766578268",
           "url_fuente": "https://www.openstreetmap.org/node/5766578268",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "addr:city": "Chascomús",
             "addr:full": "Bahía Blanca E/ Moreno Y Almafuerte 118  Gallo Blanco",
@@ -277,7 +691,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/5766578277",
           "url_fuente": "https://www.openstreetmap.org/node/5766578277",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "addr:city": "Chascomús",
             "addr:postcode": "7130",
@@ -304,7 +718,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/5766578278",
           "url_fuente": "https://www.openstreetmap.org/node/5766578278",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "name": "Gallo Blanco",
             "place": "neighbourhood"
@@ -325,7 +739,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/5766578300",
           "url_fuente": "https://www.openstreetmap.org/node/5766578300",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "addr:city": "Chascomús",
             "addr:full": "Sargento Cabral E/Inmigrantes Arabes Y Perú S/N",
@@ -353,7 +767,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/5766578305",
           "url_fuente": "https://www.openstreetmap.org/node/5766578305",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "addr:city": "Chascomús",
             "addr:postcode": "7130",
@@ -379,7 +793,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/5766578326",
           "url_fuente": "https://www.openstreetmap.org/node/5766578326",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "addr:city": "Chascomús",
             "addr:postcode": "7130",
@@ -407,7 +821,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/5766578327",
           "url_fuente": "https://www.openstreetmap.org/node/5766578327",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "addr:city": "Chascomús",
             "addr:full": "San Lorenzo E/ Quintana Y Casalins 64",
@@ -436,7 +850,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/5766578328",
           "url_fuente": "https://www.openstreetmap.org/node/5766578328",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "addr:city": "Chascomús",
             "addr:housenumber": "554",
@@ -463,7 +877,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/5766578329",
           "url_fuente": "https://www.openstreetmap.org/node/5766578329",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "addr:city": "Chascomús",
             "addr:housenumber": "173",
@@ -489,7 +903,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/5766578330",
           "url_fuente": "https://www.openstreetmap.org/node/5766578330",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "addr:city": "Chascomús",
             "addr:postcode": "7130",
@@ -517,7 +931,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/5766578331",
           "url_fuente": "https://www.openstreetmap.org/node/5766578331",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "addr:city": "Chascomús",
             "addr:postcode": "7130",
@@ -544,7 +958,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/5766578332",
           "url_fuente": "https://www.openstreetmap.org/node/5766578332",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "addr:city": "Chascomús",
             "addr:full": "L. Del Sur E/26 De Julio Y Escribano 527",
@@ -572,7 +986,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/5766578333",
           "url_fuente": "https://www.openstreetmap.org/node/5766578333",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "addr:city": "Chascomús",
             "addr:postcode": "7130",
@@ -600,7 +1014,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/5766578335",
           "url_fuente": "https://www.openstreetmap.org/node/5766578335",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "addr:city": "Chascomús",
             "addr:postcode": "7130",
@@ -628,7 +1042,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/5766578336",
           "url_fuente": "https://www.openstreetmap.org/node/5766578336",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "addr:city": "Chascomús",
             "addr:postcode": "7130",
@@ -637,6 +1051,50 @@
             "name": "Escuela De Educación Secundaria Técnica Nº 1",
             "operator:type": "public",
             "ref:cue": "60569400"
+          }
+        },
+        {
+          "id": "ent_2405c827f532",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "tipo": "barrio",
+          "nombre": "Puerto Chascomús",
+          "latitud": -35.5698976,
+          "longitud": -58.0666947,
+          "direccion": null,
+          "telefono": null,
+          "web": null,
+          "operador": null,
+          "fuente": "openstreetmap",
+          "id_en_fuente": "node/6088647889",
+          "url_fuente": "https://www.openstreetmap.org/node/6088647889",
+          "fecha": "2026-08-10T14:21:09Z",
+          "etiquetas_crudas": {
+            "name": "Puerto Chascomús",
+            "place": "neighbourhood"
+          }
+        },
+        {
+          "id": "ent_ce04a13420b2",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "tipo": "policia",
+          "nombre": "Policía de Lomas Altas",
+          "latitud": -35.5796568,
+          "longitud": -58.0609254,
+          "direccion": null,
+          "telefono": null,
+          "web": null,
+          "operador": "Policía de la Provincia de Buenos Aires",
+          "fuente": "openstreetmap",
+          "id_en_fuente": "node/6369295261",
+          "url_fuente": "https://www.openstreetmap.org/node/6369295261",
+          "fecha": "2026-08-10T14:21:09Z",
+          "etiquetas_crudas": {
+            "amenity": "police",
+            "name": "Policía de Lomas Altas",
+            "operator": "Policía de la Provincia de Buenos Aires",
+            "operator:wikidata": "Q4985546"
           }
         },
         {
@@ -654,7 +1112,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/6693596616",
           "url_fuente": "https://www.openstreetmap.org/node/6693596616",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "amenity": "community_centre",
             "club": "scout",
@@ -681,7 +1139,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/7252844546",
           "url_fuente": "https://www.openstreetmap.org/node/7252844546",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "amenity": "community_centre",
             "name": "Centro Cultural Municipal Vieja Estación"
@@ -702,7 +1160,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/7253033657",
           "url_fuente": "https://www.openstreetmap.org/node/7253033657",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "addr:city": "Chascomús",
             "addr:housenumber": "249",
@@ -729,7 +1187,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/8362961395",
           "url_fuente": "https://www.openstreetmap.org/node/8362961395",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "amenity": "pharmacy",
             "healthcare": "pharmacy",
@@ -751,7 +1209,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/8362961396",
           "url_fuente": "https://www.openstreetmap.org/node/8362961396",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "amenity": "pharmacy",
             "healthcare": "pharmacy",
@@ -773,7 +1231,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/8362961397",
           "url_fuente": "https://www.openstreetmap.org/node/8362961397",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "amenity": "pharmacy",
             "healthcare": "pharmacy",
@@ -795,7 +1253,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/8362961398",
           "url_fuente": "https://www.openstreetmap.org/node/8362961398",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "amenity": "pharmacy",
             "healthcare": "pharmacy",
@@ -817,7 +1275,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/8362961399",
           "url_fuente": "https://www.openstreetmap.org/node/8362961399",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "amenity": "pharmacy",
             "healthcare": "pharmacy",
@@ -839,7 +1297,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/8362961400",
           "url_fuente": "https://www.openstreetmap.org/node/8362961400",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "amenity": "pharmacy",
             "healthcare": "pharmacy",
@@ -861,7 +1319,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/8362961401",
           "url_fuente": "https://www.openstreetmap.org/node/8362961401",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "amenity": "pharmacy",
             "healthcare": "pharmacy",
@@ -883,7 +1341,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/8362961402",
           "url_fuente": "https://www.openstreetmap.org/node/8362961402",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "amenity": "pharmacy",
             "healthcare": "pharmacy",
@@ -905,7 +1363,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/8362961403",
           "url_fuente": "https://www.openstreetmap.org/node/8362961403",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "amenity": "pharmacy",
             "healthcare": "pharmacy",
@@ -927,7 +1385,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/8362961404",
           "url_fuente": "https://www.openstreetmap.org/node/8362961404",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "amenity": "pharmacy",
             "healthcare": "pharmacy",
@@ -949,7 +1407,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/8362961405",
           "url_fuente": "https://www.openstreetmap.org/node/8362961405",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "amenity": "pharmacy",
             "healthcare": "pharmacy",
@@ -971,10 +1429,45 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/9548014988",
           "url_fuente": "https://www.openstreetmap.org/node/9548014988",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "amenity": "pharmacy",
             "healthcare": "pharmacy"
+          }
+        },
+        {
+          "id": "ent_9ecd641e2ddf",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "tipo": "jardin",
+          "nombre": "Jardín de Infantes Rural 1",
+          "latitud": -35.4162143,
+          "longitud": -58.0271629,
+          "direccion": "Ruta Provincial 59",
+          "telefono": "+54 02227 43-6494",
+          "web": null,
+          "operador": "Dirección General de Cultura y Educación",
+          "fuente": "openstreetmap",
+          "id_en_fuente": "node/10687984415",
+          "url_fuente": "https://www.openstreetmap.org/node/10687984415",
+          "fecha": "2026-08-10T14:21:09Z",
+          "etiquetas_crudas": {
+            "addr:city": "Chascomús",
+            "addr:postcode": "7130",
+            "addr:street": "Ruta Provincial 59",
+            "amenity": "kindergarten",
+            "email": "chascomusjirimm1@gmail.com",
+            "isced:level": "0",
+            "name": "Jardín de Infantes Rural 1",
+            "official_name": "Jardín de Infantes Rural Nº1",
+            "opening_hours": "Mo-Fr 08:00-12:00",
+            "operator": "Dirección General de Cultura y Educación",
+            "operator:short": "DGCyE",
+            "operator:type": "public",
+            "operator:wikidata": "Q111467393",
+            "phone": "+54 02227 43-6494",
+            "ref:cue": "062141700",
+            "ref:cui": "602700262"
           }
         },
         {
@@ -992,7 +1485,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/11123352746",
           "url_fuente": "https://www.openstreetmap.org/node/11123352746",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "name": "Comi Pini",
             "place": "suburb"
@@ -1013,7 +1506,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/11123352749",
           "url_fuente": "https://www.openstreetmap.org/node/11123352749",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "name": "Acceso Norte",
             "place": "suburb"
@@ -1034,7 +1527,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/11123352752",
           "url_fuente": "https://www.openstreetmap.org/node/11123352752",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "name": "Villa Jardín",
             "place": "suburb"
@@ -1055,7 +1548,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/11123352769",
           "url_fuente": "https://www.openstreetmap.org/node/11123352769",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "name": "El Obispado",
             "place": "suburb"
@@ -1076,7 +1569,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/11123352770",
           "url_fuente": "https://www.openstreetmap.org/node/11123352770",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "name": "Escribano",
             "place": "suburb"
@@ -1097,7 +1590,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/11123352773",
           "url_fuente": "https://www.openstreetmap.org/node/11123352773",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "name": "San Luis",
             "place": "suburb"
@@ -1118,7 +1611,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/11123352775",
           "url_fuente": "https://www.openstreetmap.org/node/11123352775",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "name": "La Concordia",
             "place": "suburb"
@@ -1139,7 +1632,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/11123352777",
           "url_fuente": "https://www.openstreetmap.org/node/11123352777",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "name": "Villa Luján",
             "place": "suburb"
@@ -1160,7 +1653,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/11123352794",
           "url_fuente": "https://www.openstreetmap.org/node/11123352794",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "name": "Noria Chica",
             "place": "suburb"
@@ -1181,7 +1674,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/11123368614",
           "url_fuente": "https://www.openstreetmap.org/node/11123368614",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "name": "El Algarrobo",
             "place": "suburb"
@@ -1202,7 +1695,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/11123368620",
           "url_fuente": "https://www.openstreetmap.org/node/11123368620",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "name": "La Esmeralda",
             "place": "quarter"
@@ -1223,7 +1716,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/11123368622",
           "url_fuente": "https://www.openstreetmap.org/node/11123368622",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "name": "La Pampita",
             "place": "suburb"
@@ -1244,7 +1737,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/11123368623",
           "url_fuente": "https://www.openstreetmap.org/node/11123368623",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "name": "Anahí",
             "place": "quarter"
@@ -1265,7 +1758,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/11123368627",
           "url_fuente": "https://www.openstreetmap.org/node/11123368627",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "name": "Caballo Blanco",
             "place": "quarter"
@@ -1286,7 +1779,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/11123368633",
           "url_fuente": "https://www.openstreetmap.org/node/11123368633",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "name": "El Porteño",
             "place": "suburb"
@@ -1307,7 +1800,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/11123368634",
           "url_fuente": "https://www.openstreetmap.org/node/11123368634",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "name": "Ipora",
             "place": "suburb"
@@ -1328,7 +1821,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/11123368638",
           "url_fuente": "https://www.openstreetmap.org/node/11123368638",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "name": "El Hueco",
             "place": "suburb"
@@ -1349,7 +1842,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/11123368644",
           "url_fuente": "https://www.openstreetmap.org/node/11123368644",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "name": "Fátima",
             "place": "suburb"
@@ -1370,7 +1863,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/11123368671",
           "url_fuente": "https://www.openstreetmap.org/node/11123368671",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "name": "San José",
             "place": "suburb"
@@ -1391,7 +1884,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/11123368677",
           "url_fuente": "https://www.openstreetmap.org/node/11123368677",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "name": "San Juan Bautista",
             "place": "suburb"
@@ -1412,7 +1905,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/11123368678",
           "url_fuente": "https://www.openstreetmap.org/node/11123368678",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "name": "Las Violetas",
             "place": "suburb"
@@ -1433,7 +1926,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/11123368683",
           "url_fuente": "https://www.openstreetmap.org/node/11123368683",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "name": "Esteban Echeverría",
             "place": "suburb"
@@ -1454,7 +1947,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/11123368684",
           "url_fuente": "https://www.openstreetmap.org/node/11123368684",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "name": "Fernández Moreno",
             "place": "suburb"
@@ -1475,7 +1968,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/11123368689",
           "url_fuente": "https://www.openstreetmap.org/node/11123368689",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "name": "Ferroautomotor",
             "place": "suburb"
@@ -1496,7 +1989,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/11123368694",
           "url_fuente": "https://www.openstreetmap.org/node/11123368694",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "name": "Ruta 2",
             "place": "suburb"
@@ -1517,7 +2010,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "node/13687691130",
           "url_fuente": "https://www.openstreetmap.org/node/13687691130",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "name": "Los Antiguos",
             "place": "neighbourhood",
@@ -1539,7 +2032,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/157160070",
           "url_fuente": "https://www.openstreetmap.org/way/157160070",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "sports_centre",
             "name": "Club Atlético Chascomús"
@@ -1560,7 +2053,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/157160747",
           "url_fuente": "https://www.openstreetmap.org/way/157160747",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "addr:postcode": "7130",
             "addr:street": "Avenida Lastra",
@@ -1583,7 +2076,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/157279631",
           "url_fuente": "https://www.openstreetmap.org/way/157279631",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Parque Esperanza"
@@ -1604,7 +2097,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/157307658",
           "url_fuente": "https://www.openstreetmap.org/way/157307658",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "sports_centre",
             "name": "Velódromo Juan Carlos Haedo",
@@ -1626,7 +2119,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/157316464",
           "url_fuente": "https://www.openstreetmap.org/way/157316464",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "sports_centre",
             "name": "Polideportivo Municipal"
@@ -1647,7 +2140,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/179136388",
           "url_fuente": "https://www.openstreetmap.org/way/179136388",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plaza Independencia"
@@ -1668,7 +2161,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/179136786",
           "url_fuente": "https://www.openstreetmap.org/way/179136786",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Parque Los Libres del Sur"
@@ -1689,7 +2182,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/208255481",
           "url_fuente": "https://www.openstreetmap.org/way/208255481",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "barrier": "wall",
             "name": "Golf Chascomús Country Club",
@@ -1714,7 +2207,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/208418337",
           "url_fuente": "https://www.openstreetmap.org/way/208418337",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "sports_centre",
             "name": "Club Deportivo Chascomús"
@@ -1735,7 +2228,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/208418340",
           "url_fuente": "https://www.openstreetmap.org/way/208418340",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plazoleta Gándara"
@@ -1756,7 +2249,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/208418341",
           "url_fuente": "https://www.openstreetmap.org/way/208418341",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plazoleta Manuel Belgrano"
@@ -1777,7 +2270,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/208418342",
           "url_fuente": "https://www.openstreetmap.org/way/208418342",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plaza del Cuarto Poder"
@@ -1798,7 +2291,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/208418344",
           "url_fuente": "https://www.openstreetmap.org/way/208418344",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Predio Cultural Municipal Vieja Estacion"
@@ -1819,7 +2312,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/208418371",
           "url_fuente": "https://www.openstreetmap.org/way/208418371",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plaza Libertad"
@@ -1840,7 +2333,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/208418382",
           "url_fuente": "https://www.openstreetmap.org/way/208418382",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plazoleta Gouaillard"
@@ -1861,7 +2354,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/208418385",
           "url_fuente": "https://www.openstreetmap.org/way/208418385",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plaza Pedro Marmol"
@@ -1882,10 +2375,31 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/208418388",
           "url_fuente": "https://www.openstreetmap.org/way/208418388",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plaza Sarmiento"
+          }
+        },
+        {
+          "id": "ent_40806d05261a",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "tipo": "escuela_sin_clasificar",
+          "nombre": "Escuela 7",
+          "latitud": -35.6849538,
+          "longitud": -57.9563076,
+          "direccion": null,
+          "telefono": null,
+          "web": null,
+          "operador": null,
+          "fuente": "openstreetmap",
+          "id_en_fuente": "way/321745478",
+          "url_fuente": "https://www.openstreetmap.org/way/321745478",
+          "fecha": "2026-08-10T14:21:09Z",
+          "etiquetas_crudas": {
+            "amenity": "school",
+            "name": "Escuela 7"
           }
         },
         {
@@ -1903,7 +2417,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/322023537",
           "url_fuente": "https://www.openstreetmap.org/way/322023537",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plazoleta del Bicentenario"
@@ -1924,7 +2438,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/322182719",
           "url_fuente": "https://www.openstreetmap.org/way/322182719",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plaza Bramuglia"
@@ -1945,7 +2459,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/322182751",
           "url_fuente": "https://www.openstreetmap.org/way/322182751",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "addr:city": "Chascomús",
             "addr:housenumber": "344",
@@ -1971,7 +2485,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/322302691",
           "url_fuente": "https://www.openstreetmap.org/way/322302691",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plazoleta de la Paz"
@@ -1992,7 +2506,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/366113838",
           "url_fuente": "https://www.openstreetmap.org/way/366113838",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "addr:city": "Chascomús",
             "addr:housenumber": "27",
@@ -2019,7 +2533,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/411485903",
           "url_fuente": "https://www.openstreetmap.org/way/411485903",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plazoleta del Arroyo"
@@ -2040,7 +2554,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/411485904",
           "url_fuente": "https://www.openstreetmap.org/way/411485904",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plaza de los Eucaliptus"
@@ -2061,7 +2575,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/411485905",
           "url_fuente": "https://www.openstreetmap.org/way/411485905",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plazoleta del Jazmín"
@@ -2082,7 +2596,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/411485906",
           "url_fuente": "https://www.openstreetmap.org/way/411485906",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plazoleta del Olmo Pumila"
@@ -2103,7 +2617,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/411485907",
           "url_fuente": "https://www.openstreetmap.org/way/411485907",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plazoleta de las Margaritas"
@@ -2124,7 +2638,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/411485908",
           "url_fuente": "https://www.openstreetmap.org/way/411485908",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plaza del Ceibo"
@@ -2145,7 +2659,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/411485909",
           "url_fuente": "https://www.openstreetmap.org/way/411485909",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plazoleta de los Horneros"
@@ -2166,7 +2680,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/411485911",
           "url_fuente": "https://www.openstreetmap.org/way/411485911",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plaza del Azarero"
@@ -2187,7 +2701,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/411485912",
           "url_fuente": "https://www.openstreetmap.org/way/411485912",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plazoleta de las Abelias"
@@ -2208,7 +2722,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/411485913",
           "url_fuente": "https://www.openstreetmap.org/way/411485913",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plazoleta de la Arboleda"
@@ -2229,7 +2743,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/411485914",
           "url_fuente": "https://www.openstreetmap.org/way/411485914",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plazoleta de las Lavandas"
@@ -2250,7 +2764,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/473030625",
           "url_fuente": "https://www.openstreetmap.org/way/473030625",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Paseo de los Inmigrantes"
@@ -2271,7 +2785,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/473031207",
           "url_fuente": "https://www.openstreetmap.org/way/473031207",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plaza La Barraca"
@@ -2292,7 +2806,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/473599106",
           "url_fuente": "https://www.openstreetmap.org/way/473599106",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "addr:city": "Chascomùs",
             "addr:housenumber": "124",
@@ -2321,7 +2835,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/473599108",
           "url_fuente": "https://www.openstreetmap.org/way/473599108",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "addr:city": "Chascomús",
             "addr:housenumber": "270",
@@ -2356,7 +2870,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/473599109",
           "url_fuente": "https://www.openstreetmap.org/way/473599109",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "amenity": "theatre",
             "building": "yes",
@@ -2378,7 +2892,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/478857256",
           "url_fuente": "https://www.openstreetmap.org/way/478857256",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "addr:city": "Chascomús",
             "addr:housenumber": "90",
@@ -2405,7 +2919,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/478857258",
           "url_fuente": "https://www.openstreetmap.org/way/478857258",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "addr:city": "Chascomús",
             "addr:postcode": "7130",
@@ -2433,7 +2947,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/478861745",
           "url_fuente": "https://www.openstreetmap.org/way/478861745",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "amenity": "school"
           }
@@ -2453,7 +2967,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/478872029",
           "url_fuente": "https://www.openstreetmap.org/way/478872029",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "addr:city": "Chascomús",
             "addr:housenumber": "1361",
@@ -2463,6 +2977,48 @@
             "building": "yes",
             "name": "Centro Integrador Comunitario",
             "operator": "Municipalidad de Chascomús"
+          }
+        },
+        {
+          "id": "ent_0806a727c8e5",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "tipo": "policia",
+          "nombre": "Comando Patrulla Rural",
+          "latitud": -35.450044,
+          "longitud": -58.094286,
+          "direccion": null,
+          "telefono": null,
+          "web": null,
+          "operador": null,
+          "fuente": "openstreetmap",
+          "id_en_fuente": "way/541959746",
+          "url_fuente": "https://www.openstreetmap.org/way/541959746",
+          "fecha": "2026-08-10T14:21:09Z",
+          "etiquetas_crudas": {
+            "amenity": "police",
+            "building": "yes",
+            "name": "Comando Patrulla Rural"
+          }
+        },
+        {
+          "id": "ent_61d83033846d",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "tipo": "barrio",
+          "nombre": null,
+          "latitud": -35.6820055,
+          "longitud": -57.9513641,
+          "direccion": null,
+          "telefono": null,
+          "web": null,
+          "operador": null,
+          "fuente": "openstreetmap",
+          "id_en_fuente": "way/541979215",
+          "url_fuente": "https://www.openstreetmap.org/way/541979215",
+          "fecha": "2026-08-10T14:21:09Z",
+          "etiquetas_crudas": {
+            "place": "neighbourhood"
           }
         },
         {
@@ -2480,7 +3036,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/604963369",
           "url_fuente": "https://www.openstreetmap.org/way/604963369",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plaza de los Scouts"
@@ -2501,7 +3057,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/604966647",
           "url_fuente": "https://www.openstreetmap.org/way/604966647",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "addr:city": "Chascomús",
             "addr:postcode": "7130",
@@ -2526,7 +3082,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/637287591",
           "url_fuente": "https://www.openstreetmap.org/way/637287591",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plaza de Los Trabajadores",
@@ -2548,7 +3104,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/637288166",
           "url_fuente": "https://www.openstreetmap.org/way/637288166",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plaza de San Cayetano"
@@ -2569,7 +3125,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/637289035",
           "url_fuente": "https://www.openstreetmap.org/way/637289035",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Vivero Municipal"
@@ -2590,7 +3146,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/640111963",
           "url_fuente": "https://www.openstreetmap.org/way/640111963",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plaza San Antonio"
@@ -2611,7 +3167,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/640286623",
           "url_fuente": "https://www.openstreetmap.org/way/640286623",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plaza Ameghino"
@@ -2632,7 +3188,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/640286912",
           "url_fuente": "https://www.openstreetmap.org/way/640286912",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Equipamiento Comunitario"
@@ -2653,7 +3209,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/640344352",
           "url_fuente": "https://www.openstreetmap.org/way/640344352",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "addr:city": "Chascomús",
             "addr:postcode": "7130",
@@ -2678,7 +3234,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/640355331",
           "url_fuente": "https://www.openstreetmap.org/way/640355331",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plaza de Barrio"
@@ -2699,7 +3255,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/640355415",
           "url_fuente": "https://www.openstreetmap.org/way/640355415",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plaza de Barrio"
@@ -2720,7 +3276,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/640356383",
           "url_fuente": "https://www.openstreetmap.org/way/640356383",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Parque 5to Centenario"
@@ -2741,7 +3297,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/640356507",
           "url_fuente": "https://www.openstreetmap.org/way/640356507",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plazoleta de los Blandengues",
@@ -2763,7 +3319,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/640363773",
           "url_fuente": "https://www.openstreetmap.org/way/640363773",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plaza de Barrio"
@@ -2784,7 +3340,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/640410897",
           "url_fuente": "https://www.openstreetmap.org/way/640410897",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "admin_level": "9",
             "boundary": "administrative",
@@ -2807,7 +3363,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/641543262",
           "url_fuente": "https://www.openstreetmap.org/way/641543262",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plaza de Los Sueños"
@@ -2828,7 +3384,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/641543834",
           "url_fuente": "https://www.openstreetmap.org/way/641543834",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Parque"
@@ -2849,7 +3405,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/641544084",
           "url_fuente": "https://www.openstreetmap.org/way/641544084",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plazoleta Lalín"
@@ -2870,7 +3426,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/642677393",
           "url_fuente": "https://www.openstreetmap.org/way/642677393",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plaza Papa Francisco",
@@ -2893,7 +3449,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/642677899",
           "url_fuente": "https://www.openstreetmap.org/way/642677899",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plaza de barrio"
@@ -2914,7 +3470,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/644975593",
           "url_fuente": "https://www.openstreetmap.org/way/644975593",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "name": "30 de Mayo",
             "place": "neighbourhood",
@@ -2936,7 +3492,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/644981614",
           "url_fuente": "https://www.openstreetmap.org/way/644981614",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "amenity": "school",
             "name": "Escuela Agrotecnica"
@@ -2957,7 +3513,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/644988969",
           "url_fuente": "https://www.openstreetmap.org/way/644988969",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "addr:city": "Chascomús",
             "addr:postcode": "7130",
@@ -2981,7 +3537,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/645038731",
           "url_fuente": "https://www.openstreetmap.org/way/645038731",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "amenity": "school",
             "name": "Escuela Nº1"
@@ -3002,7 +3558,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/645039127",
           "url_fuente": "https://www.openstreetmap.org/way/645039127",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "amenity": "school",
             "name": "Jardín de Infantes Corazón de María",
@@ -3024,7 +3580,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/645039604",
           "url_fuente": "https://www.openstreetmap.org/way/645039604",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "amenity": "school",
             "name": "Escuela Corazón de María"
@@ -3045,7 +3601,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/645040282",
           "url_fuente": "https://www.openstreetmap.org/way/645040282",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "amenity": "school",
             "denomination": "roman_catholic",
@@ -3071,7 +3627,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/645040534",
           "url_fuente": "https://www.openstreetmap.org/way/645040534",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "amenity": "school",
             "name": "Gimnasio Corazón de María"
@@ -3092,12 +3648,33 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/645347149",
           "url_fuente": "https://www.openstreetmap.org/way/645347149",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "amenity": "hospital",
             "healthcare": "hospital",
             "name": "Centro Atencion Primaria de Salud",
             "operator": "Municipalidad de Chascomus"
+          }
+        },
+        {
+          "id": "ent_b1f74504e45e",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "tipo": "escuela_sin_clasificar",
+          "nombre": "Escuela San Ceferino Nº41",
+          "latitud": -35.6735383,
+          "longitud": -58.1376712,
+          "direccion": null,
+          "telefono": null,
+          "web": null,
+          "operador": null,
+          "fuente": "openstreetmap",
+          "id_en_fuente": "way/646884824",
+          "url_fuente": "https://www.openstreetmap.org/way/646884824",
+          "fecha": "2026-08-10T14:21:09Z",
+          "etiquetas_crudas": {
+            "amenity": "school",
+            "name": "Escuela San Ceferino Nº41"
           }
         },
         {
@@ -3115,7 +3692,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/648199503",
           "url_fuente": "https://www.openstreetmap.org/way/648199503",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plazoleta"
@@ -3136,7 +3713,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/648246360",
           "url_fuente": "https://www.openstreetmap.org/way/648246360",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "name": "Cooperativa Un Techo",
             "place": "neighbourhood"
@@ -3157,7 +3734,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/648247574",
           "url_fuente": "https://www.openstreetmap.org/way/648247574",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "name": "Los Sauces",
             "place": "neighbourhood"
@@ -3178,10 +3755,94 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/648248628",
           "url_fuente": "https://www.openstreetmap.org/way/648248628",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Grupo Scouts MM de Güemes Nº788"
+          }
+        },
+        {
+          "id": "ent_fd397dc0c02b",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "tipo": "escuela_sin_clasificar",
+          "nombre": "Escuela Nº15 - El Solito",
+          "latitud": -35.6059027,
+          "longitud": -57.8917361,
+          "direccion": null,
+          "telefono": null,
+          "web": null,
+          "operador": null,
+          "fuente": "openstreetmap",
+          "id_en_fuente": "way/648250194",
+          "url_fuente": "https://www.openstreetmap.org/way/648250194",
+          "fecha": "2026-08-10T14:21:09Z",
+          "etiquetas_crudas": {
+            "amenity": "school",
+            "name": "Escuela Nº15 - El Solito"
+          }
+        },
+        {
+          "id": "ent_c50708df41b3",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "tipo": "plaza",
+          "nombre": "Monte Morales _ Municiplaidad de Chascomus",
+          "latitud": -35.7123111,
+          "longitud": -57.7414841,
+          "direccion": null,
+          "telefono": null,
+          "web": null,
+          "operador": null,
+          "fuente": "openstreetmap",
+          "id_en_fuente": "way/648250296",
+          "url_fuente": "https://www.openstreetmap.org/way/648250296",
+          "fecha": "2026-08-10T14:21:09Z",
+          "etiquetas_crudas": {
+            "leisure": "park",
+            "name": "Monte Morales _ Municiplaidad de Chascomus"
+          }
+        },
+        {
+          "id": "ent_45b38859a974",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "tipo": "escuela_sin_clasificar",
+          "nombre": "Escuela Nº 26 - San Gregorio",
+          "latitud": -35.7822688,
+          "longitud": -57.5895769,
+          "direccion": null,
+          "telefono": null,
+          "web": null,
+          "operador": null,
+          "fuente": "openstreetmap",
+          "id_en_fuente": "way/648251518",
+          "url_fuente": "https://www.openstreetmap.org/way/648251518",
+          "fecha": "2026-08-10T14:21:09Z",
+          "etiquetas_crudas": {
+            "amenity": "school",
+            "name": "Escuela Nº 26 - San Gregorio"
+          }
+        },
+        {
+          "id": "ent_ed2229b47897",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "tipo": "plaza",
+          "nombre": "Plaza Manuel Belgrano",
+          "latitud": -35.5847404,
+          "longitud": -58.0681623,
+          "direccion": null,
+          "telefono": null,
+          "web": null,
+          "operador": null,
+          "fuente": "openstreetmap",
+          "id_en_fuente": "way/648256276",
+          "url_fuente": "https://www.openstreetmap.org/way/648256276",
+          "fecha": "2026-08-10T14:21:09Z",
+          "etiquetas_crudas": {
+            "leisure": "park",
+            "name": "Plaza Manuel Belgrano"
           }
         },
         {
@@ -3199,7 +3860,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/648257553",
           "url_fuente": "https://www.openstreetmap.org/way/648257553",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "amenity": "school",
             "name": "Escuela Nº 45"
@@ -3220,7 +3881,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/648257570",
           "url_fuente": "https://www.openstreetmap.org/way/648257570",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "amenity": "kindergarten",
             "name": "Jardín Nº 908"
@@ -3241,7 +3902,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/649218701",
           "url_fuente": "https://www.openstreetmap.org/way/649218701",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "amenity": "school",
             "name": "Escuela Nº504"
@@ -3262,7 +3923,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/653230862",
           "url_fuente": "https://www.openstreetmap.org/way/653230862",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Equipamiento Comunitario"
@@ -3283,7 +3944,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/653230996",
           "url_fuente": "https://www.openstreetmap.org/way/653230996",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Equipamiento Comunitario"
@@ -3304,7 +3965,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/653231004",
           "url_fuente": "https://www.openstreetmap.org/way/653231004",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Equipamiento Comunitario"
@@ -3325,7 +3986,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/653231160",
           "url_fuente": "https://www.openstreetmap.org/way/653231160",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Equipamiento Comunitario"
@@ -3346,7 +4007,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/653231367",
           "url_fuente": "https://www.openstreetmap.org/way/653231367",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Equipamiento Comunitario"
@@ -3367,10 +4028,31 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/653231554",
           "url_fuente": "https://www.openstreetmap.org/way/653231554",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Equipamiento Comunitario"
+          }
+        },
+        {
+          "id": "ent_63d2c31c5234",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "tipo": "barrio",
+          "nombre": "Don Cipriano",
+          "latitud": -35.4941768,
+          "longitud": -57.7710038,
+          "direccion": null,
+          "telefono": null,
+          "web": null,
+          "operador": null,
+          "fuente": "openstreetmap",
+          "id_en_fuente": "way/663591091",
+          "url_fuente": "https://www.openstreetmap.org/way/663591091",
+          "fecha": "2026-08-10T14:21:09Z",
+          "etiquetas_crudas": {
+            "name": "Don Cipriano",
+            "place": "neighbourhood"
           }
         },
         {
@@ -3388,7 +4070,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/684204748",
           "url_fuente": "https://www.openstreetmap.org/way/684204748",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plaza terreno del Obispado"
@@ -3409,7 +4091,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/697246232",
           "url_fuente": "https://www.openstreetmap.org/way/697246232",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "addr:city": "Chascomús",
             "addr:housenumber": "309",
@@ -3428,6 +4110,55 @@
           }
         },
         {
+          "id": "ent_f8ca7b42ca44",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "tipo": "policia",
+          "nombre": "Destacamento Chascomús",
+          "latitud": -35.6238461,
+          "longitud": -58.0148463,
+          "direccion": "Costanera Doctor Horacio Marino",
+          "telefono": null,
+          "web": null,
+          "operador": "Policía de la Provincia de Buenos Aires",
+          "fuente": "openstreetmap",
+          "id_en_fuente": "way/697302793",
+          "url_fuente": "https://www.openstreetmap.org/way/697302793",
+          "fecha": "2026-08-10T14:21:09Z",
+          "etiquetas_crudas": {
+            "addr:city": "Chascomús",
+            "addr:postcode": "7130",
+            "addr:street": "Costanera Doctor Horacio Marino",
+            "amenity": "police",
+            "building": "yes",
+            "name": "Destacamento Chascomús",
+            "operator": "Policía de la Provincia de Buenos Aires",
+            "operator:wikidata": "Q4985546",
+            "operator:wikipedia": "es:Policía de la Provincia de Buenos Aires"
+          }
+        },
+        {
+          "id": "ent_b20b1a786ab5",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "tipo": "plaza",
+          "nombre": "Plaza Arturo Illia",
+          "latitud": -35.626197,
+          "longitud": -58.0179714,
+          "direccion": null,
+          "telefono": null,
+          "web": null,
+          "operador": null,
+          "fuente": "openstreetmap",
+          "id_en_fuente": "way/738009066",
+          "url_fuente": "https://www.openstreetmap.org/way/738009066",
+          "fecha": "2026-08-10T14:21:09Z",
+          "etiquetas_crudas": {
+            "leisure": "park",
+            "name": "Plaza Arturo Illia"
+          }
+        },
+        {
           "id": "ent_fc9b207e1588",
           "municipio": "Chascomús",
           "id_municipio": "MUN-BA-001",
@@ -3442,7 +4173,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/738250129",
           "url_fuente": "https://www.openstreetmap.org/way/738250129",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plaza  de Barrio"
@@ -3463,7 +4194,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/744710854",
           "url_fuente": "https://www.openstreetmap.org/way/744710854",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plaza de los Chicos"
@@ -3484,7 +4215,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/744711195",
           "url_fuente": "https://www.openstreetmap.org/way/744711195",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plaza de los Sueños"
@@ -3505,7 +4236,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/744720132",
           "url_fuente": "https://www.openstreetmap.org/way/744720132",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plaza de Barrio La Pampita"
@@ -3526,7 +4257,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/745308598",
           "url_fuente": "https://www.openstreetmap.org/way/745308598",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Equipamiento Comunitario"
@@ -3547,7 +4278,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/745309449",
           "url_fuente": "https://www.openstreetmap.org/way/745309449",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "PARQUE"
@@ -3568,7 +4299,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/745309450",
           "url_fuente": "https://www.openstreetmap.org/way/745309450",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "PARQUE"
@@ -3589,7 +4320,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/745309451",
           "url_fuente": "https://www.openstreetmap.org/way/745309451",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "PARQUE"
@@ -3610,7 +4341,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/745311202",
           "url_fuente": "https://www.openstreetmap.org/way/745311202",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "PARQUE"
@@ -3631,7 +4362,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/745311203",
           "url_fuente": "https://www.openstreetmap.org/way/745311203",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "PARQUE"
@@ -3652,7 +4383,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/745311204",
           "url_fuente": "https://www.openstreetmap.org/way/745311204",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "PARQUE"
@@ -3673,7 +4404,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/745311205",
           "url_fuente": "https://www.openstreetmap.org/way/745311205",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "PARQUE"
@@ -3694,7 +4425,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/745315812",
           "url_fuente": "https://www.openstreetmap.org/way/745315812",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Equipamiento Comunitario"
@@ -3715,7 +4446,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/745714015",
           "url_fuente": "https://www.openstreetmap.org/way/745714015",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "amenity": "school",
             "name": "Nuestra Señora de Lujan"
@@ -3736,7 +4467,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/745743097",
           "url_fuente": "https://www.openstreetmap.org/way/745743097",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "amenity": "school",
             "name": "Jardín Nº 904 \"Prof. Ines J. Killian\""
@@ -3757,7 +4488,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/745744499",
           "url_fuente": "https://www.openstreetmap.org/way/745744499",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "amenity": "school",
             "name": "Secundaria Municipal"
@@ -3778,7 +4509,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/747313921",
           "url_fuente": "https://www.openstreetmap.org/way/747313921",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plaza de Barrio"
@@ -3799,7 +4530,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/747396801",
           "url_fuente": "https://www.openstreetmap.org/way/747396801",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "addr:city": "Chascomús",
             "addr:postcode": "7130",
@@ -3825,7 +4556,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/776674773",
           "url_fuente": "https://www.openstreetmap.org/way/776674773",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "amenity": "school"
           }
@@ -3845,7 +4576,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/854270460",
           "url_fuente": "https://www.openstreetmap.org/way/854270460",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Republica del Libano"
@@ -3866,7 +4597,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/854279735",
           "url_fuente": "https://www.openstreetmap.org/way/854279735",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Pozo de Agua"
@@ -3887,7 +4618,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/857253499",
           "url_fuente": "https://www.openstreetmap.org/way/857253499",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "amenity": "hospital",
             "healthcare": "hospital",
@@ -3909,10 +4640,32 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/870401997",
           "url_fuente": "https://www.openstreetmap.org/way/870401997",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "S/N"
+          }
+        },
+        {
+          "id": "ent_0efb02a167a7",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "tipo": "escuela_sin_clasificar",
+          "nombre": "Escuela Nº 31 Dean Gregorio Funes",
+          "latitud": -35.6271253,
+          "longitud": -58.0176477,
+          "direccion": null,
+          "telefono": null,
+          "web": null,
+          "operador": null,
+          "fuente": "openstreetmap",
+          "id_en_fuente": "way/885616835",
+          "url_fuente": "https://www.openstreetmap.org/way/885616835",
+          "fecha": "2026-08-10T14:21:09Z",
+          "etiquetas_crudas": {
+            "amenity": "school",
+            "grades": "0-6",
+            "name": "Escuela Nº 31 Dean Gregorio Funes"
           }
         },
         {
@@ -3930,7 +4683,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/953042561",
           "url_fuente": "https://www.openstreetmap.org/way/953042561",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "addr:city": "Chascomús",
             "addr:postcode": "7130",
@@ -3957,7 +4710,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/953053838",
           "url_fuente": "https://www.openstreetmap.org/way/953053838",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "amenity": "hospital",
             "healthcare": "hospital",
@@ -3979,7 +4732,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/1005950735",
           "url_fuente": "https://www.openstreetmap.org/way/1005950735",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Terreno Fiscal",
@@ -4001,7 +4754,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/1005951711",
           "url_fuente": "https://www.openstreetmap.org/way/1005951711",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Terreno Fiscal"
@@ -4022,7 +4775,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/1020272706",
           "url_fuente": "https://www.openstreetmap.org/way/1020272706",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Terreno Municipal"
@@ -4043,7 +4796,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/1027106439",
           "url_fuente": "https://www.openstreetmap.org/way/1027106439",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Predio de Club Atletico"
@@ -4064,10 +4817,32 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/1028131305",
           "url_fuente": "https://www.openstreetmap.org/way/1028131305",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Predio de Union Deportivo"
+          }
+        },
+        {
+          "id": "ent_c2057ef2d346",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "tipo": "bomberos",
+          "nombre": "Centro de entrenamiento Bomberos Voluntarios de Chascomus",
+          "latitud": -35.5313187,
+          "longitud": -58.0605696,
+          "direccion": null,
+          "telefono": null,
+          "web": null,
+          "operador": "Bomberos Voluntarios de Chascomus",
+          "fuente": "openstreetmap",
+          "id_en_fuente": "way/1042959804",
+          "url_fuente": "https://www.openstreetmap.org/way/1042959804",
+          "fecha": "2026-08-10T14:21:09Z",
+          "etiquetas_crudas": {
+            "amenity": "fire_station",
+            "name": "Centro de entrenamiento Bomberos Voluntarios de Chascomus",
+            "operator": "Bomberos Voluntarios de Chascomus"
           }
         },
         {
@@ -4085,7 +4860,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/1049647831",
           "url_fuente": "https://www.openstreetmap.org/way/1049647831",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plazoleta Newton"
@@ -4106,7 +4881,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/1068559931",
           "url_fuente": "https://www.openstreetmap.org/way/1068559931",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "addr:city": "Chascomús",
             "addr:postcode": "7130",
@@ -4133,7 +4908,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/1087002222",
           "url_fuente": "https://www.openstreetmap.org/way/1087002222",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Mariano Moreno",
@@ -4155,7 +4930,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/1094208549",
           "url_fuente": "https://www.openstreetmap.org/way/1094208549",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "addr:city": "Chascomús",
             "addr:housenumber": "625",
@@ -4181,7 +4956,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/1094209070",
           "url_fuente": "https://www.openstreetmap.org/way/1094209070",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "addr:city": "Chascomús",
             "addr:postcode": "7130",
@@ -4205,7 +4980,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/1098580468",
           "url_fuente": "https://www.openstreetmap.org/way/1098580468",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Terreno Municipal"
@@ -4226,7 +5001,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/1098581012",
           "url_fuente": "https://www.openstreetmap.org/way/1098581012",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Terreno Municipal"
@@ -4247,7 +5022,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/1098637782",
           "url_fuente": "https://www.openstreetmap.org/way/1098637782",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Terreno Municipal"
@@ -4268,7 +5043,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/1125029446",
           "url_fuente": "https://www.openstreetmap.org/way/1125029446",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "addr:city": "Chascomus",
             "addr:postcode": "7130",
@@ -4293,12 +5068,43 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/1155028974",
           "url_fuente": "https://www.openstreetmap.org/way/1155028974",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plaza Baldomero Fernadez Moreno",
             "operator": "Municipalidad de Chascomus",
             "operator:type": "public"
+          }
+        },
+        {
+          "id": "ent_a2158fde3c45",
+          "municipio": "Chascomús",
+          "id_municipio": "MUN-BA-001",
+          "tipo": "escuela_sin_clasificar",
+          "nombre": "IIB-INTECH (CONICET-UNSAM)",
+          "latitud": -35.6226864,
+          "longitud": -57.9946997,
+          "direccion": "Costanera Doctor Horacio Marino Km 8,200",
+          "telefono": "+54 2241430323/424045",
+          "web": "https://www.iib.unsam.edu.ar/",
+          "operador": "UNSAM - CONICET",
+          "fuente": "openstreetmap",
+          "id_en_fuente": "way/1189753856",
+          "url_fuente": "https://www.openstreetmap.org/way/1189753856",
+          "fecha": "2026-08-10T14:21:09Z",
+          "etiquetas_crudas": {
+            "addr:city": "Chascomús",
+            "addr:housenumber": "Km 8,200",
+            "addr:street": "Costanera Doctor Horacio Marino",
+            "amenity": "university",
+            "email": "intech@intech.gov.ar",
+            "fax": "+54 2241424048",
+            "internet_access": "yes",
+            "name": "IIB-INTECH (CONICET-UNSAM)",
+            "operator": "UNSAM - CONICET",
+            "operator:type": "university",
+            "phone": "+54 2241430323/424045",
+            "website": "https://www.iib.unsam.edu.ar/"
           }
         },
         {
@@ -4316,7 +5122,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/1190925353",
           "url_fuente": "https://www.openstreetmap.org/way/1190925353",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "place": "neighbourhood"
           }
@@ -4336,7 +5142,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/1227810579",
           "url_fuente": "https://www.openstreetmap.org/way/1227810579",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Plaza Baldomero Fernadez Moreno",
@@ -4359,7 +5165,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/1227810661",
           "url_fuente": "https://www.openstreetmap.org/way/1227810661",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Terreno Municipal"
@@ -4380,7 +5186,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/1227810918",
           "url_fuente": "https://www.openstreetmap.org/way/1227810918",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Terreno Municipal"
@@ -4401,7 +5207,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/1227811200",
           "url_fuente": "https://www.openstreetmap.org/way/1227811200",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Terreno Municipal"
@@ -4422,7 +5228,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/1227811747",
           "url_fuente": "https://www.openstreetmap.org/way/1227811747",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "Terreno Municipal"
@@ -4443,7 +5249,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/1362865868",
           "url_fuente": "https://www.openstreetmap.org/way/1362865868",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "RESERVA FISCAL"
@@ -4464,7 +5270,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/1364991566",
           "url_fuente": "https://www.openstreetmap.org/way/1364991566",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "RESERVA"
@@ -4485,7 +5291,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/1364991826",
           "url_fuente": "https://www.openstreetmap.org/way/1364991826",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "RESERVA"
@@ -4506,7 +5312,7 @@
           "fuente": "openstreetmap",
           "id_en_fuente": "way/1364992228",
           "url_fuente": "https://www.openstreetmap.org/way/1364992228",
-          "fecha": "2026-08-09T12:39:03Z",
+          "fecha": "2026-08-10T14:21:09Z",
           "etiquetas_crudas": {
             "leisure": "park",
             "name": "PLAZA"
