@@ -10,10 +10,14 @@ poblacion del Gold Standard, que venia sin fuente ni ano declarados.
 Que trae, por partido y con el codigo oficial INDEC:
     poblacion 2022, poblacion 2010, variacion intercensal, superficie, densidad
 
-Que NO trae, y se declara faltante en vez de estimarse: la apertura por sexo y
-la cantidad de viviendas POR PARTIDO. INDEC las publica a nivel provincial en
-estos cuadros; el detalle por partido esta en REDATAM, que no expone archivos
-descargables. Es una tarea de investigacion abierta, no un dato para inventar.
+La apertura por sexo SI esta por partido, en el cuadro 3.2: se creia que solo
+existia en REDATAM, pero INDEC publica una hoja por partido dentro del mismo
+xlsx. Se incorporo el 2026-08-09.
+
+Lo que todavia NO trae, y se declara faltante en vez de estimarse: la cantidad
+de VIVIENDAS por partido. No esta en la serie de poblacion (los cuadros 7 a 9
+son indices de envejecimiento); hay que buscarla en la serie de viviendas u
+hogares. Es una tarea abierta, no un dato para inventar.
 """
 
 from __future__ import annotations
@@ -44,6 +48,10 @@ BASE = "https://www.indec.gob.ar/ftp/cuadros/poblacion/"
 CUADROS = {
     "densidad": "c2022_bsas_est_c2_2.xlsx",
     "intercensal": "c2022_bsas_est_c1_2.xlsx",
+    # Cuadro 3.2: poblacion por sexo registrado al nacer. A diferencia de los
+    # otros dos, no es una planilla con una fila por partido: son 136 hojas, una
+    # por partido, y el nombre del partido esta en el titulo de cada hoja.
+    "sexo": "c2022_bsas_est_c3_2.xlsx",
 }
 CITA = (
     "INDEC, Censo Nacional de Poblacion, Hogares y Viviendas 2022. "
@@ -72,6 +80,8 @@ class DatoCenso(NamedTuple):
     variacion_relativa: Optional[float]
     superficie_km2: Optional[float]
     densidad: Optional[float]
+    mujeres: Optional[int] = None
+    varones: Optional[int] = None
 
 
 def _normalizar(texto: str) -> str:
@@ -113,6 +123,83 @@ def _numero(v) -> Optional[float]:
         return None
 
 
+# El titulo de cada hoja es:
+#   "Cuadro 3.2.66. Provincia de Buenos Aires, partido Lanus. Total de poblacion, ..."
+# El corte va contra ". Total de poblacion", que es fijo, y NO contra el primer
+# punto: los partidos con inicial en el nombre ("Jose C. Paz", "Leandro N. Alem")
+# quedaban truncados en "Jose C" y se perdian. Alem es uno de los 86.
+_RE_TITULO_PARTIDO = re.compile(
+    r"partido\s+(.+?)\.\s*Total\s+de\s+poblaci", re.IGNORECASE
+)
+
+
+def leer_sexo() -> Dict[str, tuple]:
+    """Poblacion por sexo registrado al nacer, por partido.
+
+    El cuadro 3.2 esta armado distinto de los otros: en vez de una planilla con
+    una fila por partido, trae 136 hojas ('Cuadro3.2.0' es la provincia,
+    'Cuadro3.2.1' a '.135' los partidos). El nombre del partido no esta en una
+    celda de datos sino en el TITULO de cada hoja:
+
+        "Cuadro 3.2.135. Provincia de Buenos Aires, partido Zarate. ..."
+
+    Se lee de ahi y no del indice, que es una hoja aparte: si el orden del indice
+    y el de las hojas se desalinearan, cada partido quedaria con la poblacion del
+    vecino. Es exactamente el error que este modulo existe para detectar en el
+    Gold Standard, asi que no se lo va a reintroducir por comodidad.
+
+    Devuelve {slug: (mujeres, varones, total)}.
+    """
+    import openpyxl
+
+    wb = openpyxl.load_workbook(
+        io.BytesIO(_bajar(CUADROS["sexo"])), data_only=True, read_only=True
+    )
+    salida: Dict[str, tuple] = {}
+
+    for nombre_hoja in wb.sheetnames:
+        if not nombre_hoja.lower().replace(" ", "").startswith("cuadro3.2."):
+            continue
+        ws = wb[nombre_hoja]
+        filas = list(ws.iter_rows(max_row=8, max_col=2, values_only=True))
+        if len(filas) < 6:
+            continue
+
+        # INDEC separa con espacio duro (\xa0); sin normalizarlo el regex no engancha.
+        titulo = next(
+            (str(f[0]).replace("\xa0", " ") for f in filas
+             if f[0] and "partido" in str(f[0]).lower()),
+            "",
+        )
+        m = _RE_TITULO_PARTIDO.search(titulo)
+        if not m:
+            continue  # la hoja del total provincial no nombra partido: se saltea
+        partido = m.group(1).strip()
+        if not partido:
+            continue
+
+        total = mujeres = varones = None
+        for etiqueta, valor in ((str(f[0] or "").strip().lower(), f[1]) for f in filas):
+            if etiqueta == "total":
+                total = _numero(valor)
+            elif etiqueta.startswith("mujer"):
+                mujeres = _numero(valor)
+            elif etiqueta.startswith("var"):
+                varones = _numero(valor)
+
+        if mujeres is None or varones is None:
+            continue
+
+        # Si las partes no suman el total, el cuadro no se leyo como se cree. Un
+        # dato mal leido es peor que un dato ausente (ADR-0009).
+        if total is not None and abs((mujeres + varones) - total) > 1:
+            continue
+
+        salida[_normalizar(partido)] = (int(mujeres), int(varones),
+                                        int(total) if total else None)
+    return salida
+
+
 def leer() -> Dict[str, DatoCenso]:
     """Datos del censo por partido, indexados por slug del nombre.
 
@@ -136,12 +223,22 @@ def leer() -> Dict[str, DatoCenso]:
             continue
         intercensal[_normalizar(partido)] = (_numero(p2010), _numero(var_abs), _numero(var_rel))
 
+    sexo = leer_sexo()
+
     salida: Dict[str, DatoCenso] = {}
     for clave, (codigo, partido, pob, sup, dens) in densidad.items():
         # Las filas agregadas tienen codigo de 2 digitos ('06'); los partidos, 4 o 5.
         if len(codigo) <= 2:
             continue
         p2010, var_abs, var_rel = intercensal.get(clave, (None, None, None))
+        mujeres, varones, total_sexo = sexo.get(clave, (None, None, None))
+
+        # Los dos cuadros tienen que hablar del mismo partido. Si el total por
+        # sexo no coincide con la poblacion del cuadro de densidad, se descarta
+        # el dato de sexo en vez de mezclar dos partidos distintos.
+        if total_sexo is not None and pob is not None and abs(total_sexo - int(pob)) > 1:
+            mujeres = varones = None
+
         salida[clave] = DatoCenso(
             codigo_indec=codigo.zfill(5),
             partido=partido,
@@ -151,6 +248,8 @@ def leer() -> Dict[str, DatoCenso]:
             variacion_relativa=round(var_rel, 1) if var_rel else None,
             superficie_km2=sup,
             densidad=round(dens, 1) if dens else None,
+            mujeres=mujeres,
+            varones=varones,
         )
     return salida
 
@@ -178,6 +277,8 @@ def cruzar_con_gold() -> List[dict]:
                 "poblacion_gold": gold,
                 "poblacion_indec_2022": indec,
                 "poblacion_indec_2010": d.poblacion_2010 if d else None,
+                "mujeres": d.mujeres if d else None,
+                "varones": d.varones if d else None,
                 "variacion_relativa": d.variacion_relativa if d else None,
                 "superficie_km2": d.superficie_km2 if d else None,
                 "densidad": d.densidad if d else None,
@@ -199,13 +300,22 @@ def guardar(filas: List[dict]) -> Path:
             """CREATE TABLE IF NOT EXISTS censo_2022 (
                 id_municipio TEXT PRIMARY KEY, municipio TEXT NOT NULL,
                 codigo_indec TEXT, poblacion_gold INTEGER, poblacion_indec_2022 INTEGER,
-                poblacion_indec_2010 INTEGER, variacion_relativa REAL,
+                poblacion_indec_2010 INTEGER, mujeres INTEGER, varones INTEGER,
+                variacion_relativa REAL,
                 superficie_km2 REAL, densidad REAL, diferencia INTEGER,
                 diferencia_pct REAL, fuente TEXT NOT NULL)"""
         )
+        # La tabla puede venir de una corrida anterior sin columnas de sexo.
+        existentes = {c[1] for c in con.execute("PRAGMA table_info(censo_2022)")}
+        for columna in ("mujeres", "varones"):
+            if columna not in existentes:
+                con.execute(f"ALTER TABLE censo_2022 ADD COLUMN {columna} INTEGER")
         con.executemany(
-            "INSERT OR REPLACE INTO censo_2022 VALUES (:id_municipio,:municipio,"
-            ":codigo_indec,:poblacion_gold,:poblacion_indec_2022,:poblacion_indec_2010,"
+            "INSERT OR REPLACE INTO censo_2022 (id_municipio,municipio,codigo_indec,"
+            "poblacion_gold,poblacion_indec_2022,poblacion_indec_2010,mujeres,varones,"
+            "variacion_relativa,superficie_km2,densidad,diferencia,diferencia_pct,fuente) "
+            "VALUES (:id_municipio,:municipio,:codigo_indec,:poblacion_gold,"
+            ":poblacion_indec_2022,:poblacion_indec_2010,:mujeres,:varones,"
             ":variacion_relativa,:superficie_km2,:densidad,:diferencia,:diferencia_pct,:fuente)",
             filas,
         )
@@ -244,8 +354,9 @@ def main() -> int:
         print(f"  {f['municipio']:<24}{f['poblacion_gold']:>10,}{f['poblacion_indec_2022']:>12,}"
               f"{f['diferencia']:>10,}{f['diferencia_pct']:>7.1f}%".replace(",", "."))
     print("\nDonde difieren manda INDEC: tiene norma, ano y metodologia publicada.")
-    print("FALTA (no se estima): apertura por sexo y viviendas por partido.")
-    print("INDEC las publica a nivel provincial; el detalle por partido esta en REDATAM.")
+    con_sexo = sum(1 for f in filas if f["mujeres"])
+    print(f"Apertura por sexo: {con_sexo} de {len(filas)} municipios (cuadro 3.2).")
+    print("FALTA (no se estima): viviendas por partido. No esta en la serie de poblacion.")
     print("=" * 76)
 
     if "--guardar" in sys.argv:
