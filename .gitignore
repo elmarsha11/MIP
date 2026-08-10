@@ -41,6 +41,11 @@ data/processed/territorio/cache/
 # evidencia (esa vive con su cita en oportunidades_86.sqlite).
 data/processed/oportunidades/cache/
 
+# Texto de los boletines oficiales bajados de SIBOM. Son PDFs publicos de 700 KB
+# cada uno y se regeneran solos; la evidencia queda con su cita y su URL en
+# gabinete_86.sqlite.
+data/processed/gabinete/cache/
+
 src/tablero/web/_prueba.html
 progreso_municipios.json
 
