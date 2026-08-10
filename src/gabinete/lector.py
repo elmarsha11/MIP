@@ -182,6 +182,14 @@ def recortar(texto: str, ventana: int = VENTANA, maximo: int = MAX_CHARS_PROMPT)
     Los tramos con firma explicita van primero: son la prueba mas dura y la mas
     barata de leer.
     """
+    # Si entra entero, va entero. El recorte existe para boletines de 773.000
+    # caracteres, no para portales de 19.000: aplicado a un portal devolvia VACIO,
+    # porque busca formulas de decreto ("refrendado por", "intendente municipal")
+    # que una nota de prensa no usa. Navarro quedaba sin analizar teniendo el
+    # intendente en la home.
+    if len(texto) <= maximo:
+        return texto
+
     partes, vistas, total = [], set(), 0
 
     def agregar(fragmento: str) -> None:

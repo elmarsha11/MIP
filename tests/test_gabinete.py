@@ -105,16 +105,33 @@ class TestNormalizarNombre(unittest.TestCase):
 
 
 class TestRecorte(unittest.TestCase):
+    """El recorte solo entra cuando el texto NO cabe entero.
+
+    Los tests pasan un `maximo` chico a proposito: con el tope real (60.000) los
+    textos de prueba entrarian completos, que es justamente el comportamiento
+    correcto para un portal y por eso no probaria nada del recorte.
+    """
+
+    def test_un_texto_que_cabe_va_entero(self):
+        """Un portal de 19.000 caracteres no se recorta.
+
+        Recortarlo devolvia VACIO: el recorte busca formulas de decreto que una
+        nota de prensa no usa, y Navarro quedaba sin analizar teniendo el
+        intendente en la home.
+        """
+        texto = "El intendente Facundo Diz recorrio las obras del barrio."
+        self.assertEqual(recortar(texto), texto)
+
     def test_extrae_la_firma_sin_el_decreto_alrededor(self):
         texto = "x" * 5000 + FIRMA + "y" * 5000
-        r = recortar(texto)
+        r = recortar(texto, maximo=3000)
         self.assertIn("Lucas Funes", r)
         self.assertLess(len(r), 3000)
 
     def test_no_repite_la_misma_firma(self):
         """Un boletin trae ~70 firmas de apenas 5 personas."""
         texto = (FIRMA + " relleno. ") * 40
-        r = recortar(texto)
+        r = recortar(texto, maximo=2000)
         self.assertEqual(r.count("Lucas Funes"), 1)
 
     def test_la_firma_multiple_sobrevive_al_presupuesto(self):
@@ -130,7 +147,7 @@ class TestRecorte(unittest.TestCase):
             "(Mariela Moscarella) y la Secretaria de Salud Pública (Marcela Arias)."
         )
         texto = (FIRMA + " relleno largo. " * 50) * 60 + multiple
-        r = recortar(texto)
+        r = recortar(texto, maximo=8000)
         self.assertIn("Mariela Moscarella", r)
 
 

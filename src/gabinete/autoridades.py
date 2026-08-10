@@ -65,8 +65,22 @@ class Autoridad(BaseModel):
 
     @property
     def id(self) -> str:
-        """Determinista: re-correr no duplica filas."""
-        semilla = f"{self.id_municipio}|{self.cargo.value}|{(self.area or '').lower()}"
+        """Determinista: re-correr no duplica filas.
+
+        Incluye la FUENTE a proposito. Si no, el boletin y el portal colisionan y
+        el segundo pisa al primero en silencio — justo cuando se contradicen, que
+        es cuando mas importa verlos a los dos.
+
+        El caso que lo justifica, con desenlace: en Chascomus el decreto nombra a
+        Lucas Funes en Obras desde mayo de 2026, mientras los diarios locales
+        seguian dando a Jorge Marino. Juli reviso y confirmo que el actual es
+        Funes: el boletin tenia razon y la prensa estaba atrasada. Lo que
+        disparo esa revision fue ver la contradiccion, no resolverla sola.
+        """
+        semilla = (
+            f"{self.id_municipio}|{self.cargo.value}|{(self.area or '').lower()}"
+            f"|{self.fuente.value}"
+        )
         return hashlib.sha1(semilla.encode("utf-8")).hexdigest()[:16]
 
     def to_row(self) -> dict:

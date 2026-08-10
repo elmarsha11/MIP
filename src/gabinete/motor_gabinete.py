@@ -28,6 +28,7 @@ Uso:
 from __future__ import annotations
 
 import argparse
+import re
 import sqlite3
 import sys
 import time
@@ -47,6 +48,7 @@ from schemas import ahora_iso  # noqa: E402
 import sibom  # noqa: E402
 from autoridades import Cargo, MunicipioGabinete, TipoFuente  # noqa: E402
 from lector import leer  # noqa: E402
+from portal import paginas_del_portal  # noqa: E402
 
 from llm import crear_proveedor, CuotaAgotada  # noqa: E402
 
@@ -99,20 +101,37 @@ def procesar(
         municipio, id_municipio = registro.nombre, registro.id_municipio
 
     fecha = ahora_iso()
-    fuentes = sibom.boletines(municipio, maximo=maximo_boletines)
-    if verbose:
-        print(f"  boletines: {len(fuentes)} ({sum(len(f.texto) for f in fuentes)} chars)")
 
+    boletines = sibom.boletines(municipio, maximo=maximo_boletines)
     autoridades, rechazadas = leer(
-        municipio, id_municipio, fuentes, cliente, fecha, TipoFuente.BOLETIN_OFICIAL
+        municipio, id_municipio, boletines, cliente, fecha, TipoFuente.BOLETIN_OFICIAL
     )
+
+    # Segunda fuente. Corre SIEMPRE, no solo cuando el boletin no dio nada: su
+    # otro trabajo es contrastar. Un cargo que las dos fuentes nombran igual vale
+    # mucho mas que uno que solo vio una, y un cargo donde se contradicen es
+    # precisamente el que hay que mirar a ojo.
+    paginas = paginas_del_portal(municipio, id_municipio)
+    del_portal, rechazadas_portal = leer(
+        municipio, id_municipio, paginas, cliente, fecha, TipoFuente.PORTAL
+    )
+    autoridades += del_portal
+    rechazadas += rechazadas_portal
+
+    if verbose:
+        print(
+            f"  boletines: {len(boletines)} ({sum(len(f.texto) for f in boletines)} chars)"
+            f" | portal: {len(paginas)} paginas ({sum(len(p.texto) for p in paginas)} chars)"
+        )
 
     return MunicipioGabinete(
         municipio=municipio,
         id_municipio=id_municipio,
         fecha=fecha,
-        boletines_leidos=len(fuentes),
-        caracteres_analizados=sum(len(f.texto) for f in fuentes),
+        boletines_leidos=len(boletines),
+        caracteres_analizados=(
+            sum(len(f.texto) for f in boletines) + sum(len(p.texto) for p in paginas)
+        ),
         autoridades=autoridades,
         rechazadas=rechazadas,
     )
@@ -179,6 +198,27 @@ def guardar(resultados, path: Path = SQLITE_GABINETE) -> Path:
     return path
 
 
+def _distinto(a: str, b: str) -> bool:
+    """Dos nombres son la misma persona salvo tildes, mayusculas y espacios.
+
+    Sin esto, "Marcela E. Arias" y "Marcela Arias" se reportarian como
+    contradiccion entre fuentes, y el aviso perderia todo su valor por ruido.
+    """
+    import unicodedata
+
+    def norma(x):
+        t = unicodedata.normalize("NFKD", str(x or "").lower())
+        t = "".join(c for c in t if not unicodedata.combining(c))
+        return {p for p in re.split(r"[^a-z0-9]+", t) if len(p) > 1}
+
+    na, nb = norma(a), norma(b)
+    if not na or not nb:
+        return True
+    # Comparten el apellido y algo mas: es la misma persona con el nombre
+    # escrito con mas o menos detalle.
+    return not (na <= nb or nb <= na)
+
+
 def _tres_meses_antes(iso: str) -> str:
     """'2026-06' a partir de '2026-09-15'. Sin dateutil: solo aritmetica de mes."""
     anio, mes = int(iso[:4]), int(iso[5:7])
@@ -194,7 +234,7 @@ def ficha(municipio: str, path: Path = SQLITE_GABINETE) -> str:
     con = sqlite3.connect(path)
     try:
         filas = con.execute(
-            "SELECT cargo, area, nombre, cita, url, confianza, fecha_norma "
+            "SELECT cargo, area, nombre, cita, url, confianza, fecha_norma, fuente "
             "FROM autoridades WHERE municipio = ? ORDER BY cargo, area",
             (municipio,),
         ).fetchall()
@@ -202,6 +242,23 @@ def ficha(municipio: str, path: Path = SQLITE_GABINETE) -> str:
         con.close()
     if not filas:
         return f"{municipio}: sin autoridades detectadas (o todavia sin analizar)."
+
+    # Un cargo puede venir de dos fuentes. Gana el boletin, que es un decreto
+    # publicado; el portal queda como corroboracion o como discrepancia. Nunca se
+    # descarta la segunda en silencio: que dos fuentes se contradigan es un dato,
+    # y es el que dispara la revision humana.
+    _PESO_FUENTE = {"boletin_oficial": 0, "portal": 1, "red_oficial": 2}
+    por_cargo: dict = {}
+    for f in filas:
+        por_cargo.setdefault((f[0], (f[1] or "").lower()), []).append(f)
+    for grupo in por_cargo.values():
+        grupo.sort(key=lambda f: _PESO_FUENTE.get(f[7], 9))
+    filas = [g[0] for g in por_cargo.values()]
+    filas.sort(key=lambda f: (f[0], f[1] or ""))
+    otras = {
+        (g[0][0], (g[0][1] or "").lower()): [x for x in g[1:] if _distinto(x[2], g[0][2])]
+        for g in por_cargo.values()
+    }
 
     # La evidencia mas fresca del municipio marca el pulso. Un cargo cuya ultima
     # prueba es de varios meses antes no esta necesariamente vacante, pero no se
@@ -211,7 +268,7 @@ def ficha(municipio: str, path: Path = SQLITE_GABINETE) -> str:
     mas_fresca = max(fechas) if fechas else None
 
     lineas = ["=" * 74, f"{municipio.upper()}  -  cupula municipal", "=" * 74]
-    for cargo, area, nombre, cita, url, confianza, fecha_norma in filas:
+    for cargo, area, nombre, cita, url, confianza, fecha_norma, fuente in filas:
         titulo = "INTENDENTE" if cargo == "intendente" else f"Secretaria de {area or '?'}"
         # La fecha del decreto va al lado del nombre y no al pie: un gabinete
         # cambia, y "quien es" sin "desde cuando" es la mitad del dato.
@@ -226,6 +283,12 @@ def ficha(municipio: str, path: Path = SQLITE_GABINETE) -> str:
             f'  Prueba: "{cita[:190]}"',
             f"  {url}",
         ]
+        for otro in otras.get((cargo, (area or "").lower()), []):
+            lineas += [
+                f"  !! el {otro[7]} dice {otro[2]} -- revisar cual esta vigente",
+                f'     "{otro[3][:150]}"',
+                f"     {otro[4]}",
+            ]
     lineas += ["", "-" * 74,
                "Cada nombre sale de una cita literal verificada contra el boletin.",
                "La fecha es la del decreto, no la del analisis: es lo que distingue",
