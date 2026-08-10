@@ -265,10 +265,19 @@ def resolver_limite(municipio: str) -> Optional[int]:
 
     nombres = [municipio, f"Partido de {municipio}"]
     filtro = "|".join(n.replace('"', "") for n in nombres)
+    # La consulta se ACOTA a la provincia de Buenos Aires. Sin eso busca en todo
+    # el mundo y hay homonimos: Ayacucho resolvia a relation/1930922, que es
+    # Ayacucho de PERU, y despues el validador descartaba todas sus entidades por
+    # "latitud fuera de Argentina" dejando al municipio con cero. Lo mismo
+    # acecha con Rivadavia, Maipu, 25 de Mayo, San Antonio, Colon y Rojas.
+    # ISO3166-2=AR-B identifica a la provincia sin ambiguedad; el nombre solo no,
+    # porque "Buenos Aires" tambien es la ciudad.
     datos = consultar(
         f'[out:json][timeout:90];'
+        f'area["boundary"="administrative"]["admin_level"="4"]'
+        f'["ISO3166-2"="AR-B"]->.prov;'
         f'relation["boundary"="administrative"]["admin_level"="8"]'
-        f'["name"~"^({filtro})$",i];out ids tags;',
+        f'["name"~"^({filtro})$",i](area.prov);out ids tags;',
         exigir_elementos=True,  # 0 resultados puede ser un espejo incompleto
     )
     encontrado = None

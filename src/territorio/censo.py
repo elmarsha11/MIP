@@ -92,6 +92,29 @@ def censar_municipio(nombre: str, id_municipio: Optional[str] = None,
     )
 
 
+def ya_censados(path: Path = SQLITE_86) -> set:
+    """Municipios que ya tienen entidades guardadas.
+
+    Overpass es un servicio publico y gratuito que se satura: una corrida de 86
+    municipios se corta a la mitad. Sin esto, cada reintento vuelve a pedir los
+    que ya estaban y nunca se llega al final — que es exactamente por que el
+    censo quedo en 3 de 86 durante dos dias.
+
+    Un municipio censado con CERO entidades no cuenta como hecho: puede ser que
+    OSM no tenga nada, pero tambien que la consulta haya vuelto vacia por
+    saturacion, y esa diferencia no se puede distinguir desde aca. Se reintenta.
+    """
+    if not Path(path).exists():
+        return set()
+    con = sqlite3.connect(f"file:{path}?mode=ro", uri=True)
+    try:
+        return {f[0] for f in con.execute("SELECT municipio FROM entidades GROUP BY municipio")}
+    except sqlite3.Error:
+        return set()
+    finally:
+        con.close()
+
+
 def guardar_sqlite(censos: Sequence[CensoMunicipio], path: Path = SQLITE_86) -> Path:
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -198,6 +221,11 @@ def main(argv: Optional[List[str]] = None) -> int:
     grupo.add_argument("--municipio")
     grupo.add_argument("--all", action="store_true")
     parser.add_argument("--limite", type=int)
+    parser.add_argument(
+        "--reanudar",
+        action="store_true",
+        help="Saltear los municipios ya censados y seguir desde ahi",
+    )
     parser.add_argument("--refrescar", action="store_true", help="Ignorar el cache de OSM")
     parser.add_argument("--geojson", type=Path, help="Exportar a GeoJSON")
     args = parser.parse_args(argv)
@@ -218,6 +246,13 @@ def main(argv: Optional[List[str]] = None) -> int:
             print(f"\nGeoJSON -> {args.geojson}")
     else:
         municipios = cargar_municipios()
+        if args.reanudar:
+            hechos = ya_censados()
+            municipios = [m for m in municipios if m.nombre not in hechos]
+            print(f"Reanudando: {len(hechos)} ya censados, quedan {len(municipios)}.")
+            if not municipios:
+                print("Nada pendiente. Los 86 estan censados.")
+                return 0
         if args.limite:
             municipios = municipios[: args.limite]
         print(f"Censando {len(municipios)} municipios. Overpass es gratuito: "
@@ -233,6 +268,11 @@ def main(argv: Optional[List[str]] = None) -> int:
                 print(f"  [{i}/{len(municipios)}] {m.nombre}: {type(exc).__name__}: {exc}")
                 continue
             censos.append(c)
+            # Se guarda municipio por municipio, no al final. Guardar solo al
+            # final significa que si el proceso muere —timeout, corte de red, un
+            # Ctrl+C— se pierden horas de consultas a un servicio que ademas
+            # limita el ritmo. Con esto, lo que entro queda, y --reanudar sigue.
+            guardar_sqlite([c])
             r = c.resumen()
             print(f"  [{i:>2}/{len(municipios)}] {m.nombre:<26} {r['total']:>4} entidades "
                   f"({r['ubicadas']} ubicadas)", flush=True)
