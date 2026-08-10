@@ -19,7 +19,7 @@ for _ruta in (
         sys.path.insert(0, str(_ruta))
 
 from autoridades import Autoridad, Cargo, TipoFuente  # noqa: E402
-from lector import recortar, verificar_respuesta  # noqa: E402
+from lector import fecha_de_la_norma, recortar, verificar_respuesta  # noqa: E402
 from nombres import motivo_del_rechazo, nombre_valido_en_cita  # noqa: E402
 
 FIRMA = (
@@ -167,6 +167,79 @@ class TestVerificacion(unittest.TestCase):
     def test_respuesta_none_no_rompe(self):
         a, r = verificar_respuesta(None, "X", "x-1", self.fuentes, "2026-08-09")
         self.assertEqual((a, r), ([], 0))
+
+
+class TestFechaDeLaNorma(unittest.TestCase):
+    """Sin la fecha del decreto, la base no distingue quien ESTA de quien ESTUVO."""
+
+    def test_toma_el_encabezado_del_decreto(self):
+        texto = "Decreto Nº 526/26 Chascomús, 29/06/2026 VISTO ... " + FIRMA
+        self.assertEqual(
+            fecha_de_la_norma(texto, texto.index("refrendado")), "2026-06-29"
+        )
+
+    def test_descarta_fechas_futuras(self):
+        """El bug del "decreto del 2029-05-02".
+
+        Un decreto menciona fechas que no son la suya: vencimientos de contrato,
+        plazos de obra, licencias "hasta el 13/07/2029". La mas cercana hacia
+        atras podia ser una de esas.
+        """
+        texto = "Chascomús, 01/06/2026 ... plazo de obra hasta el 02/05/2029 .- " + FIRMA
+        self.assertEqual(
+            fecha_de_la_norma(texto, texto.index("refrendado"), tope="2026-08-09"),
+            "2026-06-01",
+        )
+
+    def test_descarta_fechas_anteriores_a_sibom(self):
+        texto = "ordenanza de 12/03/1998 ... " + FIRMA
+        self.assertIsNone(fecha_de_la_norma(texto, texto.index("refrendado")))
+
+    def test_sin_fecha_devuelve_none(self):
+        self.assertIsNone(fecha_de_la_norma(FIRMA, 0))
+
+
+class TestGabineteQueCambia(unittest.TestCase):
+    """El caso Marino/Funes: dos citas literales, las dos correctas."""
+
+    def _fuente(self):
+        return FuenteFalsa(
+            "Decreto Nº 300/26 Chascomús, 15/04/2026 VISTO ... El presente Decreto será "
+            "refrendado por el Secretario de Obras, Servicios Públicos y Ambiente "
+            "(Jorge Marino).- Cúmplase. "
+            "Decreto Nº 500/26 Chascomús, 02/06/2026 VISTO ... El presente Decreto será "
+            "refrendado por el Secretario de Obras, Servicios Públicos y Ambiente "
+            "(Lucas Funes).- Cúmplase."
+        )
+
+    def _resp(self):
+        base = {"cargo": "secretario", "area": "Obras, Servicios Públicos y Ambiente"}
+        return {
+            "autoridades": [
+                dict(base, nombre="Jorge Marino",
+                     cita_literal="refrendado por el Secretario de Obras, Servicios Públicos y Ambiente (Jorge Marino)"),
+                dict(base, nombre="Lucas Funes",
+                     cita_literal="refrendado por el Secretario de Obras, Servicios Públicos y Ambiente (Lucas Funes)"),
+            ],
+            "_modelo": "deepseek-chat",
+        }
+
+    def test_gana_el_decreto_mas_nuevo(self):
+        a, _ = verificar_respuesta(
+            self._resp(), "Chascomús", "c-1", [self._fuente()], "2026-08-09"
+        )
+        self.assertEqual(len(a), 1)
+        self.assertEqual(a[0].nombre, "Lucas Funes")
+        self.assertEqual(a[0].fecha_norma, "2026-06-02")
+
+    def test_el_orden_de_la_respuesta_no_decide(self):
+        """Quedarse con el primero seria quedarse con el que la suerte ponga."""
+        resp = self._resp()
+        resp["autoridades"].reverse()
+        a, _ = verificar_respuesta(
+            resp, "Chascomús", "c-1", [self._fuente()], "2026-08-09"
+        )
+        self.assertEqual(a[0].nombre, "Lucas Funes")
 
 
 class TestConfianzaPorFuente(unittest.TestCase):

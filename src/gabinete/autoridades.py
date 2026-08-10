@@ -49,7 +49,14 @@ class Autoridad(BaseModel):
     cita: str
     url: str
     fuente: TipoFuente
+    # Cuando se corrio el analisis. NO sirve para saber si el dato sigue vigente.
     fecha: str
+    # Fecha del DECRETO que lo prueba, en ISO. Es la que importa: un gabinete
+    # cambia, y sin esto la base no distingue "es" de "fue". Paso con Chascomus:
+    # Jorge Marino firmo como Secretario de Obras hasta abril de 2026 y Lucas
+    # Funes desde mayo. Los dos aparecen en el boletin y las dos citas son
+    # literales; lo unico que los ordena es la fecha de la norma.
+    fecha_norma: Optional[str] = None
     modelo: Optional[str] = None
 
     @property
@@ -75,6 +82,7 @@ class Autoridad(BaseModel):
             "fuente": self.fuente.value,
             "confianza": self.confianza,
             "fecha": self.fecha,
+            "fecha_norma": self.fecha_norma,
             "modelo": self.modelo,
         }
 

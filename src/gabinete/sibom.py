@@ -44,10 +44,16 @@ BASE = "https://sibom.slyt.gba.gob.ar"
 TIMEOUT = 90
 CABECERAS = {"User-Agent": "MIP-relevamiento-municipal/0.1"}
 
-# Cuantos boletines se leen por municipio. Dos alcanzan para el gabinete actual:
-# un secretario refrenda decretos todos los meses. Subirlo multiplica PDFs de
-# 700 KB sin agregar cargos nuevos.
-BOLETINES_POR_MUNICIPIO = 2
+# Cuantos boletines se leen por municipio.
+#
+# Empezo en 2 con el razonamiento de que un secretario firma todos los meses. Es
+# falso para las carteras que firman poco: con 2 boletines Chascomus daba 7 de 8
+# secretarias, y la que faltaba (Modernizacion) aparecio recien en el sexto.
+#
+# Subirlo es seguro desde que existe `fecha_norma`: un decreto viejo ya no puede
+# pisar a uno nuevo, solo llenar huecos. El costo es de descarga, y se paga una
+# sola vez porque el texto queda cacheado.
+BOLETINES_POR_MUNICIPIO = 6
 
 # INDEC/SIBOM y el Gold Standard no siempre escriben igual el nombre del partido.
 # Mapeo explicito, nunca fuzzy: asignarle a un municipio el gabinete de otro es

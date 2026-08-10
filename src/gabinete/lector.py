@@ -65,6 +65,59 @@ _RE_PISTAS = re.compile("|".join(PISTAS), re.IGNORECASE)
 # Secretaria de Seguridad Ciudadana (Y) y la Secretaria de Salud Publica (Z)".
 _RE_FIRMA = re.compile(r"refrendad[oa]\s+por\s+[^.]{10,400}", re.IGNORECASE)
 
+# Los decretos se encabezan "Chascomus, 29/06/2026". Es la fecha que decide quien
+# ocupa el cargo HOY: sin ella, dos citas literales y contradictorias no se
+# pueden ordenar.
+_RE_FECHA = re.compile(r"\b(\d{1,2})/(\d{1,2})/(20\d{2})\b")
+# Cuanto se mira alrededor de la cita para encontrarla. El encabezado del decreto
+# queda antes del articulo que lleva la firma, por eso la ventana hacia atras es
+# mucho mas grande que la de adelante.
+_VENTANA_FECHA_ATRAS = 6000
+_VENTANA_FECHA_ADELANTE = 400
+
+
+# Un decreto no puede estar fechado en el futuro ni antes de que existiera SIBOM.
+# Sin este piso y este techo se colaba "decreto del 2029-05-02": los decretos
+# mencionan fechas que no son la suya (vencimientos de contrato, plazos de obra,
+# licencias "hasta el 13/07/2026"), y la mas cercana hacia atras podia ser una de
+# esas. Una fecha inventada es peor que ninguna: ordena mal el gabinete.
+_ANIO_MINIMO = 2015
+
+
+def _plausible(dia: int, mes: int, anio: int, tope: Optional[str]) -> bool:
+    if not (1 <= dia <= 31 and 1 <= mes <= 12):
+        return False
+    if anio < _ANIO_MINIMO:
+        return False
+    if tope and f"{anio:04d}-{mes:02d}-{dia:02d}" > tope[:10]:
+        return False
+    return True
+
+
+def fecha_de_la_norma(
+    texto: str, posicion_cita: int, tope: Optional[str] = None
+) -> Optional[str]:
+    """Fecha del decreto que contiene la cita, en ISO, o None.
+
+    Se toma la fecha plausible MAS CERCANA hacia atras: el encabezado del decreto
+    vigente. Mirar hacia adelante traeria la del decreto siguiente, y por eso solo
+    se hace si no hay ninguna atras.
+
+    `tope` es la fecha de la corrida: nada posterior es una fecha de decreto.
+    """
+    atras = texto[max(0, posicion_cita - _VENTANA_FECHA_ATRAS):posicion_cita]
+    for m in reversed(list(_RE_FECHA.finditer(atras))):
+        dia, mes, anio = (int(g) for g in m.groups())
+        if _plausible(dia, mes, anio, tope):
+            return f"{anio:04d}-{mes:02d}-{dia:02d}"
+
+    adelante = texto[posicion_cita:posicion_cita + _VENTANA_FECHA_ADELANTE]
+    for m in _RE_FECHA.finditer(adelante):
+        dia, mes, anio = (int(g) for g in m.groups())
+        if _plausible(dia, mes, anio, tope):
+            return f"{anio:04d}-{mes:02d}-{dia:02d}"
+    return None
+
 ESQUEMA_RESPUESTA = {
     "type": "object",
     "properties": {
@@ -222,9 +275,10 @@ def verificar_respuesta(
     paginas de portal, que es la segunda fuente prevista.
     """
     modelo = (respuesta or {}).get("_modelo")
-    verificadas: List[Autoridad] = []
+    # cargo+area -> Autoridad. No es una lista: para un mismo cargo puede volver
+    # mas de un nombre, y hay que quedarse con el del decreto mas nuevo.
+    por_cargo: dict = {}
     rechazadas = 0
-    vistos = set()
 
     for item in (respuesta or {}).get("autoridades", []) or []:
         try:
@@ -250,29 +304,54 @@ def verificar_respuesta(
             rechazadas += 1
             continue
 
-        # Un cargo por municipio: si el modelo repite el area con otra cita, gana
-        # la primera. Dos secretarios de Gobierno a la vez es un error de lectura.
-        clave = (cargo, (area or "").lower())
-        if clave in vistos:
-            continue
-        vistos.add(clave)
-
-        verificadas.append(
-            Autoridad(
-                municipio=municipio,
-                id_municipio=id_municipio,
-                cargo=cargo,
-                area=None if cargo is Cargo.INTENDENTE else area,
-                nombre=nombre[:120],
-                cita=cita[:500],
-                url=fuente.url,
-                fuente=tipo_fuente,
-                fecha=fecha,
-                modelo=modelo,
-            )
+        posicion = _posicion_de_la_cita(cita, fuente.texto)
+        candidata = Autoridad(
+            municipio=municipio,
+            id_municipio=id_municipio,
+            cargo=cargo,
+            area=None if cargo is Cargo.INTENDENTE else area,
+            nombre=nombre[:120],
+            cita=cita[:500],
+            url=fuente.url,
+            fuente=tipo_fuente,
+            fecha=fecha,
+            fecha_norma=(
+                fecha_de_la_norma(fuente.texto, posicion, tope=fecha)
+                if posicion is not None
+                else None
+            ),
+            modelo=modelo,
         )
 
-    return verificadas, rechazadas
+        # Un cargo, una persona: la del decreto MAS NUEVO. Dos nombres para el
+        # mismo cargo no es un error del modelo, es un cambio de gabinete, y las
+        # dos citas pueden ser literales y correctas. En Chascomus, Jorge Marino
+        # firmo Obras hasta abril de 2026 y Lucas Funes desde mayo. Quedarse con
+        # el primero que aparece seria quedarse con el que la suerte ponga
+        # primero en la respuesta.
+        clave = (cargo, (area or "").lower())
+        previa = por_cargo.get(clave)
+        if previa is None or _mas_nueva(candidata, previa):
+            por_cargo[clave] = candidata
+
+    return list(por_cargo.values()), rechazadas
+
+
+def _posicion_de_la_cita(cita: str, texto: str) -> Optional[int]:
+    """Donde cae la cita en el texto fuente. None si solo coincide normalizada."""
+    i = texto.find(cita)
+    if i >= 0:
+        return i
+    recorte = cita[:60]
+    i = texto.find(recorte)
+    return i if i >= 0 else None
+
+
+def _mas_nueva(nueva: Autoridad, previa: Autoridad) -> bool:
+    """Gana la del decreto mas reciente; sin fecha, no desplaza a una fechada."""
+    if nueva.fecha_norma and previa.fecha_norma:
+        return nueva.fecha_norma > previa.fecha_norma
+    return bool(nueva.fecha_norma) and not previa.fecha_norma
 
 
 def leer(

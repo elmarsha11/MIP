@@ -4,12 +4,19 @@ Motor de gabinete: quien gobierna cada municipio, con el decreto que lo prueba.
     Fase 3 encontro DONDE mirar. Fase 4 reporto QUE DICEN los portales.
     Esto responde QUIEN ESTA A CARGO, que es a quien hay que ir a ver.
 
-Por que no se saca del resumen de un buscador: el 2026-08-09 se comparo el
-gabinete que devuelve Google para Chascomus (citando el Instagram municipal)
-contra el Boletin Oficial del 16/07/2026. Tres secretarios coincidian y uno no:
-el buscador daba Jorge Marino en Obras, el decreto dice Lucas Funes. En ese
-boletin "Marino" aparece cero veces y "Funes" once. Un dato asi no se descubre
-mirando mas fuerte el resumen: hace falta la fuente.
+Por que no alcanza con un buscador ni con los diarios locales: el 2026-08-09 se
+comparo el gabinete de Chascomus que devuelven ambos contra el Boletin Oficial.
+Siete de ocho secretarios coincidian. El octavo no, y la diferencia tenia fecha:
+
+    ene 2026   Marino 19 menciones, Funes  4
+    abr 2026   Marino  9 menciones, Funes  2   <- Marino todavia firma Obras
+    may 2026   Marino  0 menciones, Funes  7   <- firma Funes
+    jun 2026   Marino  0 menciones, Funes 11
+
+Jorge Marino fue Secretario de Obras hasta abril de 2026 y Lucas Funes firma
+desde mayo. Las dos citas son literales y las dos son correctas: lo que las
+ordena es la FECHA DEL DECRETO. Por eso `fecha_norma` no es un adorno — sin ella
+la base no distingue quien ESTA de quien ESTUVO, que es todo lo que se le pide.
 
 Uso:
     python src/gabinete/motor_gabinete.py --municipio Chascomus
@@ -59,6 +66,7 @@ CREATE TABLE IF NOT EXISTS autoridades (
     fuente TEXT NOT NULL,
     confianza TEXT NOT NULL,
     fecha TEXT NOT NULL,
+    fecha_norma TEXT,
     modelo TEXT
 );
 CREATE INDEX IF NOT EXISTS idx_aut_municipio ON autoridades(municipio);
@@ -76,7 +84,7 @@ CREATE TABLE IF NOT EXISTS municipios_gabinete (
 """
 
 COLUMNAS = ("id", "municipio", "id_municipio", "cargo", "area", "nombre", "cita",
-            "url", "fuente", "confianza", "fecha", "modelo")
+            "url", "fuente", "confianza", "fecha", "fecha_norma", "modelo")
 
 
 def procesar(
@@ -143,6 +151,11 @@ def guardar(resultados, path: Path = SQLITE_GABINETE) -> Path:
     con = sqlite3.connect(path)
     try:
         con.executescript(DDL)
+        # La tabla puede venir de una corrida anterior sin fecha_norma:
+        # CREATE TABLE IF NOT EXISTS no agrega columnas a una tabla que ya existe.
+        existentes = {c[1] for c in con.execute("PRAGMA table_info(autoridades)")}
+        if "fecha_norma" not in existentes:
+            con.execute("ALTER TABLE autoridades ADD COLUMN fecha_norma TEXT")
         for r in resultados:
             # El gabinete es una foto: se reemplaza el municipio entero. Un
             # secretario que dejo el cargo tiene que DESAPARECER, no quedar
@@ -166,14 +179,23 @@ def guardar(resultados, path: Path = SQLITE_GABINETE) -> Path:
     return path
 
 
+def _tres_meses_antes(iso: str) -> str:
+    """'2026-06' a partir de '2026-09-15'. Sin dateutil: solo aritmetica de mes."""
+    anio, mes = int(iso[:4]), int(iso[5:7])
+    mes -= 3
+    if mes <= 0:
+        anio, mes = anio - 1, mes + 12
+    return f"{anio:04d}-{mes:02d}"
+
+
 def ficha(municipio: str, path: Path = SQLITE_GABINETE) -> str:
     if not Path(path).exists():
         return f"Sin analizar. Core: python src/gabinete/motor_gabinete.py --municipio {municipio}"
     con = sqlite3.connect(path)
     try:
         filas = con.execute(
-            "SELECT cargo, area, nombre, cita, url, confianza FROM autoridades "
-            "WHERE municipio = ? ORDER BY cargo, area",
+            "SELECT cargo, area, nombre, cita, url, confianza, fecha_norma "
+            "FROM autoridades WHERE municipio = ? ORDER BY cargo, area",
             (municipio,),
         ).fetchall()
     finally:
@@ -181,17 +203,33 @@ def ficha(municipio: str, path: Path = SQLITE_GABINETE) -> str:
     if not filas:
         return f"{municipio}: sin autoridades detectadas (o todavia sin analizar)."
 
+    # La evidencia mas fresca del municipio marca el pulso. Un cargo cuya ultima
+    # prueba es de varios meses antes no esta necesariamente vacante, pero no se
+    # puede afirmar igual que uno que firmo el mes pasado. Chascomus tenia una
+    # Secretaria de Recursos Humanos probada en diciembre de 2025 y nunca mas.
+    fechas = [f[6] for f in filas if f[6]]
+    mas_fresca = max(fechas) if fechas else None
+
     lineas = ["=" * 74, f"{municipio.upper()}  -  cupula municipal", "=" * 74]
-    for cargo, area, nombre, cita, url, confianza in filas:
+    for cargo, area, nombre, cita, url, confianza, fecha_norma in filas:
         titulo = "INTENDENTE" if cargo == "intendente" else f"Secretaria de {area or '?'}"
+        # La fecha del decreto va al lado del nombre y no al pie: un gabinete
+        # cambia, y "quien es" sin "desde cuando" es la mitad del dato.
+        sello = f"decreto del {fecha_norma}" if fecha_norma else "sin fecha de norma"
+        rezagado = (
+            mas_fresca and fecha_norma and fecha_norma[:7] < _tres_meses_antes(mas_fresca)
+        )
         lineas += [
             "",
-            f"{titulo}: {nombre}   [{confianza}]",
+            f"{titulo}: {nombre}   [{confianza}, {sello}]"
+            + ("   <-- sin firmar hace meses, confirmar" if rezagado else ""),
             f'  Prueba: "{cita[:190]}"',
             f"  {url}",
         ]
     lineas += ["", "-" * 74,
-               "Cada nombre sale de una cita literal verificada contra el boletin."]
+               "Cada nombre sale de una cita literal verificada contra el boletin.",
+               "La fecha es la del decreto, no la del analisis: es lo que distingue",
+               "quien ESTA de quien ESTUVO."]
     return "\n".join(lineas)
 
 
