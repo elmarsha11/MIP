@@ -51,8 +51,14 @@ MAX_CHARS_PROMPT = 60_000
 # traer todas las firmas ya deduplicadas, fusionadas en un tramo gigante —
 # gastando el presupuesto justo en lo que se acababa de deduplicar.
 PISTAS = (
+    # Los boletines de SIBOM abren con una seccion AUTORIDADES que nombra al
+    # intendente y a veces al gabinete entero. Es la mejor fuente que hay y se
+    # estaba perdiendo: la pista pedia "intendente municipal" y ahi dice solo
+    # "AUTORIDADES INTENDENTE Javier Gaston". Chascomus quedaba sin intendente
+    # teniendolo en la pagina 2 del boletin.
+    r"AUTORIDADES",
     r"secretari[oa]\s+de\s+",
-    r"intendente\s+municipal",
+    r"intendent[ae]\b",
     r"design[aá](?:se|ndose|r)?\b",
     r"nombr[aá](?:se|miento)?\b",
     r"asum[eií]",

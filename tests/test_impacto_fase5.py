@@ -119,3 +119,40 @@ class TestSensibilidad(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
+
+
+class TestPoblacionOficial(unittest.TestCase):
+    """El modelo MULTIPLICA por poblacion: la fuente decide el ranking.
+
+    El Gold Standard tiene poblaciones cruzadas entre municipios. Con esos
+    numeros, General Alvear entraba al ranking con 37.594 habitantes teniendo
+    12.631 — tres veces inflado. Un municipio mal rankeado es una visita
+    comercial gastada, asi que manda INDEC.
+    """
+
+    def test_manda_indec_sobre_el_gold_standard(self):
+        from motor_impacto import poblaciones_oficiales
+
+        from discovery_engine import cargar_municipios
+
+        gold = {m.nombre: m.poblacion for m in cargar_municipios()}
+        oficial = {k: v[1] for k, v in poblaciones_oficiales().items()}
+
+        # Los casos verificados contra INDEC el 2026-08-09. Si alguno vuelve al
+        # valor del Gold Standard, la migracion se revirtio.
+        for municipio, indec in (
+            ("Saladillo", 35_656),
+            ("General Alvear", 12_631),
+            ("Carmen de Areco", 17_499),
+        ):
+            with self.subTest(municipio=municipio):
+                self.assertEqual(oficial.get(municipio), indec)
+                self.assertNotEqual(oficial.get(municipio), gold.get(municipio))
+
+    def test_ningun_municipio_queda_sin_poblacion(self):
+        """Sin poblacion no se calcula (ADR-0009), asi que un hueco aca saca al
+        municipio del modelo en silencio."""
+        from motor_impacto import poblaciones_oficiales
+
+        sin_dato = [n for n, (_, p) in poblaciones_oficiales().items() if not p]
+        self.assertEqual(sin_dato, [])

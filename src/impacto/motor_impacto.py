@@ -37,6 +37,7 @@ from modelo_turnos import (  # noqa: E402
 from parametros import CATALOGO, TipoParametro, parametros_sin_fuente  # noqa: E402
 
 SQLITE_HALLAZGOS = PROJECT_ROOT / "data" / "processed" / "extraction" / "hallazgos_86.sqlite"
+SQLITE_INDEC = PROJECT_ROOT / "data" / "processed" / "indec" / "censo_2022.sqlite"
 
 # Canales que prueban que HOY no hay via digital. no_verificable no entra:
 # no saber no es lo mismo que saber que no.
@@ -47,13 +48,60 @@ def _plata(x: float) -> str:
     return f"${x:,.0f}".replace(",", ".")
 
 
+def poblaciones_oficiales() -> dict:
+    """nombre -> (id_municipio, poblacion). Manda INDEC.
+
+    El Gold Standard trae poblaciones sin fuente ni año, y **algunas estan
+    cruzadas entre municipios**: Carlos Tejedor figuraba con 1.479 habitantes
+    cuando tiene 14.079, y General Alvear con 37.594 cuando tiene 12.631. No son
+    diferencias de medicion, son filas desalineadas.
+
+    Eso importa aca mas que en ningun otro lado, porque este modelo MULTIPLICA
+    por poblacion: con el Gold Standard, General Alvear entraba al ranking con
+    tres veces la gente que tiene. Un municipio mal rankeado es una visita
+    comercial gastada.
+
+    Si INDEC no tiene el municipio se cae al Gold Standard, pero se avisa: es
+    preferible un numero peor y declarado que un silencio.
+    """
+    del_gold = {m.nombre: (m.id_municipio, m.poblacion) for m in cargar_municipios()}
+    if not Path(SQLITE_INDEC).exists():
+        print(
+            "  [aviso] no hay censo INDEC todavia; se usa el Gold Standard, que "
+            "tiene poblaciones cruzadas entre municipios. Corre: "
+            "python src/indec/censo.py --guardar"
+        )
+        return del_gold
+
+    con = sqlite3.connect(f"file:{SQLITE_INDEC}?mode=ro", uri=True)
+    try:
+        filas = con.execute(
+            "SELECT municipio, id_municipio, poblacion_indec_2022 FROM censo_2022"
+        ).fetchall()
+    except sqlite3.Error:
+        return del_gold
+    finally:
+        con.close()
+
+    salida = dict(del_gold)
+    sin_indec = []
+    for municipio, id_mun, poblacion in filas:
+        if poblacion:
+            salida[municipio] = (id_mun, poblacion)
+        else:
+            sin_indec.append(municipio)
+    if sin_indec:
+        print(f"  [aviso] {len(sin_indec)} municipios sin poblacion INDEC, se usa la del Gold Standard")
+    return salida
+
+
 def municipios_sin_canal_digital(sqlite_path: Path = SQLITE_HALLAZGOS) -> List[CostoSocial]:
     if not Path(sqlite_path).exists():
         raise FileNotFoundError(
             f"No existe {sqlite_path}. Corre Fase 4 primero: "
             "python src/extraction/extraction_engine.py --all"
         )
-    poblaciones = {m.nombre: (m.id_municipio, m.poblacion) for m in cargar_municipios()}
+    poblaciones = poblaciones_oficiales()
 
     con = sqlite3.connect(sqlite_path)
     try:
