@@ -36,7 +36,7 @@ for _ruta in (_AQUI, _SRC / "extraction"):
 from modelos import cita_esta_en_fuente  # noqa: E402  (src/extraction/modelos.py)
 
 from autoridades import Autoridad, Cargo, TipoFuente  # noqa: E402
-from nombres import nombre_valido_en_cita  # noqa: E402
+from nombres import nombre_valido_en_cita, normalizar_nombre  # noqa: E402
 
 # Un boletin de Chascomus son 320.000 caracteres. Mandarlos enteros es caro y
 # ademas diluye: los nombramientos y las firmas estan en fragmentos cortos y
@@ -287,7 +287,9 @@ def verificar_respuesta(
             rechazadas += 1
             continue
 
-        nombre = " ".join((item.get("nombre") or "").split())
+        # Se limpia el titulo ANTES de validar: si no, "Cdor. ACERBO" pasa el
+        # chequeo de nombre completo gracias al titulo y entra un apellido suelto.
+        nombre = normalizar_nombre(item.get("nombre") or "")
         cita = " ".join((item.get("cita_literal") or "").split())
         area = " ".join((item.get("area") or "").split()) or None
         if not nombre or not cita:

@@ -20,7 +20,11 @@ for _ruta in (
 
 from autoridades import Autoridad, Cargo, TipoFuente  # noqa: E402
 from lector import fecha_de_la_norma, recortar, verificar_respuesta  # noqa: E402
-from nombres import motivo_del_rechazo, nombre_valido_en_cita  # noqa: E402
+from nombres import (  # noqa: E402
+    motivo_del_rechazo,
+    nombre_valido_en_cita,
+    normalizar_nombre,
+)
 
 FIRMA = (
     "ARTÍCULO 3°.- El presente Decreto será refrendado por el Secretario de "
@@ -76,6 +80,27 @@ class TestNombreEnContexto(unittest.TestCase):
         self.assertEqual(
             motivo_del_rechazo("Juan Perez", "obras de bacheo en el barrio Belgrano"),
             "el nombre no esta en la cita",
+        )
+
+
+class TestNormalizarNombre(unittest.TestCase):
+    def test_saca_el_titulo_profesional(self):
+        self.assertEqual(normalizar_nombre("Dr. Jorge Gaute"), "Jorge Gaute")
+        self.assertEqual(normalizar_nombre("Lic. Diego Eduardo Nanni"), "Diego Eduardo Nanni")
+        self.assertEqual(normalizar_nombre("DR. JUAN FERNANDO BOUVIER"), "JUAN FERNANDO BOUVIER")
+
+    def test_no_toca_un_nombre_limpio(self):
+        self.assertEqual(normalizar_nombre("Javier Gastón"), "Javier Gastón")
+
+    def test_limpiar_antes_de_validar_descubre_el_apellido_suelto(self):
+        """"Cdor. ACERBO" pasaba el chequeo de nombre completo gracias al titulo.
+
+        Salio de la corrida de los 86: Daireaux quedaba con un intendente que era
+        un apellido con titulo, no un nombre.
+        """
+        self.assertTrue(" " in "Cdor. ACERBO")           # el titulo da el espacio
+        self.assertFalse(
+            nombre_valido_en_cita(normalizar_nombre("Cdor. ACERBO"), "INTENDENTE Cdor. ACERBO")
         )
 
 

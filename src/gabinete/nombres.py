@@ -86,6 +86,26 @@ def _entre_comillas(cita: str, inicio: int, fin: int) -> bool:
     return abre and cierra
 
 
+# Titulos profesionales que los decretos anteponen al nombre. Se sacan porque el
+# nombre es el dato: "Dr. Jorge Gaute" y "Jorge Gaute" son la misma persona, y
+# guardar el titulo ensucia la ficha comercial.
+#
+# Ademas hay que sacarlos ANTES de validar, no despues: "Cdor. ACERBO" es un
+# apellido suelto, pero el titulo le da el espacio que la validacion exige y se
+# colaba como nombre completo.
+_RE_TITULO_PROFESIONAL = re.compile(
+    r"^\s*(?:(?:dr|dra|lic|sr|sra|srta|prof|ing|cont|cdor|cra|cr|arq|esc|tec|mg|"
+    r"a\.?s|dn|dna)\.?\s+)+",
+    re.IGNORECASE,
+)
+
+
+def normalizar_nombre(nombre: str) -> str:
+    """Saca titulos profesionales del principio y colapsa espacios."""
+    limpio = _RE_TITULO_PROFESIONAL.sub("", " ".join(str(nombre or "").split()))
+    return limpio.strip(" .,-–—")
+
+
 def nombre_valido_en_cita(nombre: str, cita: str) -> bool:
     """El nombre esta en la cita Y nombra a una persona en ejercicio.
 
@@ -127,4 +147,4 @@ def motivo_del_rechazo(nombre: str, cita: str) -> Optional[str]:
     return "el nombre esta entrecomillado, parece un nombre propio de lugar"
 
 
-__all__ = ["motivo_del_rechazo", "nombre_valido_en_cita"]
+__all__ = ["motivo_del_rechazo", "nombre_valido_en_cita", "normalizar_nombre"]
