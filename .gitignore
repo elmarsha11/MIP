@@ -46,6 +46,13 @@ data/processed/oportunidades/cache/
 # gabinete_86.sqlite.
 data/processed/gabinete/cache/
 
+# EXCEPCION deliberada: data/processed/indec/cache/ SI se versiona.
+# Los otros caches guardan respuestas de servicios vivos que cambian y se vuelven
+# a pedir. Estos son los cuadros del Censo 2022, resultados DEFINITIVOS: no van a
+# cambiar nunca. Son 360 KB y tenerlos adentro hace que la poblacion y la
+# apertura por sexo de los 86 sigan siendo reproducibles aunque INDEC reorganice
+# su FTP. Es la fuente, no una copia temporal.
+
 src/tablero/web/_prueba.html
 progreso_municipios.json
 
