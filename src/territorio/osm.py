@@ -48,9 +48,23 @@ CACHE_DIR = PROJECT_ROOT / "data" / "processed" / "territorio" / "cache"
 # 200 con JSON valido y CERO elementos para Argentina. Al tomarlo como respuesta
 # autoritativa, el censo concluyo "sin limite administrativo" en 83 de 86
 # municipios. Un espejo regional no es una alternativa, es una fuente distinta.
+#
+# Como se valida un espejo antes de agregarlo (probado el 2026-08-10):
+# NO alcanza con preguntarle por nombre. La primera prueba fue pedir
+# name="Partido de Chascomús" y los tres candidatos devolvieron cero — pero el
+# test estaba mal, porque OSM la llama "Chascomús" a secas. Hay que pedir la
+# relacion POR ID, que es inequivoco, y despues correrle la consulta pesada:
+#
+#     relation(5816495);out tags;      -> tiene que devolver name="Chascomús"
+#     CONSULTA_ENTIDADES sobre esa area -> tiene que devolver cientos de
+#                                          elementos con latitud cerca de -35,6
+#
+# Asi se descarto overpass.private.coffee (cero elementos incluso por ID) y se
+# acepto maps.mail.ru (335 elementos en 4 segundos, latitudes correctas).
 SERVIDORES = (
     "https://overpass-api.de/api/interpreter",
     "https://overpass.kumi.systems/api/interpreter",
+    "https://maps.mail.ru/osm/tools/overpass/api/interpreter",
 )
 USER_AGENT = "MIP-relevamiento-municipal/0.1 (uso interno, contacto: UDS)"
 INTERVALO_MINIMO = 6.0  # segundos entre consultas: el servicio es gratuito
