@@ -1,0 +1,6685 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0138252,
+     -35.5786869
+    ]
+   },
+   "properties": {
+    "nombre": "Chascomús",
+    "tipo": "localidad",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/198443592",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.014812,
+     -35.57629
+    ]
+   },
+   "properties": {
+    "nombre": "Comisaría No. 12",
+    "tipo": "policia",
+    "direccion": "Belgrano 65",
+    "telefono": "+54 2241 422455; +54 2241 422752",
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/573407446",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0143406,
+     -35.5790316
+    ]
+   },
+   "properties": {
+    "nombre": "Teatro Municipal Brazzola",
+    "tipo": "teatro",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": "Municipalidad de Chascomús",
+    "fuente": "https://www.openstreetmap.org/node/3287853851",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0143396,
+     -35.5791758
+    ]
+   },
+   "properties": {
+    "nombre": "Club de Chascomús",
+    "tipo": "club_deportivo",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/3700985445",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0142475,
+     -35.5778936
+    ]
+   },
+   "properties": {
+    "nombre": "Comisaría Chascomús 1°",
+    "tipo": "policia",
+    "direccion": "Sarmiento 10",
+    "telefono": "+54 2241 42 2515",
+    "web": null,
+    "operador": "Policía de la Provincia de Buenos Aires",
+    "fuente": "https://www.openstreetmap.org/node/3701017308",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0148925,
+     -35.5779449
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "caps",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/3701017309",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0111254,
+     -35.5775468
+    ]
+   },
+   "properties": {
+    "nombre": "Clínica Privada de Chascomús",
+    "tipo": "clinica_privada",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/3701017310",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0095446,
+     -35.5746511
+    ]
+   },
+   "properties": {
+    "nombre": "Instituto Corazón de María",
+    "tipo": "escuela_sin_clasificar",
+    "direccion": "Soler 14",
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/4215550013",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0161493,
+     -35.5759493
+    ]
+   },
+   "properties": {
+    "nombre": "Bomberos Voluntarios de Chascomús",
+    "tipo": "bomberos",
+    "direccion": "Soler 347",
+    "telefono": "+54 2241 422033; +54 2241 424059",
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/5766231451",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9886231,
+     -35.5774919
+    ]
+   },
+   "properties": {
+    "nombre": "Escuela Primaria 9 Remedios De Escalada",
+    "tipo": "escuela_primaria",
+    "direccion": "Bahía Blanca",
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/5766578268",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9885862,
+     -35.5776397
+    ]
+   },
+   "properties": {
+    "nombre": "Jardín De Infantes 906 Maria Nilda Ciraus",
+    "tipo": "jardin",
+    "direccion": "Bahía Blanca",
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/5766578277",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9879214,
+     -35.5772269
+    ]
+   },
+   "properties": {
+    "nombre": "Gallo Blanco",
+    "tipo": "barrio",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/5766578278",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9942538,
+     -35.5682693
+    ]
+   },
+   "properties": {
+    "nombre": "Jardìn Maternal y de Infantes Clarisa Amezaga",
+    "tipo": "jardin",
+    "direccion": "Sargento Cabral",
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/5766578300",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0104118,
+     -35.564547
+    ]
+   },
+   "properties": {
+    "nombre": "Escuela Especial Nº 502 25 De Mayo",
+    "tipo": "escuela_especial",
+    "direccion": "Bartolomé Correa",
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/5766578305",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0137211,
+     -35.5628537
+    ]
+   },
+   "properties": {
+    "nombre": "Escuela Primaria 3 Sargento Cabral",
+    "tipo": "escuela_primaria",
+    "direccion": "Julián Quintana",
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/5766578326",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0135601,
+     -35.5628685
+    ]
+   },
+   "properties": {
+    "nombre": "Jardín De Infantes 909",
+    "tipo": "jardin",
+    "direccion": "San Lorenzo",
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/5766578327",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0213547,
+     -35.573386
+    ]
+   },
+   "properties": {
+    "nombre": "Escuela Especial Nº 501 Juan Bautista Alberdi",
+    "tipo": "escuela_especial",
+    "direccion": "Bolívar 554",
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/5766578328",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0139107,
+     -35.5728547
+    ]
+   },
+   "properties": {
+    "nombre": "Escuela De Educación Secundaria Nº 5 Libres Del Sur",
+    "tipo": "escuela_secundaria",
+    "direccion": "Bolívar 173",
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/5766578329",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0156738,
+     -35.5676283
+    ]
+   },
+   "properties": {
+    "nombre": "Escuela Primaria 5 Abanderado Lastra",
+    "tipo": "escuela_primaria",
+    "direccion": "Libres del Sur",
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/5766578330",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0134055,
+     -35.5661955
+    ]
+   },
+   "properties": {
+    "nombre": "Jardín De Infantes Portal De Belen",
+    "tipo": "jardin",
+    "direccion": "Quintana",
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/5766578331",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0157484,
+     -35.5677751
+    ]
+   },
+   "properties": {
+    "nombre": "Escuela Secundaria 4",
+    "tipo": "escuela_secundaria",
+    "direccion": "Libres del Sur",
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/5766578332",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0138713,
+     -35.5627396
+    ]
+   },
+   "properties": {
+    "nombre": "Escuela Secundaria 6",
+    "tipo": "escuela_secundaria",
+    "direccion": "Julián Quintana",
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/5766578333",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0192233,
+     -35.5764623
+    ]
+   },
+   "properties": {
+    "nombre": "Escuela Especial Nº 504",
+    "tipo": "escuela_especial",
+    "direccion": "Quintana",
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/5766578335",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0181572,
+     -35.5680482
+    ]
+   },
+   "properties": {
+    "nombre": "Escuela De Educación Secundaria Técnica Nº 1",
+    "tipo": "escuela_secundaria",
+    "direccion": "Avenida Escribano",
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/5766578336",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0077391,
+     -35.5743033
+    ]
+   },
+   "properties": {
+    "nombre": "Grupo Scout Martín Miguel de Güemes",
+    "tipo": "centro_comunitario",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/6693596616",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0159503,
+     -35.5708565
+    ]
+   },
+   "properties": {
+    "nombre": "Centro Cultural Municipal Vieja Estación",
+    "tipo": "centro_comunitario",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/7252844546",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9827977,
+     -35.5787863
+    ]
+   },
+   "properties": {
+    "nombre": "Comisaría de la Mujer y la Familia",
+    "tipo": "policia",
+    "direccion": "Balcarce 249",
+    "telefono": "+54 2241 42 2653",
+    "web": "https://www.mseg.gba.gov.ar/migra/dgcpg/comisarias.html",
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/7253033657",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0093306,
+     -35.5755291
+    ]
+   },
+   "properties": {
+    "nombre": "Bellingeri",
+    "tipo": "caps",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/8362961395",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0061844,
+     -35.5764955
+    ]
+   },
+   "properties": {
+    "nombre": "Moriset",
+    "tipo": "caps",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/8362961396",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0102345,
+     -35.577956
+    ]
+   },
+   "properties": {
+    "nombre": "Cramer",
+    "tipo": "caps",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/8362961397",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0109507,
+     -35.5775186
+    ]
+   },
+   "properties": {
+    "nombre": "Chascomus",
+    "tipo": "caps",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/8362961398",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0149472,
+     -35.5775295
+    ]
+   },
+   "properties": {
+    "nombre": "Aprile",
+    "tipo": "caps",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/8362961399",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0142766,
+     -35.5750447
+    ]
+   },
+   "properties": {
+    "nombre": "Alfonsin",
+    "tipo": "caps",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/8362961400",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0146065,
+     -35.5716828
+    ]
+   },
+   "properties": {
+    "nombre": "Pasteur",
+    "tipo": "caps",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/8362961401",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0152127,
+     -35.5699004
+    ]
+   },
+   "properties": {
+    "nombre": "Oria",
+    "tipo": "caps",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/8362961402",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0167362,
+     -35.5652794
+    ]
+   },
+   "properties": {
+    "nombre": "Belgrano",
+    "tipo": "caps",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/8362961403",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0149204,
+     -35.5584782
+    ]
+   },
+   "properties": {
+    "nombre": "Del Norte",
+    "tipo": "caps",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/8362961404",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0167476,
+     -35.5595851
+    ]
+   },
+   "properties": {
+    "nombre": "Puyssegur",
+    "tipo": "caps",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/8362961405",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9891014,
+     -35.5747895
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "caps",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/9548014988",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0139945,
+     -35.5530075
+    ]
+   },
+   "properties": {
+    "nombre": "Comi Pini",
+    "tipo": "barrio",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/11123352746",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.009184,
+     -35.5510607
+    ]
+   },
+   "properties": {
+    "nombre": "Acceso Norte",
+    "tipo": "barrio",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/11123352749",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0150293,
+     -35.560989
+    ]
+   },
+   "properties": {
+    "nombre": "Villa Jardín",
+    "tipo": "barrio",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/11123352752",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.020458,
+     -35.5578718
+    ]
+   },
+   "properties": {
+    "nombre": "El Obispado",
+    "tipo": "barrio",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/11123352769",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0208908,
+     -35.5666722
+    ]
+   },
+   "properties": {
+    "nombre": "Escribano",
+    "tipo": "barrio",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/11123352770",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0240703,
+     -35.5633466
+    ]
+   },
+   "properties": {
+    "nombre": "San Luis",
+    "tipo": "barrio",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/11123352773",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0277063,
+     -35.5657273
+    ]
+   },
+   "properties": {
+    "nombre": "La Concordia",
+    "tipo": "barrio",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/11123352775",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0134268,
+     -35.5659609
+    ]
+   },
+   "properties": {
+    "nombre": "Villa Luján",
+    "tipo": "barrio",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/11123352777",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.005047,
+     -35.565137
+    ]
+   },
+   "properties": {
+    "nombre": "Noria Chica",
+    "tipo": "barrio",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/11123352794",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.007178,
+     -35.5609867
+    ]
+   },
+   "properties": {
+    "nombre": "El Algarrobo",
+    "tipo": "barrio",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/11123368614",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9871243,
+     -35.5592023
+    ]
+   },
+   "properties": {
+    "nombre": "La Esmeralda",
+    "tipo": "barrio",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/11123368620",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.983232,
+     -35.5677517
+    ]
+   },
+   "properties": {
+    "nombre": "La Pampita",
+    "tipo": "barrio",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/11123368622",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9822695,
+     -35.5718469
+    ]
+   },
+   "properties": {
+    "nombre": "Anahí",
+    "tipo": "barrio",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/11123368623",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9777889,
+     -35.5715375
+    ]
+   },
+   "properties": {
+    "nombre": "Caballo Blanco",
+    "tipo": "barrio",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/11123368627",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9744533,
+     -35.5749807
+    ]
+   },
+   "properties": {
+    "nombre": "El Porteño",
+    "tipo": "barrio",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/11123368633",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9910636,
+     -35.5702408
+    ]
+   },
+   "properties": {
+    "nombre": "Ipora",
+    "tipo": "barrio",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/11123368634",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0028919,
+     -35.5704818
+    ]
+   },
+   "properties": {
+    "nombre": "El Hueco",
+    "tipo": "barrio",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/11123368638",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0027742,
+     -35.5797776
+    ]
+   },
+   "properties": {
+    "nombre": "Fátima",
+    "tipo": "barrio",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/11123368644",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0206857,
+     -35.5721251
+    ]
+   },
+   "properties": {
+    "nombre": "San José",
+    "tipo": "barrio",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/11123368671",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9964228,
+     -35.581181
+    ]
+   },
+   "properties": {
+    "nombre": "San Juan Bautista",
+    "tipo": "barrio",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/11123368677",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9929989,
+     -35.5809342
+    ]
+   },
+   "properties": {
+    "nombre": "Las Violetas",
+    "tipo": "barrio",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/11123368678",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9859004,
+     -35.5881344
+    ]
+   },
+   "properties": {
+    "nombre": "Esteban Echeverría",
+    "tipo": "barrio",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/11123368683",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9885597,
+     -35.5785102
+    ]
+   },
+   "properties": {
+    "nombre": "Fernández Moreno",
+    "tipo": "barrio",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/11123368684",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9809061,
+     -35.5775889
+    ]
+   },
+   "properties": {
+    "nombre": "Ferroautomotor",
+    "tipo": "barrio",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/11123368689",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9728665,
+     -35.5820166
+    ]
+   },
+   "properties": {
+    "nombre": "Ruta 2",
+    "tipo": "barrio",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/11123368694",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9910326,
+     -35.5538587
+    ]
+   },
+   "properties": {
+    "nombre": "Los Antiguos",
+    "tipo": "barrio",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/node/13687691130",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.003137,
+     -35.5748852
+    ]
+   },
+   "properties": {
+    "nombre": "Club Atlético Chascomús",
+    "tipo": "club_deportivo",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/157160070",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0051699,
+     -35.5772117
+    ]
+   },
+   "properties": {
+    "nombre": "Escuela Normal",
+    "tipo": "escuela_sin_clasificar",
+    "direccion": "Avenida Lastra",
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/157160747",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0005212,
+     -35.5814955
+    ]
+   },
+   "properties": {
+    "nombre": "Parque Esperanza",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/157279631",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9925098,
+     -35.584198
+    ]
+   },
+   "properties": {
+    "nombre": "Velódromo Juan Carlos Haedo",
+    "tipo": "club_deportivo",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/157307658",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9938358,
+     -35.5834964
+    ]
+   },
+   "properties": {
+    "nombre": "Polideportivo Municipal",
+    "tipo": "club_deportivo",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/157316464",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.013751,
+     -35.5790753
+    ]
+   },
+   "properties": {
+    "nombre": "Plaza Independencia",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/179136388",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0182281,
+     -35.5802214
+    ]
+   },
+   "properties": {
+    "nombre": "Parque Los Libres del Sur",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/179136786",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0140156,
+     -35.5402543
+    ]
+   },
+   "properties": {
+    "nombre": "Golf Chascomús Country Club",
+    "tipo": "barrio",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/208255481",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0169397,
+     -35.5576348
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/208412108",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0227391,
+     -35.5633272
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/208412111",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0093191,
+     -35.5684933
+    ]
+   },
+   "properties": {
+    "nombre": "Club Deportivo Chascomús",
+    "tipo": "club_deportivo",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/208418337",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.014015,
+     -35.5630166
+    ]
+   },
+   "properties": {
+    "nombre": "Plazoleta Gándara",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/208418340",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.013537,
+     -35.5656603
+    ]
+   },
+   "properties": {
+    "nombre": "Plazoleta Manuel Belgrano",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/208418341",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0138252,
+     -35.5826261
+    ]
+   },
+   "properties": {
+    "nombre": "Plaza del Cuarto Poder",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/208418342",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0164456,
+     -35.5701633
+    ]
+   },
+   "properties": {
+    "nombre": "Predio Cultural Municipal Vieja Estacion",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/208418344",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0119747,
+     -35.5768748
+    ]
+   },
+   "properties": {
+    "nombre": "Plaza Libertad",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/208418371",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0111268,
+     -35.5837084
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/208418380",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0121177,
+     -35.5833196
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/208418381",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0185743,
+     -35.5746664
+    ]
+   },
+   "properties": {
+    "nombre": "Plazoleta Gouaillard",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/208418382",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0159023,
+     -35.5821291
+    ]
+   },
+   "properties": {
+    "nombre": "Plaza Pedro Marmol",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/208418385",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0152151,
+     -35.5709047
+    ]
+   },
+   "properties": {
+    "nombre": "Plaza Sarmiento",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/208418388",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0088311,
+     -35.5754642
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/208418392",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0086752,
+     -35.5763419
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322023535",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0085493,
+     -35.5770394
+    ]
+   },
+   "properties": {
+    "nombre": "Plazoleta del Bicentenario",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322023537",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0078495,
+     -35.5805897
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322133684",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0075236,
+     -35.5822643
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322133685",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0082496,
+     -35.5785609
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322133686",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0076736,
+     -35.5815033
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322133687",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0080576,
+     -35.5795442
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322133688",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0073453,
+     -35.583231
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322133689",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0084186,
+     -35.5777022
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322133690",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0090274,
+     -35.5744946
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322182715",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0092207,
+     -35.5735117
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322182717",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0177962,
+     -35.5821412
+    ]
+   },
+   "properties": {
+    "nombre": "Plaza Bramuglia",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322182719",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0159408,
+     -35.570866
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "centro_comunitario",
+    "direccion": "Belgrano 344",
+    "telefono": null,
+    "web": "https://www.facebook.com/ViejaEstacionChasco/",
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322182751",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0105164,
+     -35.5634259
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322289621",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.009618,
+     -35.5648125
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322289623",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.012168,
+     -35.5636197
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322289624",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.014429,
+     -35.5638905
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322289625",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0094521,
+     -35.5657961
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322289626",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0093105,
+     -35.5667104
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322289627",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0133316,
+     -35.5637588
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322289628",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.01555,
+     -35.5640155
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322289629",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0113896,
+     -35.5635225
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322289630",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0097754,
+     -35.5638646
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322289631",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0148013,
+     -35.5680011
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322289632",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0097037,
+     -35.5674791
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322289633",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0103837,
+     -35.5675441
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322289634",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0123483,
+     -35.5677492
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322289635",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0157574,
+     -35.5681081
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322289636",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.013557,
+     -35.5678742
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322289637",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0112236,
+     -35.5676398
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322289638",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0095961,
+     -35.5716149
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322289639",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0102509,
+     -35.5681116
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322289640",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0097696,
+     -35.5707415
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322289641",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0099103,
+     -35.5699089
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322289642",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0094183,
+     -35.572546
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322289643",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0100872,
+     -35.5690268
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322289644",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0155514,
+     -35.5738346
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322293033",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0137507,
+     -35.5736184
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322293034",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0114504,
+     -35.5733262
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322293035",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0125692,
+     -35.5734691
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322293036",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0147188,
+     -35.5737366
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322293037",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0110277,
+     -35.5752633
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322295150",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0122319,
+     -35.5754124
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322295151",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0143608,
+     -35.5756498
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322295152",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0145198,
+     -35.5746901
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322295153",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0134063,
+     -35.5755482
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322295154",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0153655,
+     -35.5747974
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322295155",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0108716,
+     -35.5762126
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322295156",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.013248,
+     -35.576521
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322295157",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0120821,
+     -35.5763655
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322295158",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0135463,
+     -35.5745733
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322295159",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0141809,
+     -35.5766398
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322295160",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0112008,
+     -35.5742716
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322295161",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.015024,
+     -35.5767364
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322295162",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0152087,
+     -35.5757448
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322295163",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0123592,
+     -35.5744258
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322295164",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0148807,
+     -35.5777468
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322295165",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0104726,
+     -35.5772559
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322295166",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0115761,
+     -35.5773808
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322295167",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0140338,
+     -35.5776546
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322295168",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0166944,
+     -35.5779381
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322295169",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0179532,
+     -35.578073
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322295170",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0126003,
+     -35.5775098
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322295171",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0120979,
+     -35.5774432
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322295172",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0110804,
+     -35.5773255
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322295173",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0131657,
+     -35.5775608
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322295174",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0094959,
+     -35.5771457
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322295175",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0157835,
+     -35.5778423
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322295176",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0192484,
+     -35.5782082
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322295177",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.020047,
+     -35.5783941
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322295178",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0129255,
+     -35.5715992
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322295808",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0149172,
+     -35.5727928
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322295809",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0141223,
+     -35.5717567
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322295810",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0156678,
+     -35.572886
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322295811",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0139453,
+     -35.5726778
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322295812",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0150633,
+     -35.5718775
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322295813",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0164309,
+     -35.5681767
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322302688",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0183185,
+     -35.5683651
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322302689",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0169341,
+     -35.5682259
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322302690",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0164672,
+     -35.5636868
+    ]
+   },
+   "properties": {
+    "nombre": "Plazoleta de la Paz",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/322302691",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0077421,
+     -35.5763099
+    ]
+   },
+   "properties": {
+    "nombre": "Hospital Municipal San Vicente de Paul",
+    "tipo": "hospital",
+    "direccion": "Avenida Hipólito Yrigoyen 27",
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/366113838",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0136102,
+     -35.5401091
+    ]
+   },
+   "properties": {
+    "nombre": "Plazoleta del Arroyo",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/411485903",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0133078,
+     -35.5407991
+    ]
+   },
+   "properties": {
+    "nombre": "Plaza de los Eucaliptus",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/411485904",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.013566,
+     -35.5424942
+    ]
+   },
+   "properties": {
+    "nombre": "Plazoleta del Jazmín",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/411485905",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0126056,
+     -35.5425301
+    ]
+   },
+   "properties": {
+    "nombre": "Plazoleta del Olmo Pumila",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/411485906",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0144706,
+     -35.5437505
+    ]
+   },
+   "properties": {
+    "nombre": "Plazoleta de las Margaritas",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/411485907",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0157547,
+     -35.5380692
+    ]
+   },
+   "properties": {
+    "nombre": "Plaza del Ceibo",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/411485908",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0149707,
+     -35.5379907
+    ]
+   },
+   "properties": {
+    "nombre": "Plazoleta de los Horneros",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/411485909",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0152944,
+     -35.5378886
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/411485910",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0124403,
+     -35.5390808
+    ]
+   },
+   "properties": {
+    "nombre": "Plaza del Azarero",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/411485911",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0102548,
+     -35.5394984
+    ]
+   },
+   "properties": {
+    "nombre": "Plazoleta de las Abelias",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/411485912",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0144859,
+     -35.5387676
+    ]
+   },
+   "properties": {
+    "nombre": "Plazoleta de la Arboleda",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/411485913",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0141007,
+     -35.5394229
+    ]
+   },
+   "properties": {
+    "nombre": "Plazoleta de las Lavandas",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/411485914",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.020777,
+     -35.5762557
+    ]
+   },
+   "properties": {
+    "nombre": "Paseo de los Inmigrantes",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/473030625",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9981027,
+     -35.5688138
+    ]
+   },
+   "properties": {
+    "nombre": "Plaza La Barraca",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/473031207",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0155704,
+     -35.5548499
+    ]
+   },
+   "properties": {
+    "nombre": "Hogar de Ancianos Municipal",
+    "tipo": "centro_comunitario",
+    "direccion": "Los Cedros 124",
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/473599106",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0139076,
+     -35.5783249
+    ]
+   },
+   "properties": {
+    "nombre": "Municipalidad de Chascomús",
+    "tipo": "municipalidad",
+    "direccion": "Cramer 270",
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/473599108",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0138649,
+     -35.5781114
+    ]
+   },
+   "properties": {
+    "nombre": "Anfiteatro Municipal",
+    "tipo": "teatro",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/473599109",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0133977,
+     -35.5778869
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/473599110",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0144941,
+     -35.5790119
+    ]
+   },
+   "properties": {
+    "nombre": "Teatro Municipal Brazzola",
+    "tipo": "teatro",
+    "direccion": "Sarmiento 90",
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/478857256",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0176582,
+     -35.5786097
+    ]
+   },
+   "properties": {
+    "nombre": "Museo Pampeano",
+    "tipo": "museo",
+    "direccion": "Muñiz",
+    "telefono": "+54 2241 430982",
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/478857258",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9943521,
+     -35.5683946
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "escuela_sin_clasificar",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/478861745",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0107759,
+     -35.5513066
+    ]
+   },
+   "properties": {
+    "nombre": "Centro Integrador Comunitario",
+    "tipo": "centro_comunitario",
+    "direccion": "Francisco Serantes 1361",
+    "telefono": null,
+    "web": null,
+    "operador": "Municipalidad de Chascomús",
+    "fuente": "https://www.openstreetmap.org/way/478872029",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0159339,
+     -35.5670709
+    ]
+   },
+   "properties": {
+    "nombre": "Plaza de los Scouts",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/604963369",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9761163,
+     -35.5702049
+    ]
+   },
+   "properties": {
+    "nombre": "Plaza de Los Payadores",
+    "tipo": "plaza",
+    "direccion": "Santos Vega",
+    "telefono": null,
+    "web": null,
+    "operador": "Municipalidad de Chascomus",
+    "fuente": "https://www.openstreetmap.org/way/604966647",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0076982,
+     -35.5269335
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/610233421",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.963201,
+     -35.5693007
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/612363136",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9710767,
+     -35.6064401
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/628547916",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0148339,
+     -35.5343453
+    ]
+   },
+   "properties": {
+    "nombre": "Plaza de Los Trabajadores",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": "Municipalidad de Chascomus",
+    "fuente": "https://www.openstreetmap.org/way/637287591",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0171064,
+     -35.5290582
+    ]
+   },
+   "properties": {
+    "nombre": "Plaza de San Cayetano",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/637288166",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0123609,
+     -35.5504787
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/637288740",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0203029,
+     -35.5580557
+    ]
+   },
+   "properties": {
+    "nombre": "Vivero Municipal",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/637289035",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9853667,
+     -35.5594787
+    ]
+   },
+   "properties": {
+    "nombre": "Plaza San Antonio",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/640111963",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0123292,
+     -35.5544783
+    ]
+   },
+   "properties": {
+    "nombre": "Plaza Ameghino",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/640286623",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0102141,
+     -35.5548519
+    ]
+   },
+   "properties": {
+    "nombre": "Equipamiento Comunitario",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/640286912",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9900887,
+     -35.5564358
+    ]
+   },
+   "properties": {
+    "nombre": "Chacra San Ignacio",
+    "tipo": "plaza",
+    "direccion": "María de los Santos Vázquez",
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/640344352",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0102186,
+     -35.5554208
+    ]
+   },
+   "properties": {
+    "nombre": "Plaza de Barrio",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/640355331",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0134271,
+     -35.5534704
+    ]
+   },
+   "properties": {
+    "nombre": "Plaza de Barrio",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/640355415",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0191818,
+     -35.5771262
+    ]
+   },
+   "properties": {
+    "nombre": "Parque 5to Centenario",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/640356383",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0151295,
+     -35.5823042
+    ]
+   },
+   "properties": {
+    "nombre": "Plazoleta de los Blandengues",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": "Municipalidad de Chascomus",
+    "fuente": "https://www.openstreetmap.org/way/640356507",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9967247,
+     -35.5807938
+    ]
+   },
+   "properties": {
+    "nombre": "Plaza de Barrio",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/640363773",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0050545,
+     -35.5544754
+    ]
+   },
+   "properties": {
+    "nombre": "Un Techo II",
+    "tipo": "barrio",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/640410897",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0041978,
+     -35.5796681
+    ]
+   },
+   "properties": {
+    "nombre": "Plaza de Los Sueños",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/641543262",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0052035,
+     -35.5836809
+    ]
+   },
+   "properties": {
+    "nombre": "Parque",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/641543834",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0128736,
+     -35.5829107
+    ]
+   },
+   "properties": {
+    "nombre": "Plazoleta Lalín",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/641544084",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0043223,
+     -35.5639653
+    ]
+   },
+   "properties": {
+    "nombre": "Plaza Papa Francisco",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": "Obispado de Chascomus",
+    "fuente": "https://www.openstreetmap.org/way/642677393",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.009292,
+     -35.561218
+    ]
+   },
+   "properties": {
+    "nombre": "Plaza de barrio",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/642677899",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0107218,
+     -35.5501749
+    ]
+   },
+   "properties": {
+    "nombre": "30 de Mayo",
+    "tipo": "barrio",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/644975593",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0091888,
+     -35.5578977
+    ]
+   },
+   "properties": {
+    "nombre": "Escuela Agrotecnica",
+    "tipo": "escuela_secundaria",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/644981614",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0179406,
+     -35.567809
+    ]
+   },
+   "properties": {
+    "nombre": "Escuela de Educacion Tecnica Nº1",
+    "tipo": "escuela_secundaria",
+    "direccion": "Avenida Escribano",
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/644988969",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0003416,
+     -35.5775711
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/645038380",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0101894,
+     -35.5790392
+    ]
+   },
+   "properties": {
+    "nombre": "Escuela Nº1",
+    "tipo": "escuela_sin_clasificar",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/645038731",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0102356,
+     -35.5742967
+    ]
+   },
+   "properties": {
+    "nombre": "Jardín de Infantes Corazón de María",
+    "tipo": "jardin",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": "Amigos del Pais",
+    "fuente": "https://www.openstreetmap.org/way/645039127",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0101951,
+     -35.5745059
+    ]
+   },
+   "properties": {
+    "nombre": "Escuela Corazón de María",
+    "tipo": "escuela_sin_clasificar",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/645039604",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0096999,
+     -35.574747
+    ]
+   },
+   "properties": {
+    "nombre": "Instituto Corazón de María",
+    "tipo": "escuela_sin_clasificar",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": "Padres Claretianos - Amigos del Pais",
+    "fuente": "https://www.openstreetmap.org/way/645040282",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0102184,
+     -35.5748301
+    ]
+   },
+   "properties": {
+    "nombre": "Gimnasio Corazón de María",
+    "tipo": "escuela_sin_clasificar",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/645040534",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9852474,
+     -35.5763417
+    ]
+   },
+   "properties": {
+    "nombre": "Centro Atencion Primaria de Salud",
+    "tipo": "caps",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": "Municipalidad de Chascomus",
+    "fuente": "https://www.openstreetmap.org/way/645347149",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0121475,
+     -35.5517344
+    ]
+   },
+   "properties": {
+    "nombre": "Plazoleta",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/648199503",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0152492,
+     -35.5469224
+    ]
+   },
+   "properties": {
+    "nombre": "Cooperativa Un Techo",
+    "tipo": "barrio",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/648246360",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0206991,
+     -35.5532872
+    ]
+   },
+   "properties": {
+    "nombre": "Los Sauces",
+    "tipo": "barrio",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/648247574",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0078673,
+     -35.5743157
+    ]
+   },
+   "properties": {
+    "nombre": "Grupo Scouts MM de Güemes Nº788",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/648248628",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0126173,
+     -35.5322853
+    ]
+   },
+   "properties": {
+    "nombre": "Escuela Nº 45",
+    "tipo": "escuela_sin_clasificar",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/648257553",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0136882,
+     -35.5317923
+    ]
+   },
+   "properties": {
+    "nombre": "Jardín Nº 908",
+    "tipo": "jardin",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/648257570",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0191431,
+     -35.5765735
+    ]
+   },
+   "properties": {
+    "nombre": "Escuela Nº504",
+    "tipo": "escuela_sin_clasificar",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/649218701",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0127198,
+     -35.5484512
+    ]
+   },
+   "properties": {
+    "nombre": "Equipamiento Comunitario",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/653230862",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0140875,
+     -35.5496648
+    ]
+   },
+   "properties": {
+    "nombre": "Equipamiento Comunitario",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/653230996",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0102868,
+     -35.5499474
+    ]
+   },
+   "properties": {
+    "nombre": "Equipamiento Comunitario",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/653231004",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0095465,
+     -35.5531313
+    ]
+   },
+   "properties": {
+    "nombre": "Equipamiento Comunitario",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/653231160",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0088746,
+     -35.5536976
+    ]
+   },
+   "properties": {
+    "nombre": "Equipamiento Comunitario",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/653231367",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0080546,
+     -35.552877
+    ]
+   },
+   "properties": {
+    "nombre": "Equipamiento Comunitario",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/653231554",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0164441,
+     -35.5569841
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/653388323",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0154074,
+     -35.5569383
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/653388324",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0142702,
+     -35.5568816
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/653388325",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0133234,
+     -35.55685
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/653388326",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0125361,
+     -35.556814
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/653388327",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0118245,
+     -35.5567558
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/653388328",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0110446,
+     -35.5567313
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/653388329",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0102667,
+     -35.5566963
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/653388330",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0102328,
+     -35.5593382
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/653388367",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0105196,
+     -35.5586246
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/653388427",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0105905,
+     -35.5574118
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/653389161",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0239622,
+     -35.565585
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/675442075",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9929794,
+     -35.5689303
+    ]
+   },
+   "properties": {
+    "nombre": "Plaza terreno del Obispado",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/684204748",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0171347,
+     -35.5686082
+    ]
+   },
+   "properties": {
+    "nombre": "Subdelegación Chascomús",
+    "tipo": "delegacion",
+    "direccion": "Avenida Pedro Nicolas Escribano 309",
+    "telefono": "+54 2241 42 3172",
+    "web": "https://www.argentina.gob.ar/policiafederal",
+    "operador": "Policía Federal Argentina",
+    "fuente": "https://www.openstreetmap.org/way/697246232",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.007852,
+     -35.5601092
+    ]
+   },
+   "properties": {
+    "nombre": "Plaza  de Barrio",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/738250129",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0162286,
+     -35.5562491
+    ]
+   },
+   "properties": {
+    "nombre": "Plaza de los Chicos",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/744710854",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0161085,
+     -35.5580801
+    ]
+   },
+   "properties": {
+    "nombre": "Plaza de los Sueños",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/744711195",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9841222,
+     -35.5684933
+    ]
+   },
+   "properties": {
+    "nombre": "Plaza de Barrio La Pampita",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/744720132",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.018495,
+     -35.553876
+    ]
+   },
+   "properties": {
+    "nombre": "Equipamiento Comunitario",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/745308598",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0195696,
+     -35.55371
+    ]
+   },
+   "properties": {
+    "nombre": "PARQUE",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/745309449",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0197919,
+     -35.5531445
+    ]
+   },
+   "properties": {
+    "nombre": "PARQUE",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/745309450",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0198196,
+     -35.5523277
+    ]
+   },
+   "properties": {
+    "nombre": "PARQUE",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/745309451",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0193743,
+     -35.5515254
+    ]
+   },
+   "properties": {
+    "nombre": "PARQUE",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/745311202",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0205287,
+     -35.5536585
+    ]
+   },
+   "properties": {
+    "nombre": "PARQUE",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/745311203",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0212153,
+     -35.5540284
+    ]
+   },
+   "properties": {
+    "nombre": "PARQUE",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/745311204",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0218852,
+     -35.5544071
+    ]
+   },
+   "properties": {
+    "nombre": "PARQUE",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/745311205",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0082217,
+     -35.5519245
+    ]
+   },
+   "properties": {
+    "nombre": "Equipamiento Comunitario",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/745315812",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.015727,
+     -35.557308
+    ]
+   },
+   "properties": {
+    "nombre": "Nuestra Señora de Lujan",
+    "tipo": "escuela_sin_clasificar",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/745714015",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0153624,
+     -35.5554537
+    ]
+   },
+   "properties": {
+    "nombre": "Jardín Nº 904 \"Prof. Ines J. Killian\"",
+    "tipo": "jardin",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/745743097",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0151877,
+     -35.5556768
+    ]
+   },
+   "properties": {
+    "nombre": "Secundaria Municipal",
+    "tipo": "escuela_secundaria",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/745744499",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9904772,
+     -35.5600695
+    ]
+   },
+   "properties": {
+    "nombre": "Plaza de Barrio",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/747313921",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0025007,
+     -35.5710402
+    ]
+   },
+   "properties": {
+    "nombre": "Jardín Medalla Milagrosa",
+    "tipo": "jardin",
+    "direccion": "Betbezé",
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/747396801",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0158359,
+     -35.5676421
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "escuela_sin_clasificar",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/776674773",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0248308,
+     -35.5560597
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/777220552",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0092765,
+     -35.5732704
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/777280316",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0175379,
+     -35.5682934
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/845865318",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0192581,
+     -35.5684637
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/845865319",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0202296,
+     -35.568567
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/845865320",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0210538,
+     -35.5686434
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/845865321",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0221116,
+     -35.568764
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/845865323",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0236781,
+     -35.5689306
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/845865324",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0063576,
+     -35.5833839
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/854252960",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0082283,
+     -35.5837618
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/854252961",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.009292,
+     -35.5839611
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/854252962",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0102272,
+     -35.5840131
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/854252963",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0128321,
+     -35.583349
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/854253333",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0085425,
+     -35.5841299
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/854253533",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0129355,
+     -35.5825787
+    ]
+   },
+   "properties": {
+    "nombre": "Republica del Libano",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/854270460",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0132523,
+     -35.5828576
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/854270623",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0052698,
+     -35.5832756
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/854271001",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0114617,
+     -35.5637106
+    ]
+   },
+   "properties": {
+    "nombre": "Pozo de Agua",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/854279735",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0231538,
+     -35.5634352
+    ]
+   },
+   "properties": {
+    "nombre": "Centro de Atencion Primaria de Salud",
+    "tipo": "caps",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/857253499",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9918802,
+     -35.5802603
+    ]
+   },
+   "properties": {
+    "nombre": "S/N",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/870401997",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9963087,
+     -35.5692644
+    ]
+   },
+   "properties": {
+    "nombre": "CAPS IPORA",
+    "tipo": "caps",
+    "direccion": "Perú",
+    "telefono": null,
+    "web": null,
+    "operador": "MUNICIPALIDAD DE CHASCOMUS",
+    "fuente": "https://www.openstreetmap.org/way/953042561",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9707456,
+     -35.5754896
+    ]
+   },
+   "properties": {
+    "nombre": "CAPS El Porteño",
+    "tipo": "caps",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/953053838",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0331332,
+     -35.5638477
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/971150806",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0214072,
+     -35.5366632
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/1003654900",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0210254,
+     -35.5362123
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/1003654901",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9831743,
+     -35.5865303
+    ]
+   },
+   "properties": {
+    "nombre": "Terreno Fiscal",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": "Municipalidad de Chascomus",
+    "fuente": "https://www.openstreetmap.org/way/1005950735",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.994696,
+     -35.5729414
+    ]
+   },
+   "properties": {
+    "nombre": "Terreno Fiscal",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/1005951711",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0217472,
+     -35.5614063
+    ]
+   },
+   "properties": {
+    "nombre": "Terreno Municipal",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/1020272706",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0173671,
+     -35.5606295
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/1020272845",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0195446,
+     -35.5757231
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/1020273439",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0011245,
+     -35.5587963
+    ]
+   },
+   "properties": {
+    "nombre": "Predio de Club Atletico",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/1027106439",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0279661,
+     -35.5354389
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/1027109939",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0032512,
+     -35.5589997
+    ]
+   },
+   "properties": {
+    "nombre": "Predio de Union Deportivo",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/1028131305",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0151971,
+     -35.5716228
+    ]
+   },
+   "properties": {
+    "nombre": "Plazoleta Newton",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/1049647831",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0131164,
+     -35.5318381
+    ]
+   },
+   "properties": {
+    "nombre": "CAPS San Cayetano",
+    "tipo": "caps",
+    "direccion": "Gabino Ezeiza",
+    "telefono": null,
+    "web": null,
+    "operador": "Municipalidad de Chascomus",
+    "fuente": "https://www.openstreetmap.org/way/1068559931",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0206817,
+     -35.564984
+    ]
+   },
+   "properties": {
+    "nombre": "Mariano Moreno",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": "Municipalidad de Chascomus",
+    "fuente": "https://www.openstreetmap.org/way/1087002222",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0028114,
+     -35.563974
+    ]
+   },
+   "properties": {
+    "nombre": "Biblioteca Popular San José Obrero",
+    "tipo": "biblioteca",
+    "direccion": "Florencio Tomás Chappa 625",
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/1094208549",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9713588,
+     -35.5747913
+    ]
+   },
+   "properties": {
+    "nombre": "Plaza San Antonio",
+    "tipo": "plaza",
+    "direccion": "Lucio V. Mansilla",
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/1094209070",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9981109,
+     -35.574445
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/1098570385",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9986772,
+     -35.5739274
+    ]
+   },
+   "properties": {
+    "nombre": "Terreno Municipal",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/1098580468",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9946684,
+     -35.5736541
+    ]
+   },
+   "properties": {
+    "nombre": "Terreno Municipal",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/1098581012",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0239593,
+     -35.5629443
+    ]
+   },
+   "properties": {
+    "nombre": "Terreno Municipal",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/1098637782",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0254054,
+     -35.5626916
+    ]
+   },
+   "properties": {
+    "nombre": "Plaza Escondida",
+    "tipo": "plaza",
+    "direccion": "Pedro Echeverría",
+    "telefono": null,
+    "web": null,
+    "operador": "Municipalidad de Chascomus",
+    "fuente": "https://www.openstreetmap.org/way/1125029446",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0163479,
+     -35.5663335
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/1125030176",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0158986,
+     -35.5662867
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/1125030177",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0161636,
+     -35.5660555
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/1125030383",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0147214,
+     -35.5823974
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": "Municipalidad de  Chascomus",
+    "fuente": "https://www.openstreetmap.org/way/1125030761",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0040831,
+     -35.5830813
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/1125031061",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9874432,
+     -35.5776397
+    ]
+   },
+   "properties": {
+    "nombre": "Plaza Baldomero Fernadez Moreno",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": "Municipalidad de Chascomus",
+    "fuente": "https://www.openstreetmap.org/way/1155028974",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0182642,
+     -35.5669883
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "club_deportivo",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/1188672086",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9839748,
+     -35.5921663
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/1188776843",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9976872,
+     -35.5784319
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/1190513249",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9986217,
+     -35.557134
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "barrio",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/1190925353",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9910762,
+     -35.5779669
+    ]
+   },
+   "properties": {
+    "nombre": "Plaza Baldomero Fernadez Moreno",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": "Municipalidad de Chascomus",
+    "fuente": "https://www.openstreetmap.org/way/1227810579",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9906413,
+     -35.5774088
+    ]
+   },
+   "properties": {
+    "nombre": "Terreno Municipal",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/1227810661",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9903794,
+     -35.5782207
+    ]
+   },
+   "properties": {
+    "nombre": "Terreno Municipal",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/1227810918",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9932063,
+     -35.5775882
+    ]
+   },
+   "properties": {
+    "nombre": "Terreno Municipal",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/1227811200",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9935515,
+     -35.5755733
+    ]
+   },
+   "properties": {
+    "nombre": "Terreno Municipal",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/1227811747",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9765379,
+     -35.5767024
+    ]
+   },
+   "properties": {
+    "nombre": "RESERVA FISCAL",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/1362865868",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9909916,
+     -35.584232
+    ]
+   },
+   "properties": {
+    "nombre": "RESERVA",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/1364991566",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9888878,
+     -35.582483
+    ]
+   },
+   "properties": {
+    "nombre": "RESERVA",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/1364991826",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -57.9790506,
+     -35.589939
+    ]
+   },
+   "properties": {
+    "nombre": "PLAZA",
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/way/1364992228",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0248592,
+     -35.5719451
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/relation/4489315",
+    "municipio": "Chascomús"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -58.0193558,
+     -35.5804621
+    ]
+   },
+   "properties": {
+    "nombre": null,
+    "tipo": "plaza",
+    "direccion": null,
+    "telefono": null,
+    "web": null,
+    "operador": null,
+    "fuente": "https://www.openstreetmap.org/relation/4489316",
+    "municipio": "Chascomús"
+   }
+  }
+ ]
+}

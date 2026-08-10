@@ -4,6 +4,7 @@
 credenciales.txt
 credenciales*.txt
 !credenciales.ejemplo.txt
+deepseek_key.txt
 .env
 .env.*
 *.key
@@ -30,6 +31,20 @@ data/processed/discovery/cache/
 # Cache de respuestas de Gemini y contador de cuota diaria. Es estado local de
 # la maquina que corre el motor, no conocimiento del proyecto.
 data/processed/extraction/cache/
+
+# Respuestas crudas de Overpass. Se regeneran solas; lo que importa queda
+# normalizado en entidades_86.sqlite con su URL de origen.
+data/processed/territorio/cache/
+
+# Texto de las paginas guardado para no re-crawlear en cada iteracion del motor
+# comercial. Es una copia de portales publicos: se regenera sola y no es la
+# evidencia (esa vive con su cita en oportunidades_86.sqlite).
+data/processed/oportunidades/cache/
+
+# Texto de los boletines oficiales bajados de SIBOM. Son PDFs publicos de 700 KB
+# cada uno y se regeneran solos; la evidencia queda con su cita y su URL en
+# gabinete_86.sqlite.
+data/processed/gabinete/cache/
 
 src/tablero/web/_prueba.html
 progreso_municipios.json

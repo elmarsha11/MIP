@@ -52,9 +52,20 @@ def reunir_datos() -> dict:
         "turnos": consultas.mapa_turnos(),
         "costo_turnos": consultas.costo_turnos(),
         "revision": consultas.cola_de_revision(),
+        "comercial": consultas.comercial(),
         "parametros": consultas.parametros_impacto(),
+        "territorio": consultas.resumen_territorio(),
         # Las fichas se precalculan: sin servidor no hay a quien preguntarle.
         "fichas": {m["municipio"]: consultas.ficha(m["municipio"]) for m in municipios},
+        "resumenes": {
+            m["municipio"]: consultas.ficha_resumida(m["municipio"]) for m in municipios
+        },
+        # Los censos tambien se precalculan: sin servidor no hay a quien
+        # preguntarle. Solo los municipios censados, para no inflar el archivo.
+        "territorios": {
+            m["municipio"]: consultas.territorio(m["municipio"])
+            for m in consultas.resumen_territorio()["municipios"]
+        },
     }
 
 

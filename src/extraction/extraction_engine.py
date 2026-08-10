@@ -39,8 +39,11 @@ from fetcher import (  # noqa: E402
     paginas_de_turnos,
     todas_las_urls,
 )
-from gemini_client import ClienteGemini, CuotaAgotada  # noqa: E402
 from modelos import EstadoHallazgo, MunicipioExtraccion, Variable  # noqa: E402
+
+# Importar desde la capa LLM agnóstica
+sys.path.insert(0, str(PROJECT_ROOT / "src"))
+from llm import crear_proveedor, CuotaAgotada  # noqa: E402
 
 EXTRACTION_DIR = PROJECT_ROOT / "data" / "processed" / "extraction"
 JSON_86 = EXTRACTION_DIR / "hallazgos_86.json"
@@ -326,8 +329,8 @@ def main(argv: Optional[List[str]] = None) -> int:
         action="store_true",
         help="Saltear los municipios que ya tienen hallazgos y seguir desde ahi",
     )
-    parser.add_argument("--sin-ia", action="store_true", help="Solo leer paginas, sin llamar a Gemini")
-    parser.add_argument("--sin-cache", action="store_true", help="Ignorar el cache de IA")
+    parser.add_argument("--sin-ia", action="store_true", help="Solo leer paginas, sin llamar a la IA")
+    parser.add_argument("--sin-cache", action="store_true", help="Ignorar el cache de IA (no usado con nuevo factory)")
     parser.add_argument("--json", type=Path, default=JSON_86)
     parser.add_argument("--sqlite", type=Path, default=SQLITE_86)
     args = parser.parse_args(argv)
@@ -335,7 +338,7 @@ def main(argv: Optional[List[str]] = None) -> int:
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
-    cliente = None if args.sin_ia else ClienteGemini(usar_cache=not args.sin_cache)
+    cliente = None if args.sin_ia else crear_proveedor()
     inicio = time.perf_counter()
 
     if args.municipio:

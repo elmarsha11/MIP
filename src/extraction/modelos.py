@@ -25,7 +25,7 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator, model_valida
 
 
 class Variable(str, Enum):
-    """Que mide MIP. Cruza el Gold Standard con las 7 variables de UDS."""
+    """Que mide MIP. Cruza el Gold Standard con las 7 variables de UDS y nueva informacion."""
 
     TRAMITES_ONLINE = "tramites_online"
     TURNOS_SALUD_ONLINE = "turnos_salud_online"
@@ -38,6 +38,17 @@ class Variable(str, Enum):
     LICITACIONES = "licitaciones"
     APP_MUNICIPAL = "app_municipal"
     CANAL_TURNOS_SALUD = "canal_turnos_salud"
+
+    # Nuevas variables ampliadas
+    INTENDENTE = "intendente"
+    SECRETARIAS = "secretarias"
+    CONCEJALES = "concejales"
+    POBLACION = "poblacion"
+    HOSPITALES_CAPS = "hospitales_caps"
+    INSTITUCIONES_EDUCATIVAS = "instituciones_educativas"
+    MEDIO_AMBIENTE = "medio_ambiente"
+    SEGURIDAD_VIGILANCIA = "seguridad_vigilancia"
+    TRANSPORTE_PUBLICO = "transporte_publico"
 
 
 class Valor(str, Enum):
@@ -106,9 +117,47 @@ class EstadoHallazgo(str, Enum):
 DOMINIO_VALORES: dict = {v: tuple(x.value for x in Valor) for v in Variable}
 DOMINIO_VALORES[Variable.CANAL_TURNOS_SALUD] = tuple(x.value for x in CanalTurnos)
 
+# Variables de texto libre (abiertas), no tienen un dominio estricto de opciones
+VARIABLES_TEXTO_LIBRE = {
+    Variable.INTENDENTE,
+    Variable.SECRETARIAS,
+    Variable.CONCEJALES,
+    Variable.POBLACION,
+    Variable.HOSPITALES_CAPS,
+    Variable.INSTITUCIONES_EDUCATIVAS,
+    Variable.MEDIO_AMBIENTE,
+    Variable.SEGURIDAD_VIGILANCIA,
+    Variable.TRANSPORTE_PUBLICO,
+}
 
-def valores_admitidos(variable: Variable) -> tuple:
+for var in VARIABLES_TEXTO_LIBRE:
+    DOMINIO_VALORES[var] = None  # None significa que admite texto libre (cualquier string)
+
+
+def valores_admitidos(variable: Variable) -> Optional[tuple]:
+    """Valores que admite la variable, o None si es de texto libre."""
     return DOMINIO_VALORES[variable]
+
+
+def es_texto_libre(variable: Variable) -> bool:
+    return DOMINIO_VALORES[variable] is None
+
+
+def valor_respaldado_por_la_cita(valor: str, cita: str) -> bool:
+    """Para las variables de texto libre, el VALOR tiene que estar en la cita.
+
+    Es ADR-0014 llevado hasta el final. En una variable binaria el valor esta
+    acotado a si/no y la cita solo lo respalda. En una de texto libre el valor
+    ES el dato: si nadie comprueba que "Javier Gaston" aparezca en la fuente, el
+    modelo puede citar una frase real sobre bacheo y colgarle cualquier nombre.
+    Verificado el 2026-08-08: entraba como verificado con confianza Alta.
+
+    Se compara con la misma normalizacion que las citas: tolera mayusculas,
+    tildes y espaciado, no tolera palabras distintas.
+    """
+    if not valor or not cita:
+        return False
+    return normalizar_para_cotejo(valor) in normalizar_para_cotejo(cita)
 
 
 # ---------------------------------------------------------------------------
@@ -203,11 +252,12 @@ class Hallazgo(BaseModel):
         como si fuera un valor del contrato.
         """
         admitidos = DOMINIO_VALORES[self.variable]
-        if self.valor not in admitidos:
-            raise ValueError(
-                f"{self.variable.value} no admite el valor {self.valor!r}. "
-                f"Admitidos: {admitidos}"
-            )
+        if admitidos is not None:
+            if self.valor not in admitidos:
+                raise ValueError(
+                    f"{self.variable.value} no admite el valor {self.valor!r}. "
+                    f"Admitidos: {admitidos}"
+                )
         return self
 
     @model_validator(mode="after")

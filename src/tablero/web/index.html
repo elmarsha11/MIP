@@ -20,7 +20,9 @@
   <button data-vista="panel" class="activa">Panel</button>
   <button data-vista="municipios">Municipios</button>
   <button data-vista="turnos">Mapa de turnos</button>
+  <button data-vista="territorio">Territorio</button>
   <button data-vista="impacto">Impacto</button>
+  <button data-vista="comercial">Comercial</button>
   <button data-vista="revision">Revisión</button>
   <button data-vista="acciones">Acciones</button>
 </nav>
@@ -69,9 +71,39 @@
     <div id="turnos-contenido"></div>
   </section>
 
+  <!-- TERRITORIO -->
+  <section id="vista-territorio" class="vista oculta">
+    <p class="nota">
+      Qué hay adentro de cada municipio: hospitales, CAPS, escuelas, barrios, comisarías.
+      Fuente: OpenStreetMap. Cada entidad se puede abrir para verificarla.
+    </p>
+    <div class="barra">
+      <select id="territorio-municipio"></select>
+      <span id="territorio-cuenta" class="nota"></span>
+      <a class="boton" href="/api/exportar/territorio.csv">Exportar CSV</a>
+    </div>
+    <div id="mapa-caja"></div>
+    <div id="territorio-lista"></div>
+  </section>
+
   <!-- IMPACTO -->
   <section id="vista-impacto" class="vista oculta">
     <div id="impacto-contenido"></div>
+  </section>
+
+  <!-- COMERCIAL -->
+  <section id="vista-comercial" class="vista oculta">
+    <p class="nota">
+      Qué proceso sigue siendo manual en cada municipio, y qué producto de UDS lo
+      resuelve. <strong>Es la única vista que muestra interpretación y no sólo
+      evidencia:</strong> el problema y el nivel de fricción los propone el modelo,
+      lo verificado es la cita. Por eso cada fila viaja con su cita y su fuente.
+    </p>
+    <div class="barra">
+      <select id="comercial-producto"></select>
+      <span id="comercial-cuenta" class="nota"></span>
+    </div>
+    <div id="comercial-contenido"></div>
   </section>
 
   <!-- REVISION -->

@@ -13,14 +13,22 @@ const api = (r) =>
 
 function leerIncrustado(ruta) {
   const D = window.DATOS_MIP;
+  if (ruta.startsWith("territorio/")) {
+    const nombre = decodeURIComponent(ruta.slice("territorio/".length));
+    return D.territorios[nombre] || { total: 0, ubicadas: 0, recuadro: null, entidades: [] };
+  }
+  if (ruta.startsWith("resumen-municipio/")) {
+    const nombre = decodeURIComponent(ruta.slice("resumen-municipio/".length));
+    return (D.resumenes || {})[nombre] || {};
+  }
   if (ruta.startsWith("municipio/")) {
     const nombre = decodeURIComponent(ruta.slice("municipio/".length));
     return D.fichas[nombre] || { error: "Municipio inexistente" };
   }
   return {
     resumen: D.resumen, municipios: D.municipios, turnos: D.turnos,
-    "costo-turnos": D.costo_turnos, revision: D.revision,
-    parametros: D.parametros, acciones: [], tareas: [],
+    "costo-turnos": D.costo_turnos, revision: D.revision, comercial: D.comercial,
+    parametros: D.parametros, territorio: D.territorio, acciones: [], tareas: [],
   }[ruta] ?? [];
 }
 const esc = (t) =>
@@ -45,7 +53,8 @@ $$("#pestanas button").forEach((b) =>
 
 function cargarVista(vista) {
   ({ panel: verPanel, municipios: verMunicipios, turnos: verTurnos,
-     impacto: verImpacto, revision: verRevision, acciones: verAcciones }[vista] || (() => {}))();
+     territorio: verTerritorio, impacto: verImpacto, comercial: verComercial,
+     revision: verRevision, acciones: verAcciones }[vista] || (() => {}))();
 }
 
 /* -------------------------------------------------------------------- Panel */
@@ -128,13 +137,20 @@ function etiquetaCanal(c) {
 
 /* -------------------------------------------------------------------- Ficha */
 async function abrirFicha(nombre) {
-  const f = await api("municipio/" + encodeURIComponent(nombre));
+  const [f, r] = await Promise.all([
+    api("municipio/" + encodeURIComponent(nombre)),
+    api("resumen-municipio/" + encodeURIComponent(nombre)),
+  ]);
   $("#ficha-titulo").textContent = nombre;
   $("#ficha-cuerpo").innerHTML = `
-    <p class="nota">${esc(f.id_municipio)} · ${numero(f.poblacion)} habitantes
-      ${f.sitio_oficial ? `· <a href="${esc(f.sitio_oficial)}" target="_blank" rel="noopener">${esc(f.sitio_oficial)}</a>` : "· sin sitio oficial"}</p>
+    <p class="nota">${esc(f.id_municipio)}
+      ${f.sitio_oficial ? `· <a href="${esc(f.sitio_oficial)}" target="_blank" rel="noopener">${esc(f.sitio_oficial)}</a>` : "· sin sitio oficial"}
+      ${f.sitio_sin_https === 1 ? ' · <span class="etiqueta alerta">sin HTTPS</span>' : ""}</p>
 
-    <h3>Variables (${f.hallazgos.filter((h) => h.estado === "verificado").length} con evidencia)</h3>
+    ${r && r.municipio ? resumenMunicipio(r) : ""}
+
+    <h3>Evidencia detallada</h3>
+    <p class="nota">Cada variable con su cita textual, verificada contra la fuente.</p>
     ${f.hallazgos.map(fichaHallazgo).join("")}
 
     <h3>URLs descubiertas (${f.urls_detalle.length})</h3>
@@ -154,6 +170,75 @@ async function abrirFicha(nombre) {
   );
   $("#panel-ficha").classList.remove("oculta");
   $("#fondo").classList.remove("oculta");
+}
+
+/* La ficha como la leeria una persona, no como la guarda una base.
+   Todo lo que no se sabe se dice, con el motivo. ADR-0009: el vacio se muestra. */
+function resumenMunicipio(r) {
+  const falta = (motivo) => `<span class="etiqueta">sin dato</span>
+    <span class="origen"> ${esc(motivo || "")}</span>`;
+
+  const conEvidencia = (d) =>
+    d.valor
+      ? `<strong>${esc(d.valor)}</strong>${d.detalle ? " · " + esc(d.detalle) : ""}
+         ${d.url ? `<div class="origen"><a href="${esc(d.url)}" target="_blank" rel="noopener">ver fuente</a>
+            ${d.fragmento ? `— <em>"${esc(d.fragmento.slice(0, 90))}"</em>` : ""}</div>` : ""}`
+      : falta(d.motivo);
+
+  const p = r.poblacion, s = r.salud, e = r.educacion, t = r.transporte;
+  const canalEtiqueta = s.turnos_canal
+    ? etiquetaCanal(s.turnos_canal)
+    : '<span class="etiqueta">sin dato</span>';
+
+  return `
+  <div class="resumen">
+    <h3>Población</h3>
+    <p><strong>${numero(p.total)}</strong> habitantes
+      <span class="origen">· ${esc(p.fuente)}</span></p>
+    <p class="origen">Mujeres / varones / viviendas: ${esc(p.falta)}</p>
+
+    <h3>Autoridades</h3>
+    <table><tbody>
+      <tr><td>Intendente</td><td>${conEvidencia(r.autoridades.intendente)}</td></tr>
+      <tr><td>Secretarías</td><td>${conEvidencia(r.autoridades.secretarias)}</td></tr>
+      <tr><td>Concejo Deliberante</td><td>${conEvidencia(r.autoridades.concejales)}</td></tr>
+    </tbody></table>
+
+    <h3>Educación — ${e.total} establecimientos</h3>
+    ${e.total
+      ? `<table><tbody>${Object.entries(e.por_nivel).map(([nivel, n]) =>
+          `<tr><td>${esc(nivel)}</td><td class="num"><strong>${n}</strong></td></tr>`).join("")}
+         </tbody></table><p class="origen">${esc(e.fuente)}</p>`
+      : `<p>${falta("El municipio no fue censado todavía")}</p>`}
+
+    <h3>Salud</h3>
+    <table><tbody>
+      <tr><td>Hospitales</td><td>${s.hospitales.length
+        ? s.hospitales.map((h) => `<strong>${esc(h.nombre || "(sin nombre)")}</strong>
+            ${h.direccion ? `<span class="origen"> · ${esc(h.direccion)}</span>` : ""}`).join("<br>")
+        : falta("Sin hospital registrado en OpenStreetMap")}</td></tr>
+      <tr><td>CAPS / salas</td><td><strong>${s.caps}</strong>
+        ${s.caps_nombrados.length ? `<div class="origen">${s.caps_nombrados.map(esc).join(" · ")}</div>` : ""}</td></tr>
+      <tr><td>Farmacias</td><td>${s.farmacias}</td></tr>
+      <tr><td><strong>Turnos médicos</strong></td><td>${canalEtiqueta}
+        ${s.turnos_evidencia ? `<div class="origen"><em>"${esc(s.turnos_evidencia.slice(0, 100))}"</em>
+          ${s.turnos_url ? `<a href="${esc(s.turnos_url)}" target="_blank" rel="noopener"> ver fuente</a>` : ""}</div>` : ""}</td></tr>
+    </tbody></table>
+
+    <h3>Gestión digital</h3>
+    <table><tbody>
+      ${Object.entries(r.digital).map(([etiqueta, d]) =>
+        `<tr><td>${esc(etiqueta)}</td><td>${conEvidencia(d)}</td></tr>`).join("")}
+    </tbody></table>
+
+    <h3>Transporte público</h3>
+    <table><tbody>
+      <tr><td>Tren</td><td>${t.estaciones_tren.length
+        ? t.estaciones_tren.map((x) => `<strong>${esc(x.nombre || "estación")}</strong>`).join(" · ")
+        : falta("Sin estación registrada en OpenStreetMap")}</td></tr>
+      <tr><td>Colectivo urbano</td><td>${falta(t.falta)}</td></tr>
+    </tbody></table>
+  </div>`;
 }
 
 function fichaHallazgo(h) {
@@ -218,6 +303,144 @@ const grupoTurnos = (titulo, subtitulo, filas) => `
       </div>`).join("") || '<p class="nota">Ninguno.</p>'}
   </div>`;
 
+/* ---------------------------------------------------------------- Territorio */
+/* El mapa se dibuja como SVG con las coordenadas reales, sin librerias ni tiles
+   externos. No hay callejero de fondo, pero se ve la distribucion territorial
+   —donde estan los CAPS respecto de los barrios— que es lo que sirve para
+   decidir. Y funciona sin internet, que es requisito del HTML autonomo. */
+
+const COLOR_CAPA = {
+  "Salud": "#d9614c",
+  "Educación": "#4a9eda",
+  "Gobierno y seguridad": "#d99a3c",
+  "Territorio": "#8b98a8",
+  "Cultura y comunidad": "#3fb27f",
+};
+let TERRITORIO = null;
+let CAPAS_VISIBLES = new Set(Object.keys(COLOR_CAPA));
+
+async function verTerritorio() {
+  const resumen = await api("territorio");
+  const selector = $("#territorio-municipio");
+
+  if (!resumen.municipios || !resumen.municipios.length) {
+    $("#mapa-caja").innerHTML =
+      '<p class="nota">Todavía no se censó ningún municipio. Corré: ' +
+      '<code>python src/territorio/censo.py --all</code></p>';
+    $("#territorio-lista").innerHTML = "";
+    return;
+  }
+
+  if (!selector.options.length) {
+    selector.innerHTML = resumen.municipios
+      .map((m) => `<option value="${esc(m.municipio)}">${esc(m.municipio)} — ${m.total_entidades} entidades</option>`)
+      .join("");
+    selector.addEventListener("change", () => pintarTerritorio(selector.value));
+  }
+  await pintarTerritorio(selector.value || resumen.municipios[0].municipio);
+}
+
+async function pintarTerritorio(municipio) {
+  TERRITORIO = await api("territorio/" + encodeURIComponent(municipio));
+  $("#territorio-cuenta").textContent =
+    `${TERRITORIO.total} entidades · ${TERRITORIO.ubicadas} ubicadas`;
+  dibujarMapa();
+  listarEntidades();
+}
+
+function dibujarMapa() {
+  const caja = TERRITORIO.recuadro;
+  if (!caja) {
+    $("#mapa-caja").innerHTML = '<p class="nota">Sin entidades ubicadas.</p>';
+    return;
+  }
+  const ANCHO = 900, ALTO = 520, MARGEN = 24;
+  // Corrige la deformacion por latitud: a -35° un grado de longitud mide
+  // bastante menos que uno de latitud. Sin esto el municipio sale estirado.
+  const latMedia = (caja.lat_min + caja.lat_max) / 2;
+  const factorLon = Math.cos((latMedia * Math.PI) / 180);
+  const anchoGeo = Math.max((caja.lon_max - caja.lon_min) * factorLon, 1e-6);
+  const altoGeo = Math.max(caja.lat_max - caja.lat_min, 1e-6);
+  const escala = Math.min((ANCHO - 2 * MARGEN) / anchoGeo, (ALTO - 2 * MARGEN) / altoGeo);
+  const desplX = (ANCHO - anchoGeo * escala) / 2;
+  const desplY = (ALTO - altoGeo * escala) / 2;
+
+  const px = (e) => desplX + (e.longitud - caja.lon_min) * factorLon * escala;
+  const py = (e) => desplY + (caja.lat_max - e.latitud) * escala;  // norte arriba
+
+  const visibles = TERRITORIO.entidades.filter(
+    (e) => e.latitud != null && CAPAS_VISIBLES.has(e.capa)
+  );
+  // Los barrios van al fondo: son el contexto sobre el que se leen los servicios.
+  visibles.sort((a, b) => (a.capa === "Territorio" ? -1 : 0) - (b.capa === "Territorio" ? -1 : 0));
+
+  const puntos = visibles.map((e, i) => {
+    const r = e.capa === "Territorio" ? 3 : 5;
+    return `<circle class="punto" cx="${px(e).toFixed(1)}" cy="${py(e).toFixed(1)}" r="${r}"
+      fill="${COLOR_CAPA[e.capa] || "#888"}" fill-opacity="${e.capa === "Territorio" ? 0.5 : 0.85}"
+      data-i="${i}"><title>${esc(e.nombre || e.tipo)}</title></circle>`;
+  }).join("");
+
+  $("#mapa-caja").innerHTML = `
+    <svg viewBox="0 0 ${ANCHO} ${ALTO}" role="img" aria-label="Mapa de ${esc(TERRITORIO.municipio)}">
+      <rect width="${ANCHO}" height="${ALTO}" fill="transparent"/>
+      ${puntos}
+    </svg>
+    <div class="leyenda">
+      ${Object.entries(COLOR_CAPA).map(([capa, color]) => `
+        <label class="${CAPAS_VISIBLES.has(capa) ? "activa" : ""}" data-capa="${esc(capa)}">
+          <span class="bolita" style="background:${color}"></span>${esc(capa)}
+        </label>`).join("")}
+    </div>
+    <div id="mapa-detalle">Pasá el mouse por un punto, o hacé click para ver su ficha.</div>`;
+
+  $$("#mapa-caja .leyenda label").forEach((l) =>
+    l.addEventListener("click", () => {
+      const capa = l.dataset.capa;
+      CAPAS_VISIBLES.has(capa) ? CAPAS_VISIBLES.delete(capa) : CAPAS_VISIBLES.add(capa);
+      dibujarMapa();
+    })
+  );
+  $$("#mapa-caja .punto").forEach((c) =>
+    c.addEventListener("click", () => mostrarEntidad(visibles[+c.dataset.i]))
+  );
+}
+
+function mostrarEntidad(e) {
+  $("#mapa-detalle").innerHTML = `
+    <strong>${esc(e.nombre || "(sin nombre)")}</strong> · ${esc(e.tipo)}
+    ${e.direccion ? " · " + esc(e.direccion) : ""}
+    ${e.telefono ? " · " + esc(e.telefono) : ""}
+    ${e.url_fuente ? ` · <a href="${esc(e.url_fuente)}" target="_blank" rel="noopener">verificar en OpenStreetMap</a>` : ""}`;
+}
+
+function listarEntidades() {
+  const porCapa = {};
+  for (const e of TERRITORIO.entidades) (porCapa[e.capa] ||= []).push(e);
+
+  $("#territorio-lista").innerHTML = Object.entries(porCapa)
+    .map(([capa, entidades]) => {
+      const porTipo = {};
+      for (const e of entidades) (porTipo[e.tipo] ||= []).push(e);
+      return `
+        <div class="grupo">
+          <h3><span class="bolita" style="background:${COLOR_CAPA[capa] || "#888"}"></span>
+            ${esc(capa)} (${entidades.length})</h3>
+          ${Object.entries(porTipo).sort((a, b) => b[1].length - a[1].length).map(([tipo, grupo]) => `
+            <p class="subtitulo">${esc(tipo)} (${grupo.length})</p>
+            ${grupo.slice(0, 40).map((e) => `
+              <div class="evidencia">
+                <div><strong>${esc(e.nombre || "(sin nombre)")}</strong>
+                  ${e.direccion ? `<span class="origen"> · ${esc(e.direccion)}</span>` : ""}</div>
+                ${e.telefono || e.web ? `<div class="origen">${esc(e.telefono || "")} ${esc(e.web || "")}</div>` : ""}
+                ${e.url_fuente ? `<div class="origen"><a href="${esc(e.url_fuente)}" target="_blank" rel="noopener">${esc(e.url_fuente)}</a></div>` : ""}
+              </div>`).join("")}
+            ${grupo.length > 40 ? `<p class="nota">… y ${grupo.length - 40} más (ver CSV)</p>` : ""}
+          `).join("")}
+        </div>`;
+    }).join("");
+}
+
 /* ------------------------------------------------------------------ Impacto */
 async function verImpacto() {
   const [c, params] = await Promise.all([api("costo-turnos"), api("parametros")]);
@@ -272,6 +495,64 @@ async function verImpacto() {
           <span class="etiqueta ${p.afirmable ? "ok" : "alerta"}">${esc(p.tipo)}</span></div>
         <div class="origen">${esc(p.fuente)}</div>
       </div>`).join("")}`;
+}
+
+/* ---------------------------------------------------------------- Comercial */
+let COMERCIAL = null;
+
+async function verComercial() {
+  if (!COMERCIAL) COMERCIAL = await api("comercial");
+  const d = COMERCIAL;
+
+  if (!d.disponible) {
+    $("#comercial-contenido").innerHTML =
+      '<p class="nota">Todavía no se analizó. Corré <code>python src/oportunidades/motor.py --all</code>.</p>';
+    return;
+  }
+
+  const filtro = $("#comercial-producto");
+  if (!filtro.options.length) {
+    filtro.innerHTML =
+      `<option value="">Todos los productos (${d.total} oportunidades)</option>` +
+      d.productos.map((p) =>
+        `<option value="${esc(p.producto)}">${esc(p.producto)} — ${p.municipios} municipios</option>`
+      ).join("");
+    filtro.addEventListener("change", pintarComercial);
+  }
+  pintarComercial();
+}
+
+function pintarComercial() {
+  const d = COMERCIAL;
+  const producto = $("#comercial-producto").value;
+
+  // El filtro esconde las oportunidades de otros productos, pero NO recalcula el
+  // potencial: el orden sigue siendo el del municipio completo. Si se reordenara
+  // por el subconjunto filtrado, el ranking cambiaria segun lo que se esta
+  // mirando y dejaria de servir para decidir a quien visitar.
+  const municipios = d.municipios
+    .map((m) => ({
+      ...m,
+      visibles: producto ? m.oportunidades.filter((o) => o.producto === producto) : m.oportunidades,
+    }))
+    .filter((m) => m.visibles.length);
+
+  $("#comercial-cuenta").textContent =
+    `${municipios.reduce((n, m) => n + m.visibles.length, 0)} oportunidades en ${municipios.length} municipios`;
+
+  $("#comercial-contenido").innerHTML = municipios.map((m) => `
+    <div class="evidencia">
+      <div><strong>${esc(m.municipio)}</strong>
+        <span class="etiqueta">potencial ${m.puntaje}</span></div>
+      ${m.visibles.map((o) => `
+        <div style="margin-top:10px">
+          <div><span class="etiqueta ${o.friccion === "alta" ? "mal" : "alerta"}">${esc(o.friccion)}</span>
+            <strong>${esc(o.producto)}</strong></div>
+          <div class="origen">${esc(o.problema)}</div>
+          <div class="cita">“${esc(o.cita)}”</div>
+          <div class="origen"><a href="${esc(o.url)}" target="_blank" rel="noopener">${esc(o.url)}</a></div>
+        </div>`).join("")}
+    </div>`).join("");
 }
 
 /* ----------------------------------------------------------------- Revisión */
@@ -381,6 +662,7 @@ function descargasLocales() {
                ...D.turnos.sin_digital.map((f) => ({ ...f, grupo: "sin canal digital (probado)" }))],
       revision: D.revision,
       "costo-turnos": D.costo_turnos.municipios || [],
+      territorio: Object.values(D.territorios || {}).flatMap((t) => t.entidades || []),
     }[cual] || [];
     if (!filas.length) return alert("Nada para exportar.");
     const cols = Object.keys(filas[0]);

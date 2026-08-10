@@ -216,7 +216,7 @@ class TestCapaDeterministica(unittest.TestCase):
         urls = [URLTipificada("https://x/licitaciones/", "licitaciones", "Alta", "Licitaciones")]
         cliente = ClienteFalso([respuesta(Variable.TRAMITES_ONLINE, "si", "Habilitacion de Comercios")])
         extraer("Navarro", "MUN-BA-004", [PAGINA], cliente, FECHA, urls)
-        self.assertNotIn("licitaciones:", cliente.prompts[0])
+        self.assertNotIn("licitaciones (valores:", cliente.prompts[0])
 
 
 class TestPrompt(unittest.TestCase):
@@ -233,16 +233,21 @@ class TestPrompt(unittest.TestCase):
 
     def test_solo_pregunta_las_variables_pedidas(self):
         p = construir_prompt("Navarro", [PAGINA], [Variable.TURNOS_SALUD_ONLINE])
-        self.assertIn("turnos_salud_online:", p)
-        self.assertNotIn("licitaciones:", p)
+        self.assertIn("turnos_salud_online (valores:", p)
+        self.assertNotIn("licitaciones (valores:", p)
 
     def test_el_prompt_declara_los_valores_admitidos(self):
-        """El esquema ya no fija un enum unico: cada variable tiene su dominio."""
+        """El esquema ya no fija un enum unico: cada variable tiene su dominio,
+        asi que los valores admitidos se declaran en el prompt."""
         campos = ESQUEMA_RESPUESTA["properties"]["hallazgos"]["items"]["properties"]
         self.assertNotIn("enum", campos["valor"])
         p = construir_prompt("Navarro", [PAGINA], [Variable.CANAL_TURNOS_SALUD])
-        self.assertIn("whatsapp", p)
+        self.assertIn("valores: web/whatsapp/telegram", p)
         self.assertIn("no_verificable", p)
+
+    def test_el_prompt_marca_las_variables_de_texto_libre(self):
+        p = construir_prompt("Chascomus", [PAGINA], [Variable.INTENDENTE])
+        self.assertIn("texto libre", p)
 
 
 class TestCanalDeTurnos(unittest.TestCase):
@@ -352,6 +357,54 @@ class TestNoDestruirEvidencia(unittest.TestCase):
             con.close()
             self.assertEqual(valor, "no")
             self.assertEqual(frag, "cita nueva verificada")
+
+
+class TestVariablesDeTextoLibre(unittest.TestCase):
+    """En una variable binaria el valor esta acotado a si/no y la cita solo lo
+    respalda. En una de texto libre el VALOR ES EL DATO: si nadie comprueba que
+    el nombre aparezca en la fuente, el modelo puede citar una frase real y
+    colgarle cualquier nombre."""
+
+    PAGINA_OBRAS = Pagina(
+        url="https://chascomus.gob.ar/",
+        tipo="sitio_oficial",
+        confianza_url="Alta",
+        texto=("El intendente Javier Gaston recorrio las obras de bacheo en el "
+               "barrio Belgrano junto al secretario de Obras."),
+    )
+
+    def _verificar(self, valor, cita):
+        return {x.variable: x for x in verificar_respuesta(
+            respuesta(Variable.INTENDENTE, valor, cita),
+            "Chascomus", "MUN-BA-011", [self.PAGINA_OBRAS], FECHA,
+        )}[Variable.INTENDENTE]
+
+    def test_nombre_inventado_con_cita_real_no_entra(self):
+        """El caso que estaba abierto: cita verdadera, nombre falso."""
+        h = self._verificar("Juan Perez", "recorrio las obras de bacheo en el barrio Belgrano")
+        self.assertIs(h.estado, EstadoHallazgo.CITA_RECHAZADA)
+        self.assertEqual(h.valor, Valor.NO_VERIFICABLE.value)
+
+    def test_nombre_que_esta_en_la_cita_si_entra(self):
+        h = self._verificar("Javier Gaston", "El intendente Javier Gaston recorrio las obras")
+        self.assertIs(h.estado, EstadoHallazgo.VERIFICADO)
+        self.assertEqual(h.valor, "Javier Gaston")
+
+    def test_tolera_tildes_y_mayusculas_en_el_valor(self):
+        h = self._verificar("JAVIER GASTÓN", "El intendente Javier Gaston recorrio las obras")
+        self.assertIs(h.estado, EstadoHallazgo.VERIFICADO)
+
+    def test_las_binarias_no_exigen_que_el_valor_este_en_la_cita(self):
+        """'si' no aparece literal en ninguna cita, y no tiene por que."""
+        h = {x.variable: x for x in verificar_respuesta(
+            respuesta(Variable.TRAMITES_ONLINE, "si", "Habilitacion de Comercios"),
+            "Navarro", "MUN-BA-004", [PAGINA], FECHA,
+        )}[Variable.TRAMITES_ONLINE]
+        self.assertIs(h.estado, EstadoHallazgo.VERIFICADO)
+
+    def test_texto_libre_admite_cualquier_valor_del_dominio(self):
+        self.assertIsNone(DOMINIO_VALORES[Variable.INTENDENTE])
+        self.assertIsNotNone(DOMINIO_VALORES[Variable.TRAMITES_ONLINE])
 
 
 class TestCuota(unittest.TestCase):
