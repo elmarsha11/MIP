@@ -21,8 +21,10 @@ slots:
 from __future__ import annotations
 
 import json
+import re
 import threading
 import time
+import unicodedata
 from pathlib import Path
 from typing import Dict, List, Optional
 
@@ -296,8 +298,34 @@ def resolver_limite(municipio: str) -> Optional[int]:
     if municipio in mapa:
         return mapa[municipio]
 
-    nombres = [f"Partido de {municipio}", municipio]
-    filtro = "|".join(n.replace('"', "") for n in nombres)
+    # Como se llama el partido en OSM cuando no coincide con el Gold Standard.
+    # Verificado uno por uno el 2026-08-10 contra la lista completa de los 135
+    # partidos de nivel 5, NUNCA por parecido: asignarle a un municipio el
+    # territorio de otro es el peor error posible en este modulo. Es el mismo
+    # criterio y casi el mismo mapeo que ALIAS_INDEC en src/indec/censo.py.
+    ALIAS_OSM = {
+        "9 de Julio": "Nueve de Julio",
+        "San Miguel del Monte": "Monte",
+        "Alem": "Leandro N. Alem",
+        "Coronel Rosales": "Coronel de Marina Leonardo Rosales",
+        "Gonzales Cháves": "Adolfo Gonzales Chaves",
+    }
+    oficial = ALIAS_OSM.get(municipio, municipio)
+
+    # El nombre va sin tildes y con "." comodin en cada lugar acentuado: OSM
+    # escribe "Tapalqué", "Puan" y "Maipú" y el Gold Standard "Tapalque",
+    # "Puán" y "Maipu". El flag ,i de Overpass ignora mayusculas pero NO tildes,
+    # asi que esos tres quedaban sin censar por una vocal.
+    def _flexible(texto: str) -> str:
+        salida = []
+        for c in unicodedata.normalize("NFKD", texto):
+            if unicodedata.combining(c):
+                continue
+            salida.append("." if c.lower() in "aeiounc" else re.escape(c))
+        return "".join(salida)
+
+    nombres = [f"Partido de {_flexible(oficial)}", _flexible(oficial)]
+    filtro = "|".join(nombres)
     # La consulta se ACOTA a la provincia de Buenos Aires. Sin eso busca en todo
     # el mundo y hay homonimos: Ayacucho resolvia a relation/1930922, que es
     # Ayacucho de PERU, y despues el validador descartaba todas sus entidades por
