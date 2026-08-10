@@ -430,3 +430,34 @@ class TestLimpiezaHtml(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
+
+
+class TestVariablesDelegadas(unittest.TestCase):
+    """Cinco variables ya no se le preguntan al modelo: otro modulo las resuelve.
+
+    Al 2026-08-10 daban entre 0 y 1 verificados sobre 86 despues de corridas
+    completas, porque el portal municipal simplemente no publica eso. Seguir
+    preguntando gastaba una cuarta parte de la cuota de Fase 4 y llenaba la ficha
+    de "sin dato" que daban a entender que el dato no existia.
+    """
+
+    def test_el_prompt_no_pide_las_delegadas(self):
+        from extractor import construir_prompt
+        from modelos import VARIABLES_DELEGADAS
+
+        prompt = construir_prompt("X", [PAGINA])
+        for variable in VARIABLES_DELEGADAS:
+            with self.subTest(variable=variable.value):
+                self.assertNotIn(f"- {variable.value} (", prompt)
+
+    def test_siguen_en_la_base_con_el_modulo_que_las_resuelve(self):
+        """ADR-0009: el vacio se registra. Pero un vacio que dice donde buscar no
+        es lo mismo que uno que da a entender que nadie tiene el dato."""
+        from extractor import extraer
+        from modelos import VARIABLES_DELEGADAS, Variable
+
+        hallazgos = {h.variable: h for h in extraer("X", "x-1", [PAGINA], None, "2026-08-10")}
+        self.assertEqual(len(hallazgos), len(Variable))
+        for variable, modulo in VARIABLES_DELEGADAS.items():
+            with self.subTest(variable=variable.value):
+                self.assertIn(modulo, hallazgos[variable].detalle or "")

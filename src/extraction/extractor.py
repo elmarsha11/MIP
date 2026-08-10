@@ -20,6 +20,7 @@ try:
     from .fetcher import Pagina
     from .modelos import (
         DOMINIO_VALORES,
+        VARIABLES_DELEGADAS,
         CanalTurnos,
         Confianza,
         EstadoHallazgo,
@@ -35,6 +36,7 @@ except ImportError:  # ejecutado como script
     from fetcher import Pagina  # type: ignore[no-redef]
     from modelos import (  # type: ignore[no-redef]
         DOMINIO_VALORES,
+        VARIABLES_DELEGADAS,
         CanalTurnos,
         Confianza,
         EstadoHallazgo,
@@ -143,7 +145,14 @@ ESQUEMA_RESPUESTA = {
 def construir_prompt(
     municipio: str, paginas: Sequence[Pagina], variables: Optional[Sequence[Variable]] = None
 ) -> str:
-    variables = list(variables) if variables is not None else list(Variable)
+    # Por defecto NO se piden las delegadas: si el default fuera "todas", basta
+    # que alguien llame sin filtro para volver a gastar cuota en cinco preguntas
+    # que el portal no responde y que otro modulo ya resolvio.
+    variables = (
+        list(variables)
+        if variables is not None
+        else [v for v in Variable if v not in VARIABLES_DELEGADAS]
+    )
     bloques = []
     for i, p in enumerate(paginas, start=1):
         bloques.append(f"--- PAGINA {i} | tipo: {p.tipo} | {p.url}\n{p.texto}")
@@ -209,6 +218,26 @@ def _hallazgo_vacio(
         confianza=Confianza.CERO,
         estado=estado,
         modelo=modelo,
+    )
+
+
+def _hallazgo_delegado(
+    municipio: str, id_municipio: str, variable: Variable, fecha: str, modulo: str
+) -> Hallazgo:
+    """Vacio que dice DONDE esta el dato, en vez de dar a entender que no existe.
+
+    La diferencia importa para quien lee la ficha: "sin dato" y "esto lo resuelve
+    src/gabinete" son cosas distintas, y antes las dos se veian igual.
+    """
+    return Hallazgo(
+        municipio=municipio,
+        id_municipio=id_municipio,
+        variable=variable,
+        valor=Valor.NO_VERIFICABLE.value,
+        detalle=f"No se busca en el portal: lo resuelve {modulo}",
+        fecha=fecha,
+        confianza=Confianza.CERO,
+        estado=EstadoHallazgo.NO_VERIFICABLE,
     )
 
 
@@ -392,16 +421,28 @@ def extraer(
     """Primero lo que se prueba solo, despues una unica llamada de IA por el resto."""
     ya_probadas = hallazgos_deterministicos(urls_tipificadas, municipio, id_municipio, fecha)
 
+    # Las delegadas no se le preguntan al modelo: las resuelve otro modulo con
+    # una fuente mejor. Igual entran a la base como vacio (ADR-0009), pero con
+    # el detalle que dice donde buscar el dato.
+    delegadas = [
+        _hallazgo_delegado(municipio, id_municipio, v, fecha, modulo)
+        for v, modulo in VARIABLES_DELEGADAS.items()
+        if v not in ya_probadas
+    ]
+
     if not paginas or cliente is None:
         de_ia = [
             _hallazgo_vacio(
                 municipio, id_municipio, v, fecha, None, EstadoHallazgo.NO_VERIFICABLE
             )
             for v in Variable
-            if v not in ya_probadas
+            if v not in ya_probadas and v not in VARIABLES_DELEGADAS
         ]
     else:
-        pendientes = [v for v in Variable if v not in ya_probadas]
+        pendientes = [
+            v for v in Variable
+            if v not in ya_probadas and v not in VARIABLES_DELEGADAS
+        ]
         respuesta = cliente.generar_json(
             construir_prompt(municipio, paginas, pendientes), ESQUEMA_RESPUESTA
         )
@@ -410,11 +451,14 @@ def extraer(
             for h in verificar_respuesta(
                 respuesta, municipio, id_municipio, paginas, fecha
             )
-            if h.variable not in ya_probadas
+            if h.variable not in ya_probadas and h.variable not in VARIABLES_DELEGADAS
         ]
 
     # Orden estable: el del enum, para que la salida sea comparable entre corridas.
-    por_variable = {h.variable: h for h in de_ia}
+    # Las delegadas van primero para que las pise cualquier otra fuente si algun
+    # dia el portal empieza a publicarlas.
+    por_variable = {h.variable: h for h in delegadas}
+    por_variable.update({h.variable: h for h in de_ia})
     por_variable.update(ya_probadas)
     return [por_variable[v] for v in Variable if v in por_variable]
 

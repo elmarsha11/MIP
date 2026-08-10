@@ -134,6 +134,26 @@ for var in VARIABLES_TEXTO_LIBRE:
     DOMINIO_VALORES[var] = None  # None significa que admite texto libre (cualquier string)
 
 
+# Variables que ya NO se le preguntan al modelo porque otro modulo las resuelve
+# mejor. No se borran del enum: el vacio se sigue registrando (ADR-0009), pero
+# con un detalle que dice donde esta el dato en vez de quedar como un "sin dato"
+# que da a entender que nadie lo tiene.
+#
+# Por que existe: al 2026-08-10 estas cinco daban entre 0 y 1 verificados sobre
+# 86 despues de corridas completas, y las cinco tienen fuente propia andando.
+# El portal municipal simplemente no publica esto —lo dice el handoff: casi todo
+# lo que se quiere saber no esta en el portal— asi que seguir preguntandole al
+# modelo gasta cuota, ensucia la cola de revision y llena la ficha de "sin dato"
+# falsos, porque el dato existe en otro lado.
+VARIABLES_DELEGADAS: dict = {
+    Variable.INTENDENTE: "src/gabinete (Boletin Oficial y portal)",
+    Variable.SECRETARIAS: "src/gabinete (Boletin Oficial y portal)",
+    Variable.POBLACION: "src/indec (Censo 2022)",
+    Variable.HOSPITALES_CAPS: "src/territorio (OpenStreetMap)",
+    Variable.INSTITUCIONES_EDUCATIVAS: "src/territorio (OpenStreetMap)",
+}
+
+
 def valores_admitidos(variable: Variable) -> Optional[tuple]:
     """Valores que admite la variable, o None si es de texto libre."""
     return DOMINIO_VALORES[variable]
