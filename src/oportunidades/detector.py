@@ -23,7 +23,7 @@ for _ruta in (_AQUI, _SRC / "extraction"):
     if str(_ruta) not in sys.path:
         sys.path.insert(0, str(_ruta))
 
-from modelos import cita_esta_en_fuente  # noqa: E402  (src/extraction/modelos.py)
+from modelos import cita_esta_en_fuente, normalizar_para_cotejo  # noqa: E402
 
 from catalogo import CATALOGO, Area, Friccion  # noqa: E402
 from comercial import Oportunidad  # noqa: E402
@@ -158,6 +158,7 @@ def verificar_respuesta(
     verificadas: List[Oportunidad] = []
     rechazadas = 0
     vistas = set()
+    citas_vistas = set()
 
     for item in (respuesta or {}).get("oportunidades", []) or []:
         try:
@@ -192,7 +193,19 @@ def verificar_respuesta(
         # con distinta cita, gana la primera (vienen ordenadas por fuerza).
         if area in vistas:
             continue
+
+        # Y una sola por CITA. Sin esto, una misma frase se recicla para varias
+        # areas y el puntaje se infla: Carmen de Areco quedaba primero en el
+        # ranking con 4 oportunidades que eran 2 evidencias contadas dos veces
+        # ("Mesa de entradas Moreno 541" servia de prueba para tramites y para
+        # expedientes). Un ranking inflado manda al equipo comercial al
+        # municipio equivocado, que es exactamente lo que hay que evitar.
+        huella = normalizar_para_cotejo(cita)[:160]
+        if huella in citas_vistas:
+            continue
+
         vistas.add(area)
+        citas_vistas.add(huella)
 
         verificadas.append(
             Oportunidad(

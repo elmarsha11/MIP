@@ -160,6 +160,21 @@ class TestVerificarRespuesta(unittest.TestCase):
         ops, _ = verificar_respuesta(resp, "X", "x-1", self.paginas, "2026-08-09")
         self.assertEqual(len(ops), 1)
 
+    def test_una_cita_no_sirve_para_dos_areas(self):
+        """Carmen de Areco quedaba primero en el ranking por esto.
+
+        "Mesa de entradas Moreno 541" probaba tramites Y expedientes: dos
+        oportunidades de una sola evidencia. El puntaje inflado manda al equipo
+        comercial al municipio equivocado.
+        """
+        resp = self._resp()
+        gemelo = dict(resp["oportunidades"][0])
+        gemelo["area"] = "expedientes"
+        resp["oportunidades"].append(gemelo)
+        ops, _ = verificar_respuesta(resp, "X", "x-1", self.paginas, "2026-08-09")
+        self.assertEqual(len(ops), 1)
+        self.assertIs(ops[0].area, Area.SALUD)
+
     def test_respuesta_vacia_no_es_error(self):
         """Un municipio sin procesos manuales probados es una respuesta valida."""
         ops, rechazadas = verificar_respuesta(
