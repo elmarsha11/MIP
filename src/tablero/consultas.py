@@ -28,6 +28,8 @@ for _r in (PROJECT_ROOT / "src" / "discovery", PROJECT_ROOT / "src" / "impacto")
 SQLITE_DISCOVERY = PROJECT_ROOT / "data" / "processed" / "discovery" / "discovery_urls_86.sqlite"
 SQLITE_HALLAZGOS = PROJECT_ROOT / "data" / "processed" / "extraction" / "hallazgos_86.sqlite"
 SQLITE_OPORTUNIDADES = PROJECT_ROOT / "data" / "processed" / "oportunidades" / "oportunidades_86.sqlite"
+SQLITE_GABINETE = PROJECT_ROOT / "data" / "processed" / "gabinete" / "gabinete_86.sqlite"
+SQLITE_INDEC = PROJECT_ROOT / "data" / "processed" / "indec" / "censo_2022.sqlite"
 
 CANALES_DIGITALES = ("web", "whatsapp", "telegram", "app", "email")
 CANALES_SIN_DIGITAL = ("telefono", "presencial")
@@ -297,6 +299,46 @@ FILA_VARIABLE = {
 }
 
 
+def _censo_indec(nombre: str) -> dict:
+    """Poblacion oficial y apertura por sexo, si el modulo INDEC ya corrio."""
+    filas = _filas(
+        SQLITE_INDEC,
+        "SELECT poblacion_indec_2022, mujeres, varones, poblacion_gold, fuente "
+        "FROM censo_2022 WHERE municipio = ?",
+        (nombre,),
+    )
+    return filas[0] if filas else {}
+
+
+def _gabinete(nombre: str) -> dict:
+    """Intendente y secretarios, con la cita del decreto que los prueba.
+
+    Cuando dos fuentes nombran a personas distintas para el mismo cargo se guardan
+    las dos filas (el id incluye la fuente). Aca gana el boletin, que es un
+    decreto publicado; el portal queda como corroboracion.
+    """
+    filas = _filas(
+        SQLITE_GABINETE,
+        "SELECT cargo, area, nombre, cita, url, confianza, fecha_norma, fuente "
+        "FROM autoridades WHERE municipio = ? ORDER BY cargo, area",
+        (nombre,),
+    )
+    peso = {"boletin_oficial": 0, "portal": 1, "red_oficial": 2}
+    mejor: dict = {}
+    for f in filas:
+        clave = (f["cargo"], (f["area"] or "").lower())
+        actual = mejor.get(clave)
+        if actual is None or peso.get(f["fuente"], 9) < peso.get(actual["fuente"], 9):
+            mejor[clave] = f
+
+    intendente = next((f for f in mejor.values() if f["cargo"] == "intendente"), None)
+    secretarios = sorted(
+        (f for f in mejor.values() if f["cargo"] == "secretario"),
+        key=lambda f: f["area"] or "",
+    )
+    return {"intendente": intendente, "secretarios": secretarios}
+
+
 def ficha_resumida(nombre: str) -> dict:
     """La ficha de un municipio como la leería una persona, no una base.
 
@@ -335,22 +377,45 @@ def ficha_resumida(nombre: str) -> dict:
     canal = hallazgos.get("canal_turnos_salud")
     canal_valor = canal["valor"] if canal and canal["estado"] == "verificado" else None
 
+    # Poblacion: manda INDEC, que tiene norma, ano y metodologia publicada. El
+    # Gold Standard se muestra al lado cuando difieren, porque la diferencia es
+    # un dato en si misma: hay filas cruzadas entre municipios (handoff §5.1) y
+    # verlas es lo que permitio detectarlas.
+    censo = _censo_indec(nombre)
+    gold = base.get("poblacion")
+    indec = censo.get("poblacion_indec_2022")
+    poblacion = {
+        "total": indec or gold,
+        "fuente": (
+            censo.get("fuente") if indec else "Gold Standard (relevamiento manual verificado)"
+        ),
+        "mujeres": censo.get("mujeres"),
+        "varones": censo.get("varones"),
+        "viviendas": None,
+        "falta": (
+            None
+            if censo.get("mujeres")
+            else "Apertura por sexo: el modulo INDEC todavia no corrio para este municipio"
+        ),
+        "falta_viviendas": (
+            "Viviendas por partido: no esta en la serie de poblacion de INDEC, "
+            "hay que buscarla en la de hogares"
+        ),
+        "gold": gold if (indec and gold and indec != gold) else None,
+    }
+
+    gab = _gabinete(nombre)
+
     return {
         "municipio": nombre,
         "id_municipio": base["id_municipio"],
-        "poblacion": {
-            "total": base.get("poblacion"),
-            "fuente": "Gold Standard (relevamiento manual verificado)",
-            # INDEC publica la apertura por sexo; MIP todavia no la incorporo.
-            # Se declara faltante en vez de estimarla.
-            "mujeres": None,
-            "varones": None,
-            "viviendas": None,
-            "falta": "Apertura por sexo y viviendas: requiere censo INDEC, aún no incorporado",
-        },
+        "poblacion": poblacion,
         "autoridades": {
-            "intendente": dato("intendente"),
-            "secretarias": dato("secretarias"),
+            # Del Boletin Oficial y del portal (src/gabinete), no de Fase 4: el
+            # portal casi nunca nombra al intendente y Fase 4 daba 0 verificados.
+            "intendente": gab["intendente"],
+            "secretarios": gab["secretarios"],
+            # El Concejo sigue viniendo de Fase 4: todavia no tiene modulo propio.
             "concejales": dato("concejales"),
         },
         "educacion": {

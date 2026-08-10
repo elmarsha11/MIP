@@ -185,6 +185,23 @@ function resumenMunicipio(r) {
             ${d.fragmento ? `— <em>"${esc(d.fragmento.slice(0, 90))}"</em>` : ""}</div>` : ""}`
       : falta(d.motivo);
 
+  /* Una autoridad no es un dato de Fase 4: viene del gabinete, con la fecha del
+     decreto que la prueba. La fecha va al lado del nombre y no al pie, porque un
+     gabinete cambia y "quién es" sin "desde cuándo" es la mitad del dato. */
+  const nombreConDecreto = (a) =>
+    `<strong>${esc(a.nombre)}</strong>
+     <span class="etiqueta">${esc(a.confianza)}</span>
+     ${a.fecha_norma ? `<span class="origen">decreto del ${esc(a.fecha_norma)}</span>` : ""}
+     <div class="origen">
+       <a href="${esc(a.url)}" target="_blank" rel="noopener">ver fuente</a>
+       ${a.cita ? `— <em>"${esc(a.cita.slice(0, 110))}"</em>` : ""}
+     </div>`;
+
+  const autoridad = (rotulo, a) =>
+    `<table><tbody><tr><td>${esc(rotulo)}</td><td>${
+      a ? nombreConDecreto(a) : falta("Sin decreto ni mención en el portal")
+    }</td></tr></tbody></table>`;
+
   const p = r.poblacion, s = r.salud, e = r.educacion, t = r.transporte;
   const canalEtiqueta = s.turnos_canal
     ? etiquetaCanal(s.turnos_canal)
@@ -195,12 +212,26 @@ function resumenMunicipio(r) {
     <h3>Población</h3>
     <p><strong>${numero(p.total)}</strong> habitantes
       <span class="origen">· ${esc(p.fuente)}</span></p>
-    <p class="origen">Mujeres / varones / viviendas: ${esc(p.falta)}</p>
+    ${p.mujeres
+      ? `<table><tbody>
+           <tr><td>Mujeres</td><td class="num"><strong>${numero(p.mujeres)}</strong></td></tr>
+           <tr><td>Varones</td><td class="num"><strong>${numero(p.varones)}</strong></td></tr>
+         </tbody></table>`
+      : `<p class="origen">${esc(p.falta)}</p>`}
+    ${p.gold
+      ? `<p class="origen">El Gold Standard dice ${numero(p.gold)}. Donde difieren
+         manda INDEC, que tiene norma, año y metodología publicada.</p>`
+      : ""}
+    <p class="origen">${esc(p.falta_viviendas)}</p>
 
     <h3>Autoridades</h3>
+    ${autoridad("Intendente", r.autoridades.intendente)}
+    ${r.autoridades.secretarios && r.autoridades.secretarios.length
+      ? `<table><tbody>${r.autoridades.secretarios.map((s) =>
+          `<tr><td>${esc(s.area || "Secretaría")}</td><td>${nombreConDecreto(s)}</td></tr>`
+        ).join("")}</tbody></table>`
+      : `<p>Secretarías: ${falta("Sin decreto ni mención en el portal")}</p>`}
     <table><tbody>
-      <tr><td>Intendente</td><td>${conEvidencia(r.autoridades.intendente)}</td></tr>
-      <tr><td>Secretarías</td><td>${conEvidencia(r.autoridades.secretarias)}</td></tr>
       <tr><td>Concejo Deliberante</td><td>${conEvidencia(r.autoridades.concejales)}</td></tr>
     </tbody></table>
 
