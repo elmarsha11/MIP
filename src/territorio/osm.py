@@ -321,7 +321,21 @@ out center tags;
 
 def censar(municipio: str, id_municipio: str, fecha: str, refrescar: bool = False) -> List[Entidad]:
     """Todas las entidades del municipio segun OSM."""
-    path = _cache(f"osm_{id_municipio}.json")
+    # El limite se resuelve SIEMPRE primero, aunque haya cache: la clave del
+    # cache incluye la relacion OSM.
+    #
+    # Antes se llamaba osm_MUN-BA-049.json a secas, y eso dejo a Ayacucho
+    # roto de una forma invisible: la respuesta cacheada tenia 731 entidades
+    # de Ayacucho de PERU (latitudes -13), de cuando la consulta de limites
+    # buscaba en todo el mundo. Se corrigio la consulta, el limite paso a ser
+    # el correcto... y el cache siguio devolviendo Peru, porque su nombre no
+    # dependia de la relacion. El municipio quedaba en cero sin error visible.
+    osm_id = resolver_limite(municipio)
+    if osm_id is None:
+        print(f"    [OSM] sin limite administrativo para {municipio}")
+        return []
+
+    path = _cache(f"osm_{id_municipio}_r{osm_id}.json")
     crudo = None
     if path.exists() and not refrescar:
         try:
@@ -330,17 +344,21 @@ def censar(municipio: str, id_municipio: str, fecha: str, refrescar: bool = Fals
             crudo = None
 
     if crudo is None:
-        osm_id = resolver_limite(municipio)
-        if osm_id is None:
-            print(f"    [OSM] sin limite administrativo para {municipio}")
-            return []
-        crudo = consultar(CONSULTA_ENTIDADES.format(area=3600000000 + osm_id))
+        crudo = consultar(
+            CONSULTA_ENTIDADES.format(area=3600000000 + osm_id),
+            # Un partido bonaerense sin UNA sola escuela, plaza o barrio en OSM
+            # no existe: si vuelve vacio es un espejo con cobertura parcial, no
+            # un municipio sin nada. Es la trampa documentada en el handoff.
+            exigir_elementos=True,
+        )
         if crudo is None:
             raise OverpassCaido(f"Overpass no respondio para {municipio}")
-        try:
-            path.write_text(json.dumps(crudo, ensure_ascii=False), encoding="utf-8")
-        except OSError:
-            pass
+        # Solo se cachea el acierto: una respuesta vacia congelaria el fallo.
+        if crudo.get("elements"):
+            try:
+                path.write_text(json.dumps(crudo, ensure_ascii=False), encoding="utf-8")
+            except OSError:
+                pass
 
     entidades: List[Entidad] = []
     for elemento in crudo.get("elements", []):
