@@ -176,17 +176,32 @@ def guardar(resultados, path: Path = SQLITE_GABINETE) -> Path:
         if "fecha_norma" not in existentes:
             con.execute("ALTER TABLE autoridades ADD COLUMN fecha_norma TEXT")
         for r in resultados:
-            # El gabinete es una foto: se reemplaza el municipio entero. Un
-            # secretario que dejo el cargo tiene que DESAPARECER, no quedar
-            # conviviendo con el nuevo. Es lo contrario de Fase 4, donde un
-            # verificado no se pisa (ADR-0013), porque alla se guarda evidencia
-            # de lo que decia el portal y aca el estado de una cosa que cambia.
-            con.execute("DELETE FROM autoridades WHERE id_municipio = ?", (r.id_municipio,))
-            con.executemany(
-                f"INSERT OR REPLACE INTO autoridades ({', '.join(COLUMNAS)}) "
-                f"VALUES ({', '.join('?' for _ in COLUMNAS)})",
-                [tuple(a.to_row()[c] for c in COLUMNAS) for a in r.autoridades],
-            )
+            # NO se borra el municipio antes de escribir.
+            #
+            # La primera version si lo hacia, con el argumento de que el gabinete
+            # es una foto y un secretario que se fue tiene que desaparecer. El
+            # argumento es bueno y el efecto fue malo: la extraccion NO es
+            # determinista —una corrida devolvio 9 secretarias de Chascomus y la
+            # siguiente 6, con la misma evidencia disponible— asi que reescribir
+            # perdio dos secretarias reales que nadie habia dejado.
+            #
+            # Ahora cada cargo se actualiza por su cuenta y solo lo pisa un
+            # decreto MAS NUEVO. Un secretario que se fue no desaparece, pero su
+            # fecha se queda vieja y la ficha lo marca "sin firmar hace meses".
+            # Es ADR-0013: la base no se destruye a si misma. Preferimos un dato
+            # viejo y fechado a un vacio silencioso.
+            for fila in r.autoridades:
+                d = fila.to_row()
+                previa = con.execute(
+                    "SELECT fecha_norma FROM autoridades WHERE id = ?", (d["id"],)
+                ).fetchone()
+                if previa and previa[0] and d["fecha_norma"] and previa[0] > d["fecha_norma"]:
+                    continue  # lo guardado es de un decreto mas nuevo
+                con.execute(
+                    f"INSERT OR REPLACE INTO autoridades ({', '.join(COLUMNAS)}) "
+                    f"VALUES ({', '.join('?' for _ in COLUMNAS)})",
+                    tuple(d[c] for c in COLUMNAS),
+                )
             con.execute(
                 "INSERT OR REPLACE INTO municipios_gabinete VALUES (?,?,?,?,?,?,?)",
                 (r.id_municipio, r.municipio, r.fecha, r.boletines_leidos,

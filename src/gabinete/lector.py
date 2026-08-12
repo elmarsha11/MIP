@@ -276,10 +276,38 @@ REGLAS:
 Un decreto suele decir quien lo refrenda, y eso es la mejor prueba de todas:
 "El presente Decreto sera refrendado por el Secretario de Gobierno (Nombre)".
 
+7. **Cuando un decreto nombra a VARIOS secretarios en la misma frase, copia la
+   frase ENTERA para cada uno.** No armes una cita cortando pedazos: si el texto
+   dice "refrendado por el Secretario de Hacienda (Fulano) y la Secretaria de
+   Salud (Mengana)", la cita de Mengana tiene que incluir tambien a Fulano.
+   Una cita cosida no existe en el original, la verificacion la descarta, y se
+   pierde un secretario que estaba bien identificado.
+
 TEXTO DEL BOLETIN OFICIAL DE {municipio.upper()}:
 
 {texto}
 """
+
+
+_RE_INTERINO = re.compile(r"\s*\b(interin[oa]|a\s*cargo|subrogante|suplente)\b\s*", re.IGNORECASE)
+
+
+def _normalizar_area(area: Optional[str]) -> Tuple[Optional[str], bool]:
+    """Saca la condicion de interino del nombre del area. Devuelve (area, interino).
+
+    Un interino NO es una secretaria distinta. Sin esto, Chascomus figuraba con
+    11 secretarias teniendo 8: "Hacienda" y "Hacienda Interino" contaban como dos
+    areas, y "Obras" aparecia dos veces con el titular y con el reemplazante.
+
+    Ademas rompia el desempate: la regla es un cargo, una persona, la del decreto
+    mas nuevo. Con el area distinta los dos convivian y ninguno desplazaba al
+    otro, que es justo lo que la regla existe para evitar.
+    """
+    limpio = " ".join((area or "").split())
+    if not limpio:
+        return None, False
+    sin_interino = " ".join(_RE_INTERINO.sub(" ", limpio).split()).strip(" ,-")
+    return (sin_interino or None), sin_interino != limpio
 
 
 def verificar_respuesta(
@@ -299,6 +327,7 @@ def verificar_respuesta(
     # cargo+area -> Autoridad. No es una lista: para un mismo cargo puede volver
     # mas de un nombre, y hay que quedarse con el del decreto mas nuevo.
     por_cargo: dict = {}
+    interinos: dict = {}
     rechazadas = 0
 
     for item in (respuesta or {}).get("autoridades", []) or []:
@@ -312,7 +341,7 @@ def verificar_respuesta(
         # chequeo de nombre completo gracias al titulo y entra un apellido suelto.
         nombre = normalizar_nombre(item.get("nombre") or "")
         cita = " ".join((item.get("cita_literal") or "").split())
-        area = " ".join((item.get("area") or "").split()) or None
+        area, interino = _normalizar_area(item.get("area"))
         if not nombre or not cita:
             rechazadas += 1
             continue
@@ -361,10 +390,22 @@ def verificar_respuesta(
         # firmo Obras hasta abril de 2026 y Lucas Funes desde mayo. Quedarse con
         # el primero que aparece seria quedarse con el que la suerte ponga
         # primero en la respuesta.
+        #
+        # El interino NO desplaza al titular aunque su decreto sea mas nuevo:
+        # un reemplazante firma mientras el titular esta de licencia y sigue
+        # siendo un reemplazante. Solo se muestra si es el unico que hay.
         clave = (cargo, (area or "").lower())
         previa = por_cargo.get(clave)
-        if previa is None or _mas_nueva(candidata, previa):
+        previa_interina = interinos.get(clave, False)
+        if previa is None:
+            gana = True
+        elif previa_interina != interino:
+            gana = not interino  # entre titular e interino, gana el titular
+        else:
+            gana = _mas_nueva(candidata, previa)
+        if gana:
             por_cargo[clave] = candidata
+            interinos[clave] = interino
 
     return list(por_cargo.values()), rechazadas
 
