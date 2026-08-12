@@ -113,7 +113,7 @@ def hoja_municipios() -> List[dict]:
             "Aspectos de seguridad verificados": sum(
                 1 for a in c.get("aspectos", []) if a.get("evidencia")
             ),
-            "Hospitales": f["salud"].get("hospitales"),
+            "Hospitales": len(f["salud"].get("hospitales") or []),
             "CAPS": f["salud"].get("caps"),
             "Establecimientos educativos": f["educacion"].get("total"),
             "Canal de turnos": f["salud"].get("turnos_canal"),

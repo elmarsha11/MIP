@@ -50,6 +50,11 @@ data/processed/gabinete/cache/
 # medio que no resolvio se reintenta en la corrida siguiente.
 data/processed/medios/cache/
 
+# Exportes a Excel y PDF. Son DERIVADOS: se regeneran de las bases con un
+# comando, y versionarlos duplicaria el activo en un formato que ademas
+# cambia entero en cada corrida.
+data/processed/exportes/
+
 # El CSV del SNIC: 67 MB de estadistica criminal por departamento. Se cachea
 # porque la serie de un anio cerrado no cambia, pero NO se versiona: a
 # diferencia de los cuadros de INDEC (360 KB), pesa demasiado para el valor que
