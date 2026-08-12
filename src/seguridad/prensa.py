@@ -30,6 +30,8 @@ import requests
 
 _AQUI = Path(__file__).resolve().parent
 PROJECT_ROOT = _AQUI.parents[1]
+if str(PROJECT_ROOT / "src" / "discovery") not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT / "src" / "discovery"))
 
 CABECERAS = {"User-Agent": "MIP-relevamiento-municipal/0.1 (uso interno, contacto: UDS)"}
 TIMEOUT = 25
@@ -153,13 +155,48 @@ def _sin_tildes(texto: str) -> str:
     return "".join(c for c in t if not unicodedata.combining(c))
 
 
-# Ciudades grandes que un medio local republica constantemente. Si la nota las
-# nombra en el titulo y NO nombra al municipio, es noticia de afuera.
+# Lugares que un medio local republica constantemente. Si la nota los nombra en
+# el TITULO y no nombra al municipio propio, es noticia de afuera.
 AJENAS = (
+    # Grandes centros bonaerenses y del pais
     "mar del plata", "la plata", "buenos aires", "caba", "rosario", "cordoba",
     "bahia blanca", "quilmes", "lomas de zamora", "la matanza", "avellaneda",
     "san isidro", "tigre", "moron", "lanus", "berazategui", "pilar", "escobar",
+    "zarate", "campana", "lujan", "mercedes", "junin", "pergamino", "tandil",
+    "olavarria", "azul", "necochea", "san nicolas", "san pedro", "la costa",
+    "santa fe", "mendoza", "tucuman", "salta", "neuquen", "chubut", "misiones",
+    # Internacional: los medios chicos levantan cable internacional
+    "brasil", "chile", "uruguay", "paraguay", "bolivia", "estados unidos",
+    "rio de janeiro", "sao paulo", "santiago", "montevideo", "espana", "mexico",
 )
+
+
+def _otros_municipios(municipio: str) -> tuple:
+    """Los otros 85 del relevamiento, para no heredarles las noticias.
+
+    Se agrego despues de ver que un medio de Baradero titulaba "CRIMEN DEL
+    JUBILADO EN ZARATE" y la nota pasaba el filtro: AJENAS solo tenia las
+    ciudades grandes, asi que cualquier otro partido se colaba. La lista de los
+    86 ya existe, usarla es gratis y cierra el agujero de raiz.
+    """
+    from discovery_engine import cargar_municipios
+
+    propio = _sin_tildes(municipio)
+    salida = []
+    for m in cargar_municipios():
+        otro = _sin_tildes(m.nombre)
+        if otro == propio:
+            continue
+        # Solo las partes largas: "General" no distingue a nadie y descartaria
+        # las notas de los doce partidos que empiezan asi.
+        salida += [
+            p for p in otro.split()
+            if len(p) > 5 and p not in ("general", "coronel", "capitan", "adolfo")
+        ]
+    return tuple(sorted(set(salida)))
+
+
+_CACHE_OTROS: Dict[str, tuple] = {}
 
 
 def _distintivo(municipio: str) -> List[str]:
@@ -204,12 +241,15 @@ def es_del_municipio(nota: Nota, municipio: str, regional: bool = False) -> bool
     if regional:
         return nombra
 
-    # Local: se descarta si el TITULO es de otra ciudad y no nombra la propia.
+    # Local: se descarta si el TITULO es de otro lugar y no nombra el propio.
     # Se mira el titulo y no el cuerpo porque una nota local puede mencionar de
     # paso a La Plata —"el ministro provincial anuncio"— sin dejar de ser local.
-    if any(a in titulo for a in AJENAS) and not any(p in titulo for p in propias):
-        return False
-    return True
+    if any(p in titulo for p in propias):
+        return True
+    if _CACHE_OTROS.get(municipio) is None:
+        _CACHE_OTROS[municipio] = _otros_municipios(municipio)
+    ajenas = AJENAS + _CACHE_OTROS[municipio]
+    return not any(a in titulo for a in ajenas)
 
 
 def notas_del_medio(medio: str, base: str, sesion=None) -> List[Nota]:

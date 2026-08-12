@@ -60,6 +60,18 @@ class TestLaNotaEsDelMunicipio(unittest.TestCase):
         con_nombre = _nota("Detuvieron a dos personas", "Ocurrio en Chascomús.")
         self.assertTrue(es_del_municipio(con_nombre, "Chascomús", regional=True))
 
+    def test_descarta_otro_partido_de_los_86(self):
+        """Un medio de Baradero titulaba "CRIMEN DEL JUBILADO EN ZARATE" y la
+        nota pasaba: AJENAS solo tenia las ciudades grandes. Ahora se usan los
+        otros 85 del relevamiento, que ya estan cargados."""
+        n = _nota("Detuvieron a un hombre en Lezama", "Ocurrio anoche.")
+        self.assertFalse(es_del_municipio(n, "Chascomús"))
+
+    def test_descarta_cable_internacional(self):
+        """Los medios chicos levantan cable: "CRISIS EN RIO DE JANEIRO"."""
+        n = _nota("Crisis en Rio de Janeiro: el Estado enfrenta al Comando", "...")
+        self.assertFalse(es_del_municipio(n, "Baradero"))
+
     def test_el_nombre_corto_alcanza(self):
         """La prensa de General Madariaga dice "Madariaga" a secas."""
         n = _nota("Nuevo operativo", "La policia de Madariaga trabajo en la zona.")
