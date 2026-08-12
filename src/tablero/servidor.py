@@ -114,6 +114,10 @@ class Tablero(SimpleHTTPRequestHandler):
                 return self._json(acciones.estado(partes[2]))
             if partes[1:2] == ["exportar"] and len(partes) == 3:
                 return self._exportar(partes[2])
+            if partes[1:2] == ["descargar"] and len(partes) == 3:
+                return self._descargar(partes[2])
+            if partes[1:2] == ["descargar"] and len(partes) == 4:
+                return self._descargar(partes[2], partes[3])
         except Exception as exc:  # que un error no tumbe el tablero
             return self._json({"error": f"{type(exc).__name__}: {exc}"}, 500)
 
@@ -130,6 +134,45 @@ class Tablero(SimpleHTTPRequestHandler):
             return self._json({"error": "JSON invalido"}, 400)
         resultado = acciones.lanzar(cuerpo.get("accion", ""), cuerpo.get("municipio"))
         return self._json(resultado, 400 if "error" in resultado else 200)
+
+    def _descargar(self, que: str, nombre: Optional[str] = None) -> None:
+        """Sirve un archivo generado, si existe.
+
+        La ruta se resuelve y se comprueba que caiga ADENTRO de la carpeta de
+        exportes. Sin eso, un nombre de municipio con ".." serviria cualquier
+        archivo de la maquina: el servidor escucha solo en 127.0.0.1, pero un
+        agujero de path traversal no se deja abierto porque hoy nadie lo alcance.
+        """
+        from consultas import PROJECT_ROOT
+
+        base = (PROJECT_ROOT / "data" / "processed" / "exportes").resolve()
+        if que == "excel":
+            candidatos = sorted(base.glob("MIP_*.xlsx"), reverse=True)
+            destino = candidatos[0] if candidatos else None
+        elif que == "ficha" and nombre:
+            seguro = "".join(c if c.isalnum() or c in " -_" else "_" for c in nombre)
+            destino = base / "fichas" / f"MIP_{seguro.replace(' ', '_')}.pdf"
+        elif que == "html":
+            tablero = (PROJECT_ROOT / "data" / "processed" / "tablero").resolve()
+            candidatos = sorted(tablero.glob("MIP_tablero_*.html"), reverse=True)
+            destino = candidatos[0] if candidatos else None
+            base = tablero
+        else:
+            return self._json({"error": "Descarga desconocida"}, 404)
+
+        if destino is None:
+            return self._json({"error": "Todavia no se genero. Corre la accion primero."}, 404)
+        destino = destino.resolve()
+        if base not in destino.parents or not destino.exists():
+            return self._json({"error": "No disponible"}, 404)
+
+        datos = destino.read_bytes()
+        self.send_response(200)
+        self.send_header("Content-Type", "application/octet-stream")
+        self.send_header("Content-Disposition", f'attachment; filename="{destino.name}"')
+        self.send_header("Content-Length", str(len(datos)))
+        self.end_headers()
+        self.wfile.write(datos)
 
     def _exportar(self, que: str) -> None:
         if que == "municipios.csv":

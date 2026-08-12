@@ -51,6 +51,32 @@ ACCIONES = {
         "minutos_estimados": 20,
         "consume_ia": True,
     },
+    # Los exportes NO consumen IA: leen las bases ya construidas y las vuelcan a
+    # un formato que se comparte. Se pueden correr cuantas veces haga falta.
+    "exportar_excel": {
+        "titulo": "Generar el Excel con todo (8 hojas)",
+        "comando": [sys.executable, "-u", "src/exportar/libro_excel.py"],
+        "requiere_municipio": False,
+        "minutos_estimados": 1,
+    },
+    "exportar_fichas_pdf": {
+        "titulo": "Generar las 86 fichas PDF",
+        "comando": [sys.executable, "-u", "src/exportar/ficha_pdf.py", "--todos"],
+        "requiere_municipio": False,
+        "minutos_estimados": 2,
+    },
+    "exportar_ficha_pdf": {
+        "titulo": "Generar la ficha PDF de este municipio",
+        "comando": [sys.executable, "-u", "src/exportar/ficha_pdf.py", "--municipio"],
+        "requiere_municipio": True,
+        "minutos_estimados": 1,
+    },
+    "regenerar_html": {
+        "titulo": "Regenerar el HTML autónomo",
+        "comando": [sys.executable, "-u", "src/tablero/generar_html.py"],
+        "requiere_municipio": False,
+        "minutos_estimados": 1,
+    },
 }
 
 _tareas: Dict[str, dict] = {}

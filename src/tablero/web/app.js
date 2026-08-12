@@ -147,6 +147,12 @@ async function abrirFicha(nombre) {
       ${f.sitio_oficial ? `· <a href="${esc(f.sitio_oficial)}" target="_blank" rel="noopener">${esc(f.sitio_oficial)}</a>` : "· sin sitio oficial"}
       ${f.sitio_sin_https === 1 ? ' · <span class="etiqueta alerta">sin HTTPS</span>' : ""}</p>
 
+    <div class="barra">
+      <button class="boton primario" data-accion="exportar_ficha_pdf" data-m="${esc(nombre)}">Generar ficha PDF</button>
+      <a class="boton" href="/api/descargar/ficha/${encodeURIComponent(nombre)}">Descargar PDF</a>
+      <span class="nota">Generar tarda unos segundos; después descargar.</span>
+    </div>
+
     ${r && r.municipio ? resumenMunicipio(r) : ""}
 
     <h3>Evidencia detallada</h3>
