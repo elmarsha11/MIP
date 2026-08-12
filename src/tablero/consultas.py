@@ -30,6 +30,20 @@ SQLITE_HALLAZGOS = PROJECT_ROOT / "data" / "processed" / "extraction" / "hallazg
 SQLITE_OPORTUNIDADES = PROJECT_ROOT / "data" / "processed" / "oportunidades" / "oportunidades_86.sqlite"
 SQLITE_GABINETE = PROJECT_ROOT / "data" / "processed" / "gabinete" / "gabinete_86.sqlite"
 SQLITE_SEGURIDAD = PROJECT_ROOT / "data" / "processed" / "seguridad" / "seguridad_86.sqlite"
+SQLITE_OPERATIVOS = PROJECT_ROOT / "data" / "processed" / "seguridad" / "operativos_86.sqlite"
+
+# Los siete aspectos del eje 2, con su etiqueta legible y en orden de lectura:
+# primero lo que el municipio PAGA, despues quien mas interviene, al final lo
+# que ocurrio. Un intendente lee su gestion antes que la de la provincia.
+ASPECTOS_SEGURIDAD = (
+    ("patrulla_urbana", "Patrulla urbana / policía local"),
+    ("centro_monitoreo", "Centro de monitoreo / cámaras"),
+    ("alarmas_vecinales", "Alarmas vecinales / botón antipánico"),
+    ("policia_bonaerense", "Policía Bonaerense"),
+    ("fuerzas_federales", "Fuerzas federales"),
+    ("operativos", "Operativos de control"),
+    ("allanamientos", "Allanamientos"),
+)
 SQLITE_INDEC = PROJECT_ROOT / "data" / "processed" / "indec" / "censo_2022.sqlite"
 
 CANALES_DIGITALES = ("web", "whatsapp", "telegram", "app", "email")
@@ -385,6 +399,44 @@ def _seguridad(nombre: str) -> dict:
     return f
 
 
+def _como_opera(nombre: str) -> dict:
+    """Que tiene y como opera el municipio, leido de su prensa local.
+
+    Los siete aspectos aparecen SIEMPRE, con evidencia o sin ella: si solo se
+    mostraran los verificados, la ficha daria a entender que lo demas no existe.
+    Y lo que falta no es "no tiene": es "la prensa leida no lo publico".
+    """
+    verificados = {
+        f["aspecto"]: f
+        for f in _filas(
+            SQLITE_OPERATIVOS,
+            "SELECT aspecto, detalle, cita, medio, url, fecha_nota "
+            "FROM operativos WHERE municipio = ?",
+            (nombre,),
+        )
+    }
+    resumen = _filas(
+        SQLITE_OPERATIVOS,
+        "SELECT medios_leidos, notas_del_municipio FROM municipios_operativos "
+        "WHERE municipio = ?",
+        (nombre,),
+    )
+    return {
+        "disponible": bool(resumen),
+        "medios_leidos": resumen[0]["medios_leidos"] if resumen else 0,
+        "notas": resumen[0]["notas_del_municipio"] if resumen else 0,
+        "aspectos": [
+            {"clave": clave, "etiqueta": etiqueta, "evidencia": verificados.get(clave)}
+            for clave, etiqueta in ASPECTOS_SEGURIDAD
+        ],
+        "advertencia": (
+            "Ausencia de evidencia no es evidencia de ausencia: que la prensa "
+            "leída no lo haya publicado en 12 meses no prueba que el municipio "
+            "no lo tenga."
+        ),
+    }
+
+
 def ficha_resumida(nombre: str) -> dict:
     """La ficha de un municipio como la leería una persona, no una base.
 
@@ -464,6 +516,7 @@ def ficha_resumida(nombre: str) -> dict:
         "id_municipio": base["id_municipio"],
         "poblacion": poblacion,
         "seguridad": _seguridad(nombre),
+        "como_opera": _como_opera(nombre),
         "autoridades": {
             # Del Boletin Oficial y del portal (src/gabinete), no de Fase 4: el
             # portal casi nunca nombra al intendente y Fase 4 daba 0 verificados.

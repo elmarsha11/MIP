@@ -228,6 +228,37 @@ function resumenMunicipio(r) {
       <p class="origen">${esc(g.fuente)}</p>`;
   };
 
+  /* Los siete aspectos se muestran SIEMPRE, con evidencia o sin ella. Si solo
+     aparecieran los verificados, la ficha daria a entender que lo demas no
+     existe, y lo que falta no es "no tiene": es "la prensa leida no lo publico". */
+  const comoOpera = (c) => {
+    if (!c || !c.disponible) {
+      return `<p>${falta("Todavía no se leyó la prensa de este municipio")}</p>`;
+    }
+    if (!c.notas) {
+      return `<p>${falta("Sus medios no exponen archivo consultable")}</p>
+              <p class="origen">${esc(c.advertencia)}</p>`;
+    }
+    return `
+      <p class="origen">${c.medios_leidos} medios leídos · ${c.notas} notas del
+        municipio en los últimos 12 meses</p>
+      ${c.aspectos.map((a) => {
+        const e = a.evidencia;
+        if (!e) {
+          return `<div class="evidencia"><div><span class="etiqueta">sin dato</span>
+            ${esc(a.etiqueta)}</div></div>`;
+        }
+        return `<div class="evidencia">
+          <div><span class="etiqueta buena">sí</span> <strong>${esc(a.etiqueta)}</strong></div>
+          <div class="origen">${esc(e.detalle)}</div>
+          <div class="cita">“${esc(e.cita)}”</div>
+          <div class="origen">${esc(e.medio)} · ${esc(e.fecha_nota)} ·
+            <a href="${esc(e.url)}" target="_blank" rel="noopener">ver nota</a></div>
+        </div>`;
+      }).join("")}
+      <p class="origen">${esc(c.advertencia)}</p>`;
+  };
+
   const p = r.poblacion, s = r.salud, e = r.educacion, t = r.transporte;
   const canalEtiqueta = s.turnos_canal
     ? etiquetaCanal(s.turnos_canal)
@@ -254,8 +285,11 @@ function resumenMunicipio(r) {
       : ""}
     <p class="origen">${esc(p.falta_viviendas)}</p>
 
-    <h3>Seguridad</h3>
+    <h3>Seguridad — cuánto delito se denuncia</h3>
     ${seguridad(r.seguridad)}
+
+    <h3>Seguridad — qué tiene y cómo opera</h3>
+    ${comoOpera(r.como_opera)}
 
     <h3>Autoridades</h3>
     ${autoridad("Intendente", r.autoridades.intendente)}
