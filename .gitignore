@@ -46,6 +46,10 @@ data/processed/oportunidades/cache/
 # gabinete_86.sqlite.
 data/processed/gabinete/cache/
 
+# URLs de medios ya resueltas. Se regenera solo y solo guarda aciertos: un
+# medio que no resolvio se reintenta en la corrida siguiente.
+data/processed/medios/cache/
+
 # El CSV del SNIC: 67 MB de estadistica criminal por departamento. Se cachea
 # porque la serie de un anio cerrado no cambia, pero NO se versiona: a
 # diferencia de los cuadros de INDEC (360 KB), pesa demasiado para el valor que
