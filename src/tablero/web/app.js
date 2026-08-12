@@ -202,6 +202,32 @@ function resumenMunicipio(r) {
       a ? nombreConDecreto(a) : falta("Sin decreto ni mención en el portal")
     }</td></tr></tbody></table>`;
 
+  /* El nivel NUNCA va solo: sin sus advertencias, "alto" se lee como
+     "peligroso", que es afirmar algo que el dato no dice. Son denuncias, el
+     nivel es relativo a los 86, y en los balnearios la tasa esta inflada. */
+  const seguridad = (g) => {
+    if (!g || !g.disponible) {
+      return `<p>${falta("El SNIC no publica datos de este municipio")}</p>`;
+    }
+    const clase = { alto: "mal", medio: "alerta", bajo: "buena" }[g.nivel] || "";
+    return `
+      <p><span class="etiqueta ${clase}">${esc(g.nivel)}</span>
+        <strong>${numero(Math.round(g.tasa_indice))}</strong> hechos denunciados
+        por 100.000 hab. · ${g.anio}
+        <span class="origen">puesto ${g.puesto} de ${g.total}</span></p>
+      <table><tbody>
+        <tr><td>Contra las personas</td><td class="num">${numero(Math.round(g.tasa_personas))}</td></tr>
+        <tr><td>Contra la propiedad</td><td class="num">${numero(Math.round(g.tasa_propiedad))}</td></tr>
+        <tr><td>Integridad sexual</td><td class="num">${numero(Math.round(g.tasa_sexual))}</td></tr>
+        <tr><td>Homicidios dolosos</td><td class="num"><strong>${numero(g.homicidios)}</strong></td></tr>
+        <tr><td>Robos</td><td class="num"><strong>${numero(g.robos)}</strong></td></tr>
+        <tr><td>Drogas y armas <span class="origen">(fuera del índice)</span></td>
+          <td class="num">${numero(Math.round(g.tasa_actividad_policial))}</td></tr>
+      </tbody></table>
+      ${g.advertencias.map((a) => `<p class="origen">· ${esc(a)}</p>`).join("")}
+      <p class="origen">${esc(g.fuente)}</p>`;
+  };
+
   const p = r.poblacion, s = r.salud, e = r.educacion, t = r.transporte;
   const canalEtiqueta = s.turnos_canal
     ? etiquetaCanal(s.turnos_canal)
@@ -214,15 +240,22 @@ function resumenMunicipio(r) {
       <span class="origen">· ${esc(p.fuente)}</span></p>
     ${p.mujeres
       ? `<table><tbody>
-           <tr><td>Mujeres</td><td class="num"><strong>${numero(p.mujeres)}</strong></td></tr>
-           <tr><td>Varones</td><td class="num"><strong>${numero(p.varones)}</strong></td></tr>
-         </tbody></table>`
+           <tr><td>Mujeres</td><td class="num"><strong>${numero(p.mujeres)}</strong>
+             <span class="origen">${p.pct_mujeres}%</span></td></tr>
+           <tr><td>Varones</td><td class="num"><strong>${numero(p.varones)}</strong>
+             <span class="origen">${p.pct_varones}%</span></td></tr>
+         </tbody></table>
+         <p class="origen">El porcentaje se calcula sobre quienes declararon sexo,
+           no sobre el total: así los dos suman 100.</p>`
       : `<p class="origen">${esc(p.falta)}</p>`}
     ${p.gold
       ? `<p class="origen">El Gold Standard dice ${numero(p.gold)}. Donde difieren
          manda INDEC, que tiene norma, año y metodología publicada.</p>`
       : ""}
     <p class="origen">${esc(p.falta_viviendas)}</p>
+
+    <h3>Seguridad</h3>
+    ${seguridad(r.seguridad)}
 
     <h3>Autoridades</h3>
     ${autoridad("Intendente", r.autoridades.intendente)}

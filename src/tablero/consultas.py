@@ -29,6 +29,7 @@ SQLITE_DISCOVERY = PROJECT_ROOT / "data" / "processed" / "discovery" / "discover
 SQLITE_HALLAZGOS = PROJECT_ROOT / "data" / "processed" / "extraction" / "hallazgos_86.sqlite"
 SQLITE_OPORTUNIDADES = PROJECT_ROOT / "data" / "processed" / "oportunidades" / "oportunidades_86.sqlite"
 SQLITE_GABINETE = PROJECT_ROOT / "data" / "processed" / "gabinete" / "gabinete_86.sqlite"
+SQLITE_SEGURIDAD = PROJECT_ROOT / "data" / "processed" / "seguridad" / "seguridad_86.sqlite"
 SQLITE_INDEC = PROJECT_ROOT / "data" / "processed" / "indec" / "censo_2022.sqlite"
 
 CANALES_DIGITALES = ("web", "whatsapp", "telegram", "app", "email")
@@ -339,6 +340,51 @@ def _gabinete(nombre: str) -> dict:
     return {"intendente": intendente, "secretarios": secretarios}
 
 
+def _seguridad(nombre: str) -> dict:
+    """Delito denunciado del SNIC, con el puesto y las advertencias.
+
+    El nivel viaja SIEMPRE con su explicacion. "Alto" sin aclarar que es relativo
+    a los 86 y que son denuncias se lee como "peligroso", que es afirmar algo que
+    el dato no dice.
+    """
+    filas = _filas(
+        SQLITE_SEGURIDAD,
+        "SELECT anio, nivel, tasa_indice, hechos_indice, tasa_personas, "
+        "tasa_propiedad, tasa_sexual, homicidios, tasa_homicidios, robos, "
+        "tasa_robos, tasa_actividad_policial, poblacion_estacional, fuente "
+        "FROM seguridad WHERE municipio = ?",
+        (nombre,),
+    )
+    if not filas:
+        return {"disponible": False}
+
+    f = dict(filas[0])
+    ranking = _filas(
+        SQLITE_SEGURIDAD,
+        "SELECT COUNT(*) AS total, "
+        "SUM(CASE WHEN tasa_indice > (SELECT tasa_indice FROM seguridad "
+        "WHERE municipio = ?) THEN 1 ELSE 0 END) AS arriba FROM seguridad",
+        (nombre,),
+    )
+    f["disponible"] = True
+    f["total"] = ranking[0]["total"] if ranking else None
+    f["puesto"] = (ranking[0]["arriba"] + 1) if ranking else None
+    f["advertencias"] = [
+        "Son hechos DENUNCIADOS, no delitos ocurridos: donde se denuncia menos, "
+        "el número baja sin que baje el delito.",
+        "El nivel es RELATIVO a los 86 municipios relevados. «Alto» significa "
+        "«en el tercio superior», no «peligroso».",
+        "El índice deja afuera estupefacientes y armas: se detectan por acción "
+        "policial, no por denuncia de una víctima. Se informan aparte.",
+    ]
+    if f.get("poblacion_estacional"):
+        f["advertencias"].append(
+            "Partido BALNEARIO: la tasa está inflada porque los hechos ocurren "
+            "sobre la población de verano y se dividen por la residente."
+        )
+    return f
+
+
 def ficha_resumida(nombre: str) -> dict:
     """La ficha de un municipio como la leería una persona, no una base.
 
@@ -384,13 +430,20 @@ def ficha_resumida(nombre: str) -> dict:
     censo = _censo_indec(nombre)
     gold = base.get("poblacion")
     indec = censo.get("poblacion_indec_2022")
+    # El porcentaje se calcula sobre la suma de mujeres y varones, NO sobre la
+    # poblacion total: el total del censo incluye a quienes no declararon sexo,
+    # asi que dividir por el total daria dos porcentajes que no suman 100.
+    mujeres, varones = censo.get("mujeres"), censo.get("varones")
+    con_sexo = (mujeres or 0) + (varones or 0)
     poblacion = {
         "total": indec or gold,
         "fuente": (
             censo.get("fuente") if indec else "Gold Standard (relevamiento manual verificado)"
         ),
-        "mujeres": censo.get("mujeres"),
-        "varones": censo.get("varones"),
+        "mujeres": mujeres,
+        "varones": varones,
+        "pct_mujeres": round(mujeres / con_sexo * 100, 1) if con_sexo else None,
+        "pct_varones": round(varones / con_sexo * 100, 1) if con_sexo else None,
         "viviendas": None,
         "falta": (
             None
@@ -410,6 +463,7 @@ def ficha_resumida(nombre: str) -> dict:
         "municipio": nombre,
         "id_municipio": base["id_municipio"],
         "poblacion": poblacion,
+        "seguridad": _seguridad(nombre),
         "autoridades": {
             # Del Boletin Oficial y del portal (src/gabinete), no de Fase 4: el
             # portal casi nunca nombra al intendente y Fase 4 daba 0 verificados.
