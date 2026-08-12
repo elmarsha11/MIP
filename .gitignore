@@ -46,6 +46,12 @@ data/processed/oportunidades/cache/
 # gabinete_86.sqlite.
 data/processed/gabinete/cache/
 
+# El CSV del SNIC: 67 MB de estadistica criminal por departamento. Se cachea
+# porque la serie de un anio cerrado no cambia, pero NO se versiona: a
+# diferencia de los cuadros de INDEC (360 KB), pesa demasiado para el valor que
+# agrega estar adentro del repositorio. Se vuelve a bajar con --refrescar.
+data/processed/seguridad/cache/
+
 # EXCEPCION deliberada: data/processed/indec/cache/ SI se versiona.
 # Los otros caches guardan respuestas de servicios vivos que cambian y se vuelven
 # a pedir. Estos son los cuadros del Censo 2022, resultados DEFINITIVOS: no van a
