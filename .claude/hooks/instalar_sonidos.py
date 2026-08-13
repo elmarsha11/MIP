@@ -8,8 +8,12 @@ Uso tipico, desde la raiz del proyecto:
     python .claude\hooks\instalar_sonidos.py --quitar   # desinstala
 
 Por defecto escribe en el settings.json global (~/.claude/settings.json) para
-que los sonidos funcionen en todos los proyectos. Con --proyecto escribe en
-.claude/settings.json de este repo.
+que los sonidos funcionen en todos los proyectos, y copia los scripts a
+~/.claude/hooks/ para que la configuracion global no dependa de esta carpeta:
+si mas adelante moves, renombras o borras el repo, los sonidos siguen andando.
+Con --sin-copiar registra las rutas de aca, tal cual estan.
+
+Con --proyecto escribe en .claude/settings.json de este repo y no copia nada.
 
 Es idempotente: antes de escribir borra cualquier version previa de estos
 mismos hooks, asi que correrlo dos veces no duplica sonidos. Tambien avisa si
@@ -106,7 +110,29 @@ def quitar_hooks(config: dict) -> int:
     return quitados
 
 
-def agregar_hooks(config: dict, interprete: str) -> None:
+def copiar_scripts() -> Path:
+    """Copia los scripts a ~/.claude/hooks/ y devuelve la ruta del hook.
+
+    Un settings.json global que apunta adentro de un repo se rompe el dia que
+    ese repo se mueve o se borra. Con la copia, la instalacion global queda
+    parada sobre la carpeta de Claude Code y sobrevive a eso.
+    """
+    destino = Path.home() / ".claude" / "hooks"
+    destino.mkdir(parents=True, exist_ok=True)
+
+    if destino.resolve() == AQUI.resolve():
+        return SCRIPT_HOOK  # ya estamos corriendo desde ahi
+
+    for nombre in ("sonidos_claude.py", "instalar_sonidos.py"):
+        origen = AQUI / nombre
+        if origen.is_file():
+            shutil.copy2(origen, destino / nombre)
+
+    print(f"Scripts copiados a {destino}")
+    return destino / "sonidos_claude.py"
+
+
+def agregar_hooks(config: dict, interprete: str, script: Path) -> None:
     hooks = config.setdefault("hooks", {})
     if not isinstance(hooks, dict):
         raise SystemExit("ERROR: la clave 'hooks' del settings.json no es un objeto.")
@@ -120,7 +146,7 @@ def agregar_hooks(config: dict, interprete: str) -> None:
                 {
                     "type": "command",
                     "command": interprete,
-                    "args": [str(SCRIPT_HOOK)],
+                    "args": [str(script)],
                     "timeout": 10,
                 }
             ]
@@ -259,6 +285,12 @@ def main() -> int:
     ambito.add_argument("--global", dest="global_", action="store_true", help="settings.json global (por defecto)")
     ambito.add_argument("--proyecto", action="store_true", help="settings.json de este repo")
     parser.add_argument("--quitar", action="store_true", help="desinstala los hooks")
+    parser.add_argument(
+        "--sin-copiar",
+        dest="sin_copiar",
+        action="store_true",
+        help="no copia los scripts a ~/.claude/hooks: registra las rutas de aca",
+    )
     parser.add_argument("--probar", action="store_true", help="reproduce los 5 sonidos")
     parser.add_argument("--simular", action="store_true", help="simula un turno sin instalar nada")
     parser.add_argument("--interprete", default=sys.executable, help="ejecutable de Python para los hooks")
@@ -285,12 +317,20 @@ def main() -> int:
         print(f"Quitados {quitados} hooks de sonido de {ruta}")
         return 0
 
-    agregar_hooks(config, args.interprete)
+    # En global copiamos los scripts para no depender de esta carpeta; en
+    # proyecto no tiene sentido, ya viven adentro del repo.
+    if destino == "global" and not args.sin_copiar:
+        script = copiar_scripts()
+    else:
+        script = SCRIPT_HOOK
+
+    agregar_hooks(config, args.interprete, script)
     escribir(ruta, config)
 
     if quitados:
         print(f"Reemplazados {quitados} hooks previos.")
     print(f"Instalados {len(EVENTOS)} hooks de sonido en {ruta}")
+    print(f"Hook: {script}")
     print(f"Interprete: {args.interprete}")
     print()
     verificar_wavs()

@@ -10,9 +10,22 @@ Desde la raiz del proyecto, en tu maquina Windows:
 python .claude\hooks\instalar_sonidos.py
 ```
 
-Escribe en el `settings.json` global (`C:\Users\julia\.claude\settings.json`), asi
-los sonidos funcionan en todos tus proyectos y no solo en MIP. Hace un respaldo
-con fecha antes de tocar nada y conserva lo que ya tenias configurado.
+Esto hace dos cosas:
+
+1. Copia `sonidos_claude.py` e `instalar_sonidos.py` a `C:\Users\julia\.claude\hooks\`.
+2. Escribe los hooks en el `settings.json` global
+   (`C:\Users\julia\.claude\settings.json`), apuntando a esa copia.
+
+Asi los sonidos funcionan en **todos** tus proyectos, no solo en MIP, y la
+configuracion no depende de esta carpeta: si mas adelante moves, renombras o
+borras el repo, los sonidos siguen andando. Despues de instalar podes manejar
+todo desde `C:\Users\julia\.claude\hooks\` sin volver a pasar por el repo.
+
+Hace un respaldo con fecha antes de tocar el `settings.json` y conserva lo que
+ya tenias configurado.
+
+Si preferis que apunte a los archivos del repo en lugar de copiarlos, agregale
+`--sin-copiar`.
 
 Despues **reinicia Claude Code** (o abri `/hooks` una vez) para que tome los cambios.
 
@@ -91,10 +104,20 @@ y volve a instalar.
 ## Desinstalar
 
 ```
-python .claude\hooks\instalar_sonidos.py --quitar
+python %USERPROFILE%\.claude\hooks\instalar_sonidos.py --quitar
 ```
 
-Saca solo estos hooks y deja intacto el resto del `settings.json`.
+Saca solo estos hooks y deja intacto el resto del `settings.json`. Los scripts
+copiados quedan en `%USERPROFILE%\.claude\hooks\`; podes borrarlos a mano si no
+los vas a usar mas.
+
+## Ambitos
+
+| | Donde escribe | Copia los scripts | Cuando |
+|---|---|---|---|
+| (por defecto) | `%USERPROFILE%\.claude\settings.json` | si, a `%USERPROFILE%\.claude\hooks\` | Uso general de Claude Code, en todos los proyectos |
+| `--sin-copiar` | `%USERPROFILE%\.claude\settings.json` | no, apunta al repo | Uso general, pero editando los scripts desde el repo |
+| `--proyecto` | `.claude\settings.json` de MIP | no | Solo dentro de MIP |
 
 ## Notas
 

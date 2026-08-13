@@ -32,7 +32,12 @@
       "Bash(python \"C:\\\\Users\\\\julia\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\C--Users-julia-OneDrive-Documentos-UDS-MIP\\\\8c7eaaca-45cd-4dab-bcae-8a708d39f644\\\\scratchpad\\\\test_llm_factory.py\")",
       "Bash(git commit -m ' *)",
       "Bash(python \"C:/Users/julia/AppData/Local/Temp/claude/C--Users-julia-OneDrive-Documentos-UDS-MIP/8c7eaaca-45cd-4dab-bcae-8a708d39f644/scratchpad/smoke_deepseek.py\")",
-      "Bash(mkdir -p /home/user/MIP/.claude/hooks && echo ok)"
+      "Bash(mkdir -p /home/user/MIP/.claude/hooks && echo ok)",
+      "Bash(python -m unittest tests.test_sonidos_hooks)",
+      "Bash(python .claude/hooks/instalar_sonidos.py --simular)",
+      "Bash(cp .claude/settings.local.json /tmp/x.bak)",
+      "Bash(python .claude/hooks/instalar_sonidos.py --proyecto)",
+      "Bash(python .claude/hooks/instalar_sonidos.py --proyecto --quitar)"
     ]
   }
 }
