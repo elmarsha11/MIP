@@ -1,0 +1,26 @@
+# Dependencias de MIP.
+#
+#     python -m pip install -r requirements.txt
+#
+# IMPORTANTE: instalarlas con el MISMO Python con el que se levanta el tablero.
+# El servidor lanza las acciones con sys.executable —el interprete que lo esta
+# corriendo— asi que si se instala con un Python y se levanta con otro, los
+# botones fallan con ModuleNotFoundError aunque desde la terminal ande.
+#
+# Para saber cual es:  python -c "import sys; print(sys.executable)"
+
+# --- nucleo -----------------------------------------------------------------
+requests                 # HTTP en todas las fases
+beautifulsoup4           # limpieza de HTML de los portales
+pydantic>=2              # los modelos que validan y rechazan un dato sin evidencia
+
+# --- fuentes de datos -------------------------------------------------------
+openpyxl                 # cuadros del Censo 2022 de INDEC, y el exporte a Excel
+pypdf                    # boletines oficiales de SIBOM, que vienen en PDF
+
+# --- exportes ---------------------------------------------------------------
+fpdf2                    # fichas PDF por municipio
+
+# --- IA ---------------------------------------------------------------------
+# Gemini es el proveedor de Fase 4. DeepSeek se usa via HTTP y no necesita SDK.
+google-genai

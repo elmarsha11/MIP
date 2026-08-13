@@ -52,7 +52,21 @@ class Ficha:
     """Envuelve a FPDF con las pocas primitivas que esta ficha necesita."""
 
     def __init__(self, municipio: str):
-        from fpdf import FPDF
+        try:
+            from fpdf import FPDF
+        except ImportError as exc:
+            # Un traceback de ImportError no le dice a nadie que hacer, y desde
+            # el tablero aparece como "fallo" a secas. El caso real: se instalo
+            # fpdf2 con un Python y el servidor se levanto con otro, asi que
+            # anda desde la terminal y falla desde el boton.
+            raise SystemExit(
+                "Falta fpdf2, que genera los PDF.\n"
+                f"  Instalalo con ESTE interprete:\n"
+                f"    {sys.executable} -m pip install -r requirements.txt\n"
+                "  Si desde la terminal anda y desde el tablero no, es que el\n"
+                "  servidor se levanto con otro Python: las acciones usan el\n"
+                "  interprete que corre el servidor."
+            ) from exc
 
         self.pdf = FPDF(format="A4", unit="mm")
         self.pdf.set_auto_page_break(auto=True, margin=18)
