@@ -71,7 +71,33 @@ De más barata a más cara:
 2. **El portal recorrido con las señales del tema.** Es la cosecha dirigida que
    Fase 4 usa para turnos, generalizada. Ahí vive la página de residuos que nadie
    clasificó.
-3. **Prensa local**, si se pide con `--con-prensa`.
+3. **Los boletines oficiales**, leídos con `src/gabinete/sibom.py`. No se baja la
+   URL de SIBOM que descubrió Fase 3: esa es `cities/N`, la página de **listado**
+   del municipio, y su HTML es un índice sin contenido. El lector de gabinete
+   navega de ahí a los boletines y les saca el texto con `pypdf`.
+4. **Prensa local**, si se pide con `--con-prensa`.
+
+### Alcance de los boletines
+
+65 de los 86 municipios publican en SIBOM; los otros 21 están registrados pero
+nunca publicaron. Y se leen **sin paginar**: los más recientes. Eso alcanza para
+lo que el municipio decidió últimamente, no para un programa creado por ordenanza
+en 2019 — eso vive en el digesto, que pocos publican.
+
+La primera corrida es lenta porque baja PDFs. Quedan cacheados en
+`data/processed/gabinete/cache`, compartidos con el motor de gabinete: si ese ya
+corrió, esta parte es instantánea. Con `--sin-boletines` se saltea.
+
+### Documentos largos: ventanas, no recorte
+
+Un boletín de SIBOM son 320.000 caracteres y en el prompt entran 4.000. Cortar
+por el principio deja la carátula y el índice, con la ordenanza ambiental en la
+página 60. Por eso `fragmentos_relevantes` extrae ventanas alrededor de cada
+señal y las pega con un separador. Si no hay ninguna señal, cae al principio: la
+página puede ser corta y hablar del tema con otras palabras.
+
+Una cita que cruce dos ventanas no verifica, y está bien: es el lado seguro del
+error.
 
 ## La regla que lo sostiene
 
@@ -149,6 +175,15 @@ Al agregar por municipio, `confirmado` gana a `indicio` y `indicio` gana a
 | `motor_temas.py` | Orquestador, CLI, ficha y cobertura |
 
 ## Trampas encontradas armando esto
+
+- **La primera corrida sobre los 86 dio cero en dos de los tres sub-temas.**
+  `acciones_ambientales` sacó 23 de 86 y los otros dos quedaron en 0 exacto —
+  cero también en `no_compete`, o sea que no llegaba ninguna cita, ni siquiera
+  para rechazarla. Eran dos bugs encadenados, los dos en la pata de normativa,
+  que es justo donde viven promotores y fiscalización: se bajaba el índice de
+  SIBOM en vez de los boletines, y aunque se hubiera bajado el PDF, el recorte a
+  4.000 caracteres desde el principio se quedaba con la carátula. Acciones
+  funcionaba porque es contenido de portal y no dependía de esa pata.
 
 - **`exige_hecho` empezó puesto solo en acciones.** Estaba mal: *"se implementará
   el programa de promotores en 2027"* tampoco prueba que hoy haya promotores. Las

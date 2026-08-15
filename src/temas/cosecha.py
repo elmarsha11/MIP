@@ -31,7 +31,7 @@ from urllib.parse import urljoin, urlparse
 
 _AQUI = Path(__file__).resolve().parent
 _SRC = _AQUI.parent
-for _ruta in (_AQUI, _SRC / "extraction", _SRC / "seguridad"):
+for _ruta in (_AQUI, _SRC / "extraction", _SRC / "seguridad", _SRC / "gabinete"):
     if str(_ruta) not in sys.path:
         sys.path.insert(0, str(_ruta))
 
@@ -59,6 +59,84 @@ MAX_ENLACES_COSECHADOS = 6
 MAX_PAGINAS = 12
 MAX_BYTES_HTML = 400_000
 TIMEOUT = 20
+
+# Cuanto texto de una pagina entra al prompt, y como se elige ese texto.
+# Un boletin de SIBOM son 320.000 caracteres: cortar por el principio deja la
+# caratula y el indice, y la ordenanza ambiental queda en la pagina 60. Por eso
+# los documentos largos entran por ventanas alrededor de cada senal.
+MAX_CHARS_POR_PAGINA = 4000
+VENTANA_SENAL = 1200
+MAX_VENTANAS = 4
+
+# Boletines por municipio. Son PDF y se bajan una sola vez: gabinete los cachea
+# en data/processed/gabinete/cache. La primera corrida es lenta.
+BOLETINES_POR_MUNICIPIO = 4
+
+# Traduccion 1 a 1: preserva la longitud, asi los indices del texto plano valen
+# sobre el original. `normalizar_para_cotejo` no sirve aca porque el NFKD le
+# cambia el largo.
+_ACENTOS = str.maketrans("áéíóúüñÁÉÍÓÚÜÑ", "aeiouunAEIOUUN")
+
+
+def _plano(texto: str) -> str:
+    return texto.translate(_ACENTOS).lower()
+
+
+def fragmentos_relevantes(
+    texto: str,
+    senales: Sequence[str],
+    ventana: int = VENTANA_SENAL,
+    maximo: int = MAX_VENTANAS,
+    tope: int = MAX_CHARS_POR_PAGINA,
+) -> str:
+    """Ventanas de texto alrededor de cada senal, en vez de cortar por el principio.
+
+    Si no hay ninguna senal, devuelve el principio: puede ser una pagina corta
+    que hable del tema con otras palabras, y descartarla seria peor.
+
+    Las ventanas se pegan con un separador visible. Una cita que cruce dos
+    ventanas no va a verificar, y esta bien: es el lado seguro del error.
+    """
+    if len(texto) <= tope:
+        return texto
+
+    plano = _plano(texto)
+    cortes: List[tuple] = []
+    for senal in senales:
+        aguja = _plano(senal)
+        if not aguja:
+            continue
+        desde = 0
+        while True:
+            i = plano.find(aguja, desde)
+            if i < 0:
+                break
+            cortes.append((max(0, i - ventana // 2), min(len(texto), i + ventana // 2)))
+            desde = i + len(aguja)
+
+    if not cortes:
+        return texto[:tope]
+
+    # Fusionar las ventanas que se pisan, para no repetir texto.
+    cortes.sort()
+    fusionados: List[list] = [list(cortes[0])]
+    for ini, fin in cortes[1:]:
+        if ini <= fusionados[-1][1]:
+            fusionados[-1][1] = max(fusionados[-1][1], fin)
+        else:
+            fusionados.append([ini, fin])
+
+    partes: List[str] = []
+    usados = 0
+    for ini, fin in fusionados[:maximo]:
+        trozo = texto[ini:fin]
+        if usados + len(trozo) > tope:
+            trozo = trozo[: max(0, tope - usados)]
+        if not trozo:
+            break
+        partes.append(trozo)
+        usados += len(trozo)
+    return "\n[...]\n".join(partes)
 
 
 class PaginaTema(NamedTuple):
@@ -187,6 +265,50 @@ def _traer_html(url: str) -> Optional[str]:
         return None
 
 
+def boletines_del_municipio(
+    municipio: str,
+    tema: Tema,
+    lector=None,
+    maximo: int = BOLETINES_POR_MUNICIPIO,
+) -> List[PaginaTema]:
+    """Texto de los boletines oficiales, no el indice de SIBOM.
+
+    Este es el bug que dejo promotores y fiscalizacion en cero sobre los 86: las
+    URLs de SIBOM que descubrio Fase 3 son `cities/N`, la pagina de LISTADO del
+    municipio. Bajarla con `descargar` devuelve el HTML del indice —una lista de
+    links— y ahi no hay ninguna ordenanza.
+
+    `src/gabinete/sibom.py` ya sabia navegar de `cities/N` a los boletines y
+    sacarles el texto con pypdf. Reusarlo era lo correcto desde el principio.
+
+    Ojo con el alcance: SIBOM se lee sin paginar, o sea los boletines mas
+    recientes. Sirve para lo que el municipio decidio ultimamente, no para un
+    programa creado por ordenanza en 2019. Eso vive en el digesto, que no todos
+    publican.
+    """
+    if lector is None:
+        try:
+            from sibom import boletines as lector
+        except ImportError:
+            return []
+
+    paginas: List[PaginaTema] = []
+    for b in lector(municipio, maximo) or []:
+        texto = getattr(b, "texto", "") or ""
+        if len(texto) < 80:
+            continue
+        paginas.append(
+            PaginaTema(
+                url=getattr(b, "url", ""),
+                tipo="boletin_sibom",
+                confianza_url="Alta",
+                texto=fragmentos_relevantes(texto, tema.senales),
+                tipo_evidencia=TipoEvidencia.NORMATIVA,
+            )
+        )
+    return paginas
+
+
 def notas_de_prensa(
     municipio: str,
     tema: Tema,
@@ -226,6 +348,8 @@ def paginas_del_tema(
     sqlite_path: Path = SQLITE_DISCOVERY,
     con_prensa: bool = False,
     buscador_prensa: Optional[Callable] = None,
+    con_boletines: bool = True,
+    lector_boletines: Optional[Callable] = None,
     bajar: Callable = descargar,
     traer_html: Callable = _traer_html,
     maximo: int = MAX_PAGINAS,
@@ -246,6 +370,10 @@ def paginas_del_tema(
     for candidata in candidatas:
         if len(paginas) >= maximo:
             break
+        # Las URLs de SIBOM son el indice del municipio, no un documento: se
+        # leen aparte, con el lector que sabe abrir los PDF.
+        if candidata.tipo == "boletin_sibom":
+            continue
         bajada = bajar(candidata)
         if bajada is None:
             continue
@@ -254,10 +382,13 @@ def paginas_del_tema(
                 url=bajada.url,
                 tipo=bajada.tipo,
                 confianza_url=bajada.confianza_url,
-                texto=bajada.texto,
+                texto=fragmentos_relevantes(bajada.texto, tema.senales),
                 tipo_evidencia=TIPOS_BASE.get(candidata.tipo, TipoEvidencia.OFICIAL),
             )
         )
+
+    if con_boletines:
+        paginas += boletines_del_municipio(municipio, tema, lector_boletines)
 
     if con_prensa:
         paginas += notas_de_prensa(municipio, tema, buscador_prensa)

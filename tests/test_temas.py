@@ -26,7 +26,12 @@ for _ruta in (
     if str(_ruta) not in sys.path:
         sys.path.insert(0, str(_ruta))
 
-from cosecha import PaginaTema, enlaces_del_tema  # noqa: E402
+from cosecha import (  # noqa: E402
+    PaginaTema,
+    boletines_del_municipio,
+    enlaces_del_tema,
+    fragmentos_relevantes,
+)
 from definiciones import TEMA_AMBIENTAL, ids_temas, tema  # noqa: E402
 from guardas import (  # noqa: E402
     clasificar,
@@ -360,6 +365,106 @@ class TestCosechaDeEnlaces(unittest.TestCase):
 # ---------------------------------------------------------------------------
 # Agregacion por municipio
 # ---------------------------------------------------------------------------
+
+
+class TestFragmentosRelevantes(unittest.TestCase):
+    """El corte a 4000 por el principio dejaba la caratula del boletin.
+
+    Es la segunda mitad del bug que dejo promotores y fiscalizacion en cero:
+    un boletin de SIBOM son 320.000 caracteres y la ordenanza ambiental esta en
+    la pagina 60.
+    """
+
+    def test_texto_corto_pasa_entero(self):
+        t = "La Municipalidad tiene promotores ambientales."
+        self.assertEqual(fragmentos_relevantes(t, TEMA_AMBIENTAL.senales), t)
+
+    def test_encuentra_la_ordenanza_enterrada(self):
+        relleno = "Visto el expediente y considerando lo actuado. " * 8000
+        ordenanza = "ORDENANZA 4521: crease el programa de promotores ambientales."
+        boletin = relleno + ordenanza + relleno
+
+        self.assertGreater(len(boletin), 300_000)
+        frag = fragmentos_relevantes(boletin, TEMA_AMBIENTAL.senales)
+
+        self.assertIn("promotores ambientales", frag)
+        self.assertIn("ORDENANZA 4521", frag)
+        self.assertLessEqual(len(frag), 4200)
+
+    def test_el_corte_viejo_no_la_encontraba(self):
+        """Deja constancia de por que fallaba, para que no vuelva."""
+        relleno = "Visto el expediente y considerando lo actuado. " * 8000
+        boletin = relleno + "ORDENANZA 4521: promotores ambientales." + relleno
+        self.assertNotIn("promotores ambientales", boletin[:4000])
+
+    def test_sin_senales_cae_al_principio(self):
+        t = "Nada del tema. " * 1000
+        frag = fragmentos_relevantes(t, TEMA_AMBIENTAL.senales)
+        self.assertEqual(frag, t[:4000])
+
+    def test_respeta_el_tope(self):
+        t = ("hay un punto verde aca. " + "x" * 3000) * 40
+        self.assertLessEqual(len(fragmentos_relevantes(t, TEMA_AMBIENTAL.senales)), 4200)
+
+    def test_tolera_tildes_en_el_texto(self):
+        """Las senales van sin tilde; el boletin las trae con tilde."""
+        relleno = "z" * 5000
+        t = relleno + "programa de separación en origen vigente" + relleno
+        frag = fragmentos_relevantes(t, TEMA_AMBIENTAL.senales)
+        self.assertIn("separación en origen", frag)
+
+    def test_ventanas_solapadas_no_duplican(self):
+        relleno = "y" * 5000
+        t = relleno + "punto verde y compostaje juntos" + relleno
+        frag = fragmentos_relevantes(t, TEMA_AMBIENTAL.senales)
+        self.assertEqual(frag.count("punto verde y compostaje juntos"), 1)
+
+
+class TestBoletines(unittest.TestCase):
+    """SIBOM se lee con el lector de gabinete, no bajando el indice."""
+
+    def test_usa_el_lector_y_marca_normativa(self):
+        class BoletinFalso:
+            url = "https://sibom.slyt.gba.gob.ar/bulletins/117"
+            texto = (
+                "VISTO el expediente 4521/21 y CONSIDERANDO que resulta necesario "
+                "fortalecer la gestion ambiental del partido, el Honorable Concejo "
+                "Deliberante sanciona con fuerza de ORDENANZA: crease el programa "
+                "municipal de promotores ambientales."
+            )
+
+        paginas = boletines_del_municipio(
+            "Chascomus", TEMA_AMBIENTAL, lector=lambda m, n: [BoletinFalso()]
+        )
+        self.assertEqual(len(paginas), 1)
+        self.assertIs(paginas[0].tipo_evidencia, TipoEvidencia.NORMATIVA)
+        self.assertIn("promotores ambientales", paginas[0].texto)
+
+    def test_municipio_que_nunca_publico(self):
+        """21 de los 86 estan en SIBOM pero no publicaron. No es un error."""
+        self.assertEqual(
+            boletines_del_municipio("Navarro", TEMA_AMBIENTAL, lector=lambda m, n: []),
+            [],
+        )
+
+    def test_boletin_vacio_se_descarta(self):
+        class Vacio:
+            url = "u"
+            texto = "corto"
+
+        self.assertEqual(
+            boletines_del_municipio("X", TEMA_AMBIENTAL, lector=lambda m, n: [Vacio()]),
+            [],
+        )
+
+    def test_recorta_el_boletin_por_senales(self):
+        class Largo:
+            url = "u"
+            texto = "a" * 200_000 + "los puntos verdes funcionan" + "b" * 200_000
+
+        p = boletines_del_municipio("X", TEMA_AMBIENTAL, lector=lambda m, n: [Largo()])[0]
+        self.assertIn("los puntos verdes funcionan", p.texto)
+        self.assertLess(len(p.texto), 5000)
 
 
 class TestEstadoPorSubtema(unittest.TestCase):

@@ -97,6 +97,7 @@ def rastrear(
     cliente=None,
     con_prensa: bool = False,
     buscador_prensa=None,
+    con_boletines: bool = True,
 ) -> MunicipioTema:
     """Rastrea un tema en un municipio y devuelve lo verificado."""
     resultado = MunicipioTema(
@@ -109,6 +110,7 @@ def rastrear(
             tema,
             con_prensa=con_prensa,
             buscador_prensa=buscador_prensa,
+            con_boletines=con_boletines,
         )
     except FileNotFoundError as exc:
         resultado.error = str(exc)
@@ -146,6 +148,7 @@ def rastrear_todos(
     cliente=None,
     con_prensa: bool = False,
     buscador_prensa=None,
+    con_boletines: bool = True,
     verbose: bool = True,
 ) -> List[MunicipioTema]:
     from llm import CuotaAgotada
@@ -158,7 +161,8 @@ def rastrear_todos(
         id_m = getattr(m, "id_municipio", getattr(m, "id", nombre))
         try:
             r = rastrear(
-                nombre, id_m, tema, cliente, con_prensa, buscador_prensa
+                nombre, id_m, tema, cliente, con_prensa, buscador_prensa,
+                con_boletines,
             )
         except CuotaAgotada:
             if verbose:
@@ -350,6 +354,8 @@ def main(argv: Optional[List[str]] = None) -> int:
     parser.add_argument("--limite", type=int, help="cortar despues de N municipios")
     parser.add_argument("--con-prensa", action="store_true", dest="con_prensa",
                         help="sumar notas de medios locales (evidencia de indicio)")
+    parser.add_argument("--sin-boletines", action="store_true", dest="sin_boletines",
+                        help="no leer los boletines de SIBOM (mucho mas rapido)")
     parser.add_argument("--ficha", help="mostrar lo ya rastreado de un municipio")
     parser.add_argument("--cobertura", action="store_true",
                         help="cuantos municipios tienen cada sub-tema")
@@ -388,6 +394,7 @@ def main(argv: Optional[List[str]] = None) -> int:
         r = rastrear(
             m.nombre, m.id_municipio, tema,
             con_prensa=args.con_prensa, buscador_prensa=buscador,
+            con_boletines=not args.sin_boletines,
         )
         guardar([r])
         print(ficha(tema.id, m.nombre))
@@ -398,7 +405,8 @@ def main(argv: Optional[List[str]] = None) -> int:
         if args.limite:
             municipios = municipios[: args.limite]
         resultados = rastrear_todos(
-            tema, municipios, con_prensa=args.con_prensa, buscador_prensa=buscador
+            tema, municipios, con_prensa=args.con_prensa, buscador_prensa=buscador,
+            con_boletines=not args.sin_boletines,
         )
         guardar(resultados)
         print()
