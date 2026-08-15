@@ -28,6 +28,7 @@ function leerIncrustado(ruta) {
   return {
     resumen: D.resumen, municipios: D.municipios, turnos: D.turnos,
     "costo-turnos": D.costo_turnos, revision: D.revision, comercial: D.comercial,
+    ambiental: D.ambiental,
     parametros: D.parametros, territorio: D.territorio, acciones: [], tareas: [],
   }[ruta] ?? [];
 }
@@ -54,6 +55,7 @@ $$("#pestanas button").forEach((b) =>
 function cargarVista(vista) {
   ({ panel: verPanel, municipios: verMunicipios, turnos: verTurnos,
      territorio: verTerritorio, impacto: verImpacto, comercial: verComercial,
+     ambiental: verAmbiental,
      revision: verRevision, acciones: verAcciones }[vista] || (() => {}))();
 }
 

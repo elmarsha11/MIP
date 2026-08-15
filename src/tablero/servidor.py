@@ -100,6 +100,8 @@ class Tablero(SimpleHTTPRequestHandler):
                 return self._json(consultas.resumen_territorio())
             if partes[1:2] == ["territorio"] and len(partes) == 3:
                 return self._json(consultas.territorio(partes[2]))
+            if partes[1:] == ["ambiental"]:
+                return self._json(consultas.ambiental())
             if partes[1:] == ["comercial"]:
                 return self._json(consultas.comercial())
             if partes[1:] == ["revision"]:

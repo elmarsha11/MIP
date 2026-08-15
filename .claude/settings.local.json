@@ -37,7 +37,8 @@
       "Bash(python .claude/hooks/instalar_sonidos.py --simular)",
       "Bash(cp .claude/settings.local.json /tmp/x.bak)",
       "Bash(python .claude/hooks/instalar_sonidos.py --proyecto)",
-      "Bash(python .claude/hooks/instalar_sonidos.py --proyecto --quitar)"
+      "Bash(python .claude/hooks/instalar_sonidos.py --proyecto --quitar)",
+      "Bash(cd /home/user/MIP *)"
     ]
   }
 }

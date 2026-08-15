@@ -204,3 +204,77 @@ python -m unittest tests.test_temas -v
 
 40 tests, sin red y sin IA. Los casos de tercera categoría son los modos
 concretos de equivocarse que motivaron el guard.
+
+---
+
+# Plan ambiental: el relevamiento manual
+
+`plan_ambiental.py` importa `data/raw/ambiental/plan_ambiental_86.csv`, el
+relevamiento hecho a mano de los 86 municipios. Es la mejor fuente que tiene MIP
+sobre el tema —completo, 86 de 86 sin una celda vacía, con fuentes oficiales por
+fila— y **manda sobre lo que saque el motor**: eso es lectura de un modelo, esto
+es trabajo verificado.
+
+```bash
+python src/temas/plan_ambiental.py --importar
+python src/temas/plan_ambiental.py --ficha Suipacha
+python src/temas/plan_ambiental.py --resumen
+```
+
+Vive en la tabla `plan_ambiental` de `temas_86.sqlite`, aparte de
+`hallazgos_tema`: un texto redactado por una persona no es una cita literal
+verificada contra su fuente, y mezclarlos borraría esa diferencia.
+
+## El CSV venía roto
+
+Todas las filas traen 19 campos y la cabecera nombra 10. Los campos con comas
+salieron **sin comillas**, así que una lista como *"industrias láctea, quesera,
+agroindustrial y metalmecánica liviana"* se partió en cuatro campos y corrió todo
+lo de la derecha. En Suipacha eso dejaba los Puntos Verdes bajo el título
+"Fuentes Oficiales", que en realidad era la columna de GIRSU desplazada.
+
+El CSV crudo se versiona **tal cual**. La reparación es código, no una edición a
+mano: así es auditable, testeable, y volver a exportar el original no obliga a
+rehacer el arreglo.
+
+Se repega con dos señales, y ninguna sola alcanza:
+
+1. Si un campo no cierra oración, el siguiente es su continuación.
+2. Si un campo empieza en minúscula, es continuación del anterior.
+
+La segunda existe por Ayacucho: su campo de fiscalización termina en
+*"(Mateo Hermanos S.A.)"*, que parece cierre de oración y no lo es. La primera
+existe porque hay continuaciones que empiezan con nombre propio (*"La Colina"*,
+*"PET"*) y ahí la minúscula no ayuda.
+
+Las URLs son la excepción a las dos: empiezan en minúscula pero no continúan
+nada, y arrancan la columna de fuentes aunque el campo anterior haya quedado
+abierto.
+
+**Dos invariantes cierran la reparación**: las 86 filas reconstruyen a exactamente
+6 campos, y las 86 tienen URL en el sexto. Si alguna vez fallan, el importador se
+planta en vez de guardar datos corridos.
+
+## El resumen derivado
+
+El texto es el dato y viaja siempre entero. El `estado` es una lectura derivada
+por palabras clave, y existe para una sola cosa: **que los 86 se puedan
+comparar**. Un párrafo en prosa no permite ordenar ni filtrar.
+
+| Categoría | Etiquetas | Reparto |
+|---|---|---|
+| Fiscalización 3ra | mixta / provincial / municipal | 67 / 13 / 5 (+1 sin clasificar) |
+| Promotores | cuerpo nombrado | 68 de 86 |
+| GIRSU | planta propia, puntos verdes | 51 y 46 de 86 |
+| Áreas y arbolado | reserva declarada, plan de arbolado | 21 y 59 de 86 |
+| Otras | ordenanza de fitosanitarios | 75 de 86 |
+
+Cuando la etiqueta y el texto no coincidan, **vale el texto**. Por eso el tablero
+los muestra juntos y cada etiqueta lleva su glosa: "mixta" sin decir mixta entre
+quién y quién no significa nada.
+
+## En el tablero
+
+Pestaña **Ambiental**, y dentro de la ficha de cada municipio. Anda con servidor
+(`/api/ambiental`) y también en el HTML estático que genera `generar_html.py`,
+donde los datos viajan incrustados.

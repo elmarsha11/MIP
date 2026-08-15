@@ -22,6 +22,7 @@
   <button data-vista="turnos">Mapa de turnos</button>
   <button data-vista="territorio">Territorio</button>
   <button data-vista="impacto">Impacto</button>
+  <button data-vista="ambiental">Ambiental</button>
   <button data-vista="comercial">Comercial</button>
   <button data-vista="revision">Revisión</button>
   <button data-vista="acciones">Acciones</button>
@@ -104,6 +105,24 @@
       <span id="comercial-cuenta" class="nota"></span>
     </div>
     <div id="comercial-contenido"></div>
+  </section>
+
+  <!-- AMBIENTAL -->
+  <section id="vista-ambiental" class="vista oculta">
+    <p class="nota">
+      Relevamiento ambiental de los 86, hecho a mano y con las fuentes oficiales de
+      cada municipio. <strong>El texto es el dato.</strong> La etiqueta de color es
+      una lectura derivada por palabras clave, y está sólo para poder comparar y
+      filtrar: un párrafo en prosa no permite ordenar 86 municipios. Cuando la
+      etiqueta y el texto no coincidan, vale el texto.
+    </p>
+    <div class="barra">
+      <select id="ambiental-categoria"></select>
+      <select id="ambiental-estado"></select>
+      <span id="ambiental-cuenta" class="nota"></span>
+    </div>
+    <div id="ambiental-resumen"></div>
+    <div id="ambiental-contenido"></div>
   </section>
 
   <!-- REVISION -->

@@ -45,6 +45,7 @@ ASPECTOS_SEGURIDAD = (
     ("allanamientos", "Allanamientos"),
 )
 SQLITE_INDEC = PROJECT_ROOT / "data" / "processed" / "indec" / "censo_2022.sqlite"
+SQLITE_TEMAS = PROJECT_ROOT / "data" / "processed" / "temas" / "temas_86.sqlite"
 
 CANALES_DIGITALES = ("web", "whatsapp", "telegram", "app", "email")
 CANALES_SIN_DIGITAL = ("telefono", "presencial")
@@ -543,6 +544,7 @@ def ficha_resumida(nombre: str) -> dict:
             "turnos_url": canal.get("url") if canal else None,
         },
         "digital": {etiqueta: dato(v) for v, etiqueta in FILA_VARIABLE.items()},
+        "ambiental": _ambiental(nombre),
         "sitio_oficial": base.get("sitio_oficial"),
         "sitio_sin_https": base.get("sitio_sin_https"),
         "transporte": {
@@ -552,6 +554,117 @@ def ficha_resumida(nombre: str) -> dict:
             "colectivo": None,
             "falta": "Líneas de colectivo urbano: no relevado todavía",
         },
+    }
+
+
+# ---------------------------------------------------------------------------
+# Ambiental
+# ---------------------------------------------------------------------------
+
+CATEGORIAS_AMBIENTAL = (
+    ("promotores_ambientales", "Promotores ambientales"),
+    ("fiscalizacion_3ra", "Fiscalización 3ra categoría"),
+    ("girsu_residuos", "GIRSU y residuos"),
+    ("areas_arbolado", "Áreas protegidas y arbolado"),
+    ("otras_acciones", "Otras acciones ambientales"),
+)
+
+# Como se lee cada etiqueta derivada. La etiqueta sola no significa nada para
+# quien mira el tablero: "mixta" tiene que decir mixta ENTRE QUIEN Y QUIEN.
+GLOSA_AMBIENTAL = {
+    "mixta": "Provincia fiscaliza 3ra; el municipio controla 1ra y 2da o inspecciona junto a ella",
+    "provincial": "La fiscaliza la Provincia (Ley 11.459); no se describe rol municipal",
+    "municipal": "El texto solo describe control municipal",
+    "sin_clasificar": "El texto no dice quién ejerce el control",
+    "cuerpo_nombrado": "Nombra promotores o promotoras propios",
+    "planta_propia": "Tiene planta de tratamiento, separación o reciclado",
+    "puntos_verdes": "Tiene puntos verdes o puntos limpios",
+    "planta_propia+puntos_verdes": "Tiene planta y además puntos verdes",
+    "reserva_declarada": "Tiene reserva o área protegida declarada",
+    "plan_arbolado": "Tiene plan u ordenanza de arbolado",
+    "reserva_declarada+plan_arbolado": "Tiene reserva declarada y plan de arbolado",
+    "ordenanza_fitosanitarios": "Regula fitosanitarios o agroquímicos",
+    "sin_senal": "El texto no menciona ninguna de las señales buscadas",
+}
+
+
+def _ambiental(nombre: str) -> dict:
+    """El plan ambiental del municipio, tal como lo relevo una persona.
+
+    El texto es lo que manda y viaja siempre entero. El `estado` es una lectura
+    DERIVADA con palabras clave, para que los 86 se puedan comparar: un parrafo
+    en prosa no permite ordenar ni filtrar. Por eso se muestran juntos, y por eso
+    cada etiqueta viene con su glosa.
+    """
+    filas = _filas(
+        SQLITE_TEMAS,
+        "SELECT categoria, texto, estado, fuentes, seccion, poblacion, origen "
+        "FROM plan_ambiental WHERE municipio = ?",
+        (nombre,),
+    )
+    if not filas:
+        return {"hay_datos": False, "motivo": "Sin relevamiento ambiental cargado"}
+
+    por_id = {f["categoria"]: f for f in filas}
+    return {
+        "hay_datos": True,
+        "origen": filas[0]["origen"],
+        "seccion": filas[0]["seccion"],
+        "fuentes": [u.strip() for u in (filas[0]["fuentes"] or "").split(";") if u.strip()],
+        "categorias": [
+            {
+                "id": cid,
+                "etiqueta": etiqueta,
+                "texto": por_id[cid]["texto"],
+                "estado": por_id[cid]["estado"],
+                "glosa": GLOSA_AMBIENTAL.get(por_id[cid]["estado"], ""),
+            }
+            for cid, etiqueta in CATEGORIAS_AMBIENTAL
+            if cid in por_id
+        ],
+    }
+
+
+def ambiental() -> dict:
+    """Los 86 comparados por categoria, para la vista de conjunto."""
+    filas = _filas(
+        SQLITE_TEMAS,
+        "SELECT municipio, categoria, estado, texto, fuentes FROM plan_ambiental",
+    )
+    if not filas:
+        return {"hay_datos": False, "municipios": [], "por_categoria": []}
+
+    municipios: Dict[str, dict] = {}
+    for f in filas:
+        m = municipios.setdefault(
+            f["municipio"],
+            {"municipio": f["municipio"], "fuentes": f["fuentes"], "estados": {}, "textos": {}},
+        )
+        m["estados"][f["categoria"]] = f["estado"]
+        m["textos"][f["categoria"]] = f["texto"]
+
+    por_categoria = []
+    for cid, etiqueta in CATEGORIAS_AMBIENTAL:
+        conteo: Dict[str, int] = {}
+        for m in municipios.values():
+            e = m["estados"].get(cid)
+            if e:
+                conteo[e] = conteo.get(e, 0) + 1
+        por_categoria.append({
+            "id": cid,
+            "etiqueta": etiqueta,
+            "estados": [
+                {"estado": e, "n": n, "glosa": GLOSA_AMBIENTAL.get(e, "")}
+                for e, n in sorted(conteo.items(), key=lambda x: -x[1])
+            ],
+        })
+
+    return {
+        "hay_datos": True,
+        "total": len(municipios),
+        "categorias": [{"id": c, "etiqueta": e} for c, e in CATEGORIAS_AMBIENTAL],
+        "por_categoria": por_categoria,
+        "municipios": sorted(municipios.values(), key=lambda m: m["municipio"]),
     }
 
 
