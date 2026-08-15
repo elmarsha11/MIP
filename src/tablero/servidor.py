@@ -176,6 +176,15 @@ class Tablero(SimpleHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(datos)
 
+    def _archivo(self, ruta, nombre: str, tipo: str) -> None:
+        cuerpo = Path(ruta).read_bytes()
+        self.send_response(200)
+        self.send_header("Content-Type", tipo)
+        self.send_header("Content-Disposition", f'attachment; filename="{nombre}"')
+        self.send_header("Content-Length", str(len(cuerpo)))
+        self.end_headers()
+        self.wfile.write(cuerpo)
+
     def _exportar(self, que: str) -> None:
         if que == "municipios.csv":
             return self._csv(consultas.municipios(), "mip_municipios.csv")
@@ -198,6 +207,13 @@ class Tablero(SimpleHTTPRequestHandler):
                 for f in datos.get("municipios", [])
             ]
             return self._csv(filas, "mip_costo_turnos.csv")
+        if que == "ambiental.xlsx":
+            sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "exportar"))
+            from libro_excel import exportar_ambiental
+
+            return self._archivo(exportar_ambiental(), "mip_ambiental.xlsx",
+                                 "application/vnd.openxmlformats-officedocument."
+                                 "spreadsheetml.sheet")
         return self._json({"error": "Exportacion desconocida"}, 404)
 
 

@@ -255,11 +255,41 @@ CAPAS_MAPA = {
 CAPA_DE_TIPO = {t: capa for capa, tipos in CAPAS_MAPA.items() for t in tipos}
 
 
+def _limite(municipio: str) -> Optional[dict]:
+    """El contorno del partido, si ya se bajo de OSM.
+
+    Cambia el encuadre del mapa, y no es cosmetico: encuadrar por los puntos
+    hace que un partido censado solo en su casco urbano parezca cubierto entero.
+    Con el contorno se ve el area vacia, que es el dato util.
+    """
+    filas = _filas(
+        SQLITE_TERRITORIO,
+        "SELECT anillos, lat_min, lat_max, lon_min, lon_max FROM limites "
+        "WHERE municipio = ?",
+        (municipio,),
+    )
+    if not filas:
+        return None
+    import json as _json
+
+    f = filas[0]
+    try:
+        anillos = _json.loads(f["anillos"])
+    except (TypeError, ValueError):
+        return None
+    return {
+        "anillos": anillos,
+        "lat_min": f["lat_min"], "lat_max": f["lat_max"],
+        "lon_min": f["lon_min"], "lon_max": f["lon_max"],
+    }
+
+
 def territorio(municipio: str) -> dict:
     """Entidades del municipio, listas para dibujar en un mapa.
 
-    Devuelve tambien el recuadro que las contiene: es lo que permite hacer zoom
-    al municipio sin depender de un servicio de mapas externo.
+    Devuelve el contorno del partido si esta bajado, y el recuadro de las
+    entidades como respaldo: sin contorno el mapa sigue andando, encuadrado por
+    los puntos como antes.
     """
     filas = _filas(
         SQLITE_TERRITORIO,
@@ -287,6 +317,7 @@ def territorio(municipio: str) -> dict:
         "total": len(filas),
         "ubicadas": len(ubicadas),
         "recuadro": recuadro,
+        "limite": _limite(municipio),
         "por_tipo": conteo,
         "entidades": filas,
     }

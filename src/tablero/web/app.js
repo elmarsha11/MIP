@@ -455,7 +455,12 @@ async function pintarTerritorio(municipio) {
 }
 
 function dibujarMapa() {
-  const caja = TERRITORIO.recuadro;
+  const limite = TERRITORIO.limite;
+  // El encuadre sale del CONTORNO del partido si esta bajado, y del recuadro de
+  // los puntos si no. No es lo mismo: encuadrar por los puntos hace que un
+  // partido censado solo en su casco urbano llene el mapa y parezca cubierto
+  // entero. Con el contorno se ve el area vacia, que es el dato util.
+  const caja = limite || TERRITORIO.recuadro;
   if (!caja) {
     $("#mapa-caja").innerHTML = '<p class="nota">Sin entidades ubicadas.</p>';
     return;
@@ -473,6 +478,16 @@ function dibujarMapa() {
 
   const px = (e) => desplX + (e.longitud - caja.lon_min) * factorLon * escala;
   const py = (e) => desplY + (caja.lat_max - e.latitud) * escala;  // norte arriba
+  const proy = (lon, lat) =>
+    `${(desplX + (lon - caja.lon_min) * factorLon * escala).toFixed(1)},` +
+    `${(desplY + (caja.lat_max - lat) * escala).toFixed(1)}`;
+
+  const contorno = limite
+    ? limite.anillos.map((anillo) =>
+        `<polygon class="limite" points="${anillo.map((p) => proy(p[0], p[1])).join(" ")}"
+          fill="#f3f6f9" stroke="#9fb3c8" stroke-width="1.5" stroke-linejoin="round"/>`
+      ).join("")
+    : "";
 
   const visibles = TERRITORIO.entidades.filter(
     (e) => e.latitud != null && CAPAS_VISIBLES.has(e.capa)
@@ -490,6 +505,7 @@ function dibujarMapa() {
   $("#mapa-caja").innerHTML = `
     <svg viewBox="0 0 ${ANCHO} ${ALTO}" role="img" aria-label="Mapa de ${esc(TERRITORIO.municipio)}">
       <rect width="${ANCHO}" height="${ALTO}" fill="transparent"/>
+      ${contorno}
       ${puntos}
     </svg>
     <div class="leyenda">
@@ -673,6 +689,11 @@ async function verAmbiental() {
       '<p class="nota">Todavía no se importó. Corré <code>python src/temas/plan_ambiental.py --importar</code>.</p>';
     return;
   }
+
+  // Sin servidor no hay quien genere el .xlsx, asi que el boton se esconde en
+  // vez de quedar como un link roto en el export.
+  const botonExcel = $("#ambiental-excel");
+  if (botonExcel) botonExcel.style.display = ESTATICO ? "none" : "";
 
   const cat = $("#ambiental-categoria");
   if (!cat.options.length) {

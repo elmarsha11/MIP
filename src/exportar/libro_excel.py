@@ -41,9 +41,17 @@ BASES = {
     "operativos": PROCESADO / "seguridad" / "operativos_86.sqlite",
     "territorio": PROCESADO / "territorio" / "entidades_86.sqlite",
     "medios": PROCESADO / "medios" / "medios_86.sqlite",
+    "temas": PROCESADO / "temas" / "temas_86.sqlite",
 }
 
 FUENTES = [
+    ("Plan ambiental", "Relevamiento manual de los 86, con las fuentes oficiales de cada fila",
+     "El TEXTO es el dato. La columna '— etiqueta' es una lectura derivada por "
+     "palabras clave, y existe solo para poder ordenar y filtrar: un párrafo en "
+     "prosa no permite comparar 86 municipios. Cuando la etiqueta y el texto no "
+     "coincidan, vale el texto. En fiscalización 3ra, 'provincial' NO es una "
+     "carencia del municipio: por Ley 11.459 el Certificado de Aptitud Ambiental "
+     "lo emite la Provincia."),
     ("Población y sexo", "INDEC, Censo Nacional 2022, resultados definitivos",
      "Donde el Gold Standard difiere, manda INDEC: tiene norma, año y metodología. "
      "Hay 6 municipios cuya población en el Gold Standard es la del partido vecino."),
@@ -204,6 +212,56 @@ def hoja_medios() -> List[dict]:
     ]
 
 
+# Las cinco categorias del relevamiento, en el orden en que se releva.
+CATEGORIAS_AMBIENTAL = (
+    ("promotores_ambientales", "Promotores ambientales"),
+    ("fiscalizacion_3ra", "Fiscalización 3ra categoría"),
+    ("girsu_residuos", "GIRSU y residuos"),
+    ("areas_arbolado", "Áreas protegidas y arbolado"),
+    ("otras_acciones", "Otras acciones ambientales"),
+)
+
+
+def hoja_ambiental() -> List[dict]:
+    """Una fila por municipio, una columna por categoria.
+
+    A lo ancho y no a lo largo: quien abre el Excel quiere comparar municipios
+    entre si, y con cinco filas por municipio eso obliga a filtrar. Ademas cada
+    categoria lleva su etiqueta derivada en una columna aparte, que es lo unico
+    ordenable y filtrable: el texto no se puede ordenar.
+    """
+    filas = _filas(
+        BASES["temas"],
+        "SELECT municipio, seccion, poblacion, categoria, texto, estado, fuentes "
+        "FROM plan_ambiental ORDER BY municipio",
+    )
+    if not filas:
+        return []
+
+    por_municipio: dict = {}
+    for f in filas:
+        m = por_municipio.setdefault(f["municipio"], {
+            "Municipio": f["municipio"],
+            "Sección": f["seccion"],
+            "Población": f["poblacion"],
+        })
+        etiqueta = dict(CATEGORIAS_AMBIENTAL).get(f["categoria"], f["categoria"])
+        m[etiqueta] = f["texto"]
+        m[f"{etiqueta} — etiqueta"] = f["estado"]
+        m["Fuentes oficiales"] = f["fuentes"]
+
+    # Orden de columnas fijo: texto y etiqueta juntos, categoria por categoria.
+    columnas = ["Municipio", "Sección", "Población"]
+    for _, etiqueta in CATEGORIAS_AMBIENTAL:
+        columnas += [etiqueta, f"{etiqueta} — etiqueta"]
+    columnas.append("Fuentes oficiales")
+
+    return [
+        {c: m.get(c, "") for c in columnas}
+        for m in sorted(por_municipio.values(), key=lambda x: x["Municipio"])
+    ]
+
+
 def _escribir(libro, titulo: str, filas: Sequence[dict], anchos: dict = None) -> None:
     from openpyxl.styles import Alignment, Font, PatternFill
     from openpyxl.utils import get_column_letter
@@ -279,6 +337,10 @@ def exportar(salida: Optional[Path] = None) -> Path:
               {"Detalle": 60, "Cita textual": 70, "URL": 50})
     _escribir(libro, "Territorio", hoja_territorio())
     _escribir(libro, "Medios locales", hoja_medios(), {"URL": 45})
+    _escribir(libro, "Ambiental", hoja_ambiental(),
+              {**{e: 70 for _, e in CATEGORIAS_AMBIENTAL},
+               **{f"{e} — etiqueta": 22 for _, e in CATEGORIAS_AMBIENTAL},
+               "Fuentes oficiales": 55})
     _hoja_fuentes(libro)
 
     if salida is None:
@@ -289,9 +351,36 @@ def exportar(salida: Optional[Path] = None) -> Path:
     return salida
 
 
+def exportar_ambiental(salida: Optional[Path] = None) -> Path:
+    """Solo el plan ambiental, para bajar desde su pestaña.
+
+    Va con la hoja de fuentes igual: un Excel se reenvia y se lee sin contexto,
+    y sin la advertencia alguien va a leer "provincial" como una carencia del
+    municipio cuando es como reparte la competencia la Ley 11.459.
+    """
+    from openpyxl import Workbook
+
+    libro = Workbook()
+    libro.remove(libro.active)
+    _escribir(libro, "Ambiental", hoja_ambiental(),
+              {**{e: 70 for _, e in CATEGORIAS_AMBIENTAL},
+               **{f"{e} — etiqueta": 22 for _, e in CATEGORIAS_AMBIENTAL},
+               "Fuentes oficiales": 55})
+    _hoja_fuentes(libro)
+
+    if salida is None:
+        SALIDA_DIR.mkdir(parents=True, exist_ok=True)
+        salida = SALIDA_DIR / f"MIP_ambiental_{datetime.now().strftime('%Y-%m-%d')}.xlsx"
+    salida.parent.mkdir(parents=True, exist_ok=True)
+    libro.save(salida)
+    return salida
+
+
 def main(argv: Optional[List[str]] = None) -> int:
     parser = argparse.ArgumentParser(description="MIP - Exportar todo a Excel")
     parser.add_argument("--salida", type=Path)
+    parser.add_argument("--solo-ambiental", action="store_true",
+                        help="un libro con la hoja ambiental nada mas")
     args = parser.parse_args(argv)
 
     if hasattr(sys.stdout, "reconfigure"):

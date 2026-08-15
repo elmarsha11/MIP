@@ -278,3 +278,19 @@ quién y quién no significa nada.
 Pestaña **Ambiental**, y dentro de la ficha de cada municipio. Anda con servidor
 (`/api/ambiental`) y también en el HTML estático que genera `generar_html.py`,
 donde los datos viajan incrustados.
+
+## Excel
+
+La pestaña Ambiental tiene botón **Descargar Excel**: un libro con la hoja
+ambiental y la de fuentes. El libro completo (`src/exportar/libro_excel.py`)
+también la incluye como novena hoja.
+
+Va **a lo ancho**: una fila por municipio y dos columnas por categoría —el texto
+y su etiqueta—. Con cinco filas por municipio habría que filtrar para comparar,
+que es justo lo que uno quiere hacer al abrirlo. La etiqueta va en columna aparte
+porque es lo único ordenable: el texto no se puede ordenar.
+
+La hoja de fuentes viaja siempre, incluso en el libro de una sola hoja. Un Excel
+se reenvía y se lee sin contexto, y sin la advertencia alguien va a leer
+`provincial` en fiscalización como una carencia del municipio, cuando es cómo
+reparte la competencia la Ley 11.459.
