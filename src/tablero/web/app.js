@@ -661,6 +661,80 @@ function pintarComercial() {
     </div>`).join("");
 }
 
+/* ---------------------------------------------------------------- Ambiental */
+let AMBIENTAL = null;
+
+async function verAmbiental() {
+  if (!AMBIENTAL) AMBIENTAL = await api("ambiental");
+  const d = AMBIENTAL;
+
+  if (!d || !d.hay_datos) {
+    $("#ambiental-contenido").innerHTML =
+      '<p class="nota">Todavía no se importó. Corré <code>python src/temas/plan_ambiental.py --importar</code>.</p>';
+    return;
+  }
+
+  const cat = $("#ambiental-categoria");
+  if (!cat.options.length) {
+    cat.innerHTML = d.categorias
+      .map((c) => `<option value="${esc(c.id)}">${esc(c.etiqueta)}</option>`)
+      .join("");
+    cat.addEventListener("change", () => { llenarEstadosAmbiental(); pintarAmbiental(); });
+    $("#ambiental-estado").addEventListener("change", pintarAmbiental);
+    llenarEstadosAmbiental();
+  }
+  pintarAmbiental();
+}
+
+function llenarEstadosAmbiental() {
+  const d = AMBIENTAL;
+  const cid = $("#ambiental-categoria").value;
+  const c = d.por_categoria.find((x) => x.id === cid);
+  $("#ambiental-estado").innerHTML =
+    `<option value="">Todas las etiquetas (${d.total} municipios)</option>` +
+    (c ? c.estados.map((e) =>
+      `<option value="${esc(e.estado)}">${esc(e.estado)} — ${e.n}</option>`).join("") : "");
+}
+
+function pintarAmbiental() {
+  const d = AMBIENTAL;
+  const cid = $("#ambiental-categoria").value;
+  const filtro = $("#ambiental-estado").value;
+  const cat = d.por_categoria.find((x) => x.id === cid);
+
+  // El reparto de la categoría elegida va antes de la lista: dice de un vistazo
+  // cómo se distribuyen los 86 y qué significa cada etiqueta. La etiqueta sola
+  // no le dice nada a quien mira — "mixta" entre quién y quién.
+  $("#ambiental-resumen").innerHTML = cat
+    ? '<table><thead><tr><th>Etiqueta</th><th>Municipios</th><th>Qué significa</th></tr></thead><tbody>' +
+      cat.estados.map((e) =>
+        `<tr><td><span class="etiqueta">${esc(e.estado)}</span></td><td class="num">${e.n}</td>` +
+        `<td class="nota">${esc(e.glosa)}</td></tr>`).join("") +
+      "</tbody></table>"
+    : "";
+
+  const visibles = d.municipios.filter(
+    (m) => m.textos[cid] && (!filtro || m.estados[cid] === filtro)
+  );
+  $("#ambiental-cuenta").textContent = `${visibles.length} municipios`;
+
+  $("#ambiental-contenido").innerHTML = visibles.map((m) => {
+    const fuentes = String(m.fuentes || "").split(";").map((u) => u.trim()).filter(Boolean);
+    return `<div class="evidencia">
+      <div><strong>${esc(m.municipio)}</strong>
+        <span class="etiqueta">${esc(m.estados[cid] || "")}</span></div>
+      <div class="origen">${esc(m.textos[cid])}</div>
+      <div class="origen">${
+        fuentes.map((u) =>
+          u.startsWith("http")
+            ? `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(u)}</a>`
+            : esc(u)
+        ).join(" · ") || "—"
+      }</div>
+    </div>`;
+  }).join("");
+}
+
 /* ----------------------------------------------------------------- Revisión */
 async function verRevision() {
   const filas = await api("revision");
