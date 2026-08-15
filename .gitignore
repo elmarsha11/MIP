@@ -80,3 +80,9 @@ desktop.ini
 ~$*.xlsx
 ~$*.docx
 *.tmp
+
+# La base del motor de temas la genera cada maquina: el plan ambiental sale del
+# CSV crudo con --importar (instantaneo) y los hallazgos del motor salen de la
+# corrida local. Versionarla hacia que cada pull pisara la corrida del otro, y
+# ademas bloqueaba el pull de quien ya la tenia.
+data/processed/temas/temas_86.sqlite

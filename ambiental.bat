@@ -15,6 +15,17 @@ echo ===============================================================
 echo   Tema ambiental - los 86 municipios
 echo   Proveedor: %MIP_LLM_PROVIDER%
 echo ===============================================================
+REM El plan ambiental relevado a mano sale del CSV versionado. Es instantaneo y
+REM idempotente, asi que se importa siempre: deja la base lista para el tablero
+REM aunque nunca se corra el motor.
+python -u src\temas\plan_ambiental.py --importar >nul 2>&1
+if errorlevel 1 (
+  echo AVISO: no se pudo importar el plan ambiental. Proba a mano:
+  echo    python src\temas\plan_ambiental.py --importar
+) else (
+  echo Plan ambiental relevado: importado y listo para el tablero.
+)
+
 echo.
 echo Antes de largar los 86 conviene mirar uno. Elegi:
 echo.
