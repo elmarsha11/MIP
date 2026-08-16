@@ -660,7 +660,8 @@ def ambiental() -> dict:
     """Los 86 comparados por categoria, para la vista de conjunto."""
     filas = _filas(
         SQLITE_TEMAS,
-        "SELECT municipio, categoria, estado, texto, fuentes FROM plan_ambiental",
+        "SELECT municipio, seccion, poblacion, categoria, estado, texto, fuentes "
+        "FROM plan_ambiental",
     )
     if not filas:
         return {"hay_datos": False, "municipios": [], "por_categoria": []}
@@ -669,7 +670,9 @@ def ambiental() -> dict:
     for f in filas:
         m = municipios.setdefault(
             f["municipio"],
-            {"municipio": f["municipio"], "fuentes": f["fuentes"], "estados": {}, "textos": {}},
+            {"municipio": f["municipio"], "seccion": f["seccion"],
+             "poblacion": f["poblacion"], "fuentes": f["fuentes"],
+             "estados": {}, "textos": {}},
         )
         m["estados"][f["categoria"]] = f["estado"]
         m["textos"][f["categoria"]] = f["texto"]

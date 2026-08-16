@@ -690,10 +690,19 @@ async function verAmbiental() {
     return;
   }
 
-  // Sin servidor no hay quien genere el .xlsx, asi que el boton se esconde en
-  // vez de quedar como un link roto en el export.
+  // Con servidor el boton baja un .xlsx de verdad. Sin servidor —en el HTML
+  // exportado— no hay quien lo genere, pero esconder el boton dejaba al archivo
+  // que uno REENVIA sin forma de sacar los datos, que es justo cuando mas hace
+  // falta. Asi que ahi baja un CSV armado en el navegador con los datos ya
+  // incrustados. Se abre en Excel igual.
   const botonExcel = $("#ambiental-excel");
-  if (botonExcel) botonExcel.style.display = ESTATICO ? "none" : "";
+  if (botonExcel && ESTATICO && !botonExcel.dataset.listo) {
+    botonExcel.dataset.listo = "1";
+    botonExcel.textContent = "Descargar CSV";
+    botonExcel.removeAttribute("href");
+    botonExcel.style.cursor = "pointer";
+    botonExcel.addEventListener("click", bajarAmbientalCSV);
+  }
 
   const cat = $("#ambiental-categoria");
   if (!cat.options.length) {
@@ -754,6 +763,37 @@ function pintarAmbiental() {
       }</div>
     </div>`;
   }).join("");
+}
+
+function bajarAmbientalCSV() {
+  const d = AMBIENTAL;
+  if (!d || !d.hay_datos) return;
+
+  // Mismo orden de columnas que el Excel: texto y etiqueta juntos, categoria
+  // por categoria, para que los dos archivos se lean igual.
+  const cols = ["Municipio", "Sección", "Población"];
+  d.categorias.forEach((c) => cols.push(c.etiqueta, c.etiqueta + " — etiqueta"));
+  cols.push("Fuentes oficiales");
+
+  const celda = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`;
+  const filas = [cols.map(celda).join(",")];
+  d.municipios.forEach((m) => {
+    const fila = [m.municipio, m.seccion, m.poblacion];
+    d.categorias.forEach((c) => fila.push(m.textos[c.id] || "", m.estados[c.id] || ""));
+    fila.push(m.fuentes || "");
+    filas.push(fila.map(celda).join(","));
+  });
+
+  // El BOM es lo que hace que Excel en Windows no rompa los acentos.
+  const blob = new Blob(["\ufeff" + filas.join("\r\n")], {
+    type: "text/csv;charset=utf-8",
+  });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "mip_ambiental.csv";
+  a.click();
+  URL.revokeObjectURL(url);
 }
 
 /* ----------------------------------------------------------------- Revisión */
