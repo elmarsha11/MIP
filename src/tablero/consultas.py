@@ -656,6 +656,85 @@ def _ambiental(nombre: str) -> dict:
     }
 
 
+NIVELES_SEGURIDAD_GLOSA = {
+    "bajo": "Tercio inferior de los 86 en hechos denunciados por 100.000 hab.",
+    "medio": "Tercio medio de los 86",
+    "alto": "Tercio superior de los 86 — relativo, no significa «peligroso»",
+    "sin_dato": "Sin serie del SNIC para este partido",
+}
+
+
+def seguridad() -> dict:
+    """Los 86 comparados en los dos ejes de seguridad: cuánto y cómo opera.
+
+    Cuánto sale del SNIC (denuncias, no delitos; nivel RELATIVO a los 86). Cómo
+    opera sale de la prensa local y son 7 aspectos fijos que aparecen siempre,
+    confirmados o no: si solo se listaran los confirmados, la ausencia se leería
+    como si no existiera la pregunta.
+    """
+    indice = _filas(
+        SQLITE_SEGURIDAD,
+        "SELECT municipio, nivel, tasa_indice, homicidios, tasa_homicidios, "
+        "robos, tasa_robos, tasa_actividad_policial, poblacion_estacional, fuente "
+        "FROM seguridad",
+    )
+    if not indice:
+        return {"hay_datos": False, "municipios": [], "niveles": [], "aspectos": []}
+
+    evidencia_por_municipio: Dict[str, Dict[str, dict]] = {}
+    for f in _filas(
+        SQLITE_OPERATIVOS,
+        "SELECT municipio, aspecto, detalle, cita, medio, url, fecha_nota FROM operativos",
+    ):
+        evidencia_por_municipio.setdefault(f["municipio"], {})[f["aspecto"]] = f
+
+    conteo_nivel: Dict[str, int] = {}
+    conteo_aspecto: Dict[str, int] = {clave: 0 for clave, _ in ASPECTOS_SEGURIDAD}
+    municipios = []
+    for f in indice:
+        nivel = f["nivel"] or "sin_dato"
+        conteo_nivel[nivel] = conteo_nivel.get(nivel, 0) + 1
+        evidencia = evidencia_por_municipio.get(f["municipio"], {})
+
+        aspectos = []
+        for clave, etiqueta in ASPECTOS_SEGURIDAD:
+            e = evidencia.get(clave)
+            if e:
+                conteo_aspecto[clave] += 1
+            aspectos.append({
+                "clave": clave, "etiqueta": etiqueta, "confirmado": bool(e),
+                "cita": e["cita"] if e else None,
+                "url": e["url"] if e else None,
+                "medio": e["medio"] if e else None,
+            })
+
+        municipios.append({
+            "municipio": f["municipio"], "nivel": nivel,
+            "tasa_indice": f["tasa_indice"],
+            "homicidios": f["homicidios"], "tasa_homicidios": f["tasa_homicidios"],
+            "robos": f["robos"], "tasa_robos": f["tasa_robos"],
+            "tasa_actividad_policial": f["tasa_actividad_policial"],
+            "poblacion_estacional": bool(f["poblacion_estacional"]),
+            "fuente": f["fuente"], "aspectos": aspectos,
+        })
+
+    municipios.sort(key=lambda m: m["municipio"])
+    orden_nivel = {"bajo": 0, "medio": 1, "alto": 2, "sin_dato": 3}
+
+    return {
+        "hay_datos": True,
+        "total": len(municipios),
+        "niveles": [
+            {"nivel": n, "n": c, "glosa": NIVELES_SEGURIDAD_GLOSA.get(n, "")}
+            for n, c in sorted(conteo_nivel.items(), key=lambda x: orden_nivel.get(x[0], 9))
+        ],
+        "aspectos": [
+            {"clave": c, "etiqueta": e, "n": conteo_aspecto[c]} for c, e in ASPECTOS_SEGURIDAD
+        ],
+        "municipios": municipios,
+    }
+
+
 def ambiental() -> dict:
     """Los 86 comparados por categoria, para la vista de conjunto."""
     filas = _filas(

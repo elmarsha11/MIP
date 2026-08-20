@@ -69,6 +69,30 @@ class TestMapaDeVistas(unittest.TestCase):
                          "ambiental-cuenta", "ambiental-resumen", "ambiental-contenido"):
             self.assertIn(f'id="{elemento}"', self.html, elemento)
 
+    def test_seguridad_esta_completa(self):
+        """La pestaña de este cambio, explicitamente."""
+        self.assertIn("seguridad", self.botones)
+        self.assertIn("seguridad", self.mapa)
+        self.assertRegex(self.js, r"async function verSeguridad\s*\(")
+        for elemento in ("seguridad-nivel", "seguridad-aspecto", "seguridad-cuenta",
+                         "seguridad-resumen", "seguridad-contenido",
+                         "seguridad-excel", "seguridad-pdf"):
+            self.assertIn(f'id="{elemento}"', self.html, elemento)
+
+    def test_seguridad_pdf_se_deshabilita_en_estatico_no_se_esconde(self):
+        """Un boton que no funciona sin servidor tiene que explicarse, no desaparecer.
+
+        Es la misma leccion que costo el boton de Excel de ambiental: esconder
+        un boton en el export deja al que lo abre sin ninguna pista de que
+        faltaba o por que.
+        """
+        self.assertIn('$("#seguridad-pdf")', self.js)
+        self.assertIn("requiere servidor", self.js.lower())
+        self.assertNotIn(
+            'if (botonPdf) botonPdf.style.display', self.js,
+            "el boton de PDF no deberia esconderse en modo estatico",
+        )
+
 
 class TestModoEstatico(unittest.TestCase):
     """El HTML generado no tiene servidor: los datos viajan incrustados.

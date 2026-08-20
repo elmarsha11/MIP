@@ -54,6 +54,7 @@ def reunir_datos() -> dict:
         "revision": consultas.cola_de_revision(),
         "comercial": consultas.comercial(),
         "ambiental": consultas.ambiental(),
+        "seguridad": consultas.seguridad(),
         "parametros": consultas.parametros_impacto(),
         "territorio": consultas.resumen_territorio(),
         # Las fichas se precalculan: sin servidor no hay a quien preguntarle.

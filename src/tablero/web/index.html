@@ -22,6 +22,7 @@
   <button data-vista="turnos">Mapa de turnos</button>
   <button data-vista="territorio">Territorio</button>
   <button data-vista="impacto">Impacto</button>
+  <button data-vista="seguridad">Seguridad</button>
   <button data-vista="ambiental">Ambiental</button>
   <button data-vista="comercial">Comercial</button>
   <button data-vista="revision">Revisión</button>
@@ -105,6 +106,26 @@
       <span id="comercial-cuenta" class="nota"></span>
     </div>
     <div id="comercial-contenido"></div>
+  </section>
+
+  <!-- SEGURIDAD -->
+  <section id="vista-seguridad" class="vista oculta">
+    <p class="nota">
+      Dos ejes, y dos fuentes distintas. <strong>Cuánto</strong> es el índice del
+      SNIC: hechos DENUNCIADOS por 100.000 habitantes, nivel RELATIVO a los 86 —
+      «alto» significa «en el tercio superior», no «peligroso». <strong>Cómo
+      opera</strong> es lo que la prensa local confirmó en 12 meses; que no
+      aparezca no prueba que el municipio no lo tenga.
+    </p>
+    <div class="barra">
+      <select id="seguridad-nivel"></select>
+      <select id="seguridad-aspecto"></select>
+      <span id="seguridad-cuenta" class="nota"></span>
+      <a id="seguridad-excel" class="boton" href="/api/exportar/seguridad.xlsx">Descargar Excel</a>
+      <a id="seguridad-pdf" class="boton" href="/api/exportar/seguridad.pdf">Descargar informe PDF</a>
+    </div>
+    <div id="seguridad-resumen"></div>
+    <div id="seguridad-contenido"></div>
   </section>
 
   <!-- AMBIENTAL -->

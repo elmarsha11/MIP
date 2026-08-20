@@ -99,3 +99,31 @@ existe, y estimarla sería inventar (ADR-0009). **Se marca con `*` y se avisa.**
 
 El CSV son 67 MB: se cachea en `data/processed/seguridad/cache/` pero **no se
 versiona**, a diferencia de los cuadros de INDEC. Se rebaja con `--refrescar`.
+
+## En el tablero
+
+Pestaña **Seguridad**, con los dos ejes uno al lado del otro: cuánto (SNIC) y
+cómo opera (prensa), cada uno con su propia distribución. Se filtra por nivel y
+por aspecto a la vez — son preguntas independientes, no una lista de categorías
+donde se elige una.
+
+**Excel** (`src/exportar/libro_excel.py:exportar_seguridad`): dos hojas, una por
+eje, igual que en el libro completo. Mismo motivo que en ambiental: mezclar un
+número del SNIC con una cita de diario en la misma tabla haría parecer que
+pesan lo mismo.
+
+**PDF** (`src/exportar/informe_seguridad_pdf.py`): el informe que la ficha por
+municipio no da — los 86 juntos, para decidir a quién visitar en vez de leer
+sobre uno ya elegido. Apaisado, con la portada llevando las cuatro advertencias
+del índice más la de cómo-opera, porque el informe se imprime y se lee suelto,
+sin la ficha al lado que las explique.
+
+```bash
+python src/exportar/informe_seguridad_pdf.py
+```
+
+En el HTML exportado sin servidor no hay quien genere ninguno de los dos: el
+Excel se reemplaza por un CSV armado en el navegador con los mismos datos, y el
+botón del PDF se deshabilita explicándose (`requiere servidor`) en vez de
+desaparecer — esconderlo fue el error que costó una vuelta completa con el
+Excel de ambiental.

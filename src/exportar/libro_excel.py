@@ -376,6 +376,34 @@ def exportar_ambiental(salida: Optional[Path] = None) -> Path:
     return salida
 
 
+def exportar_seguridad(salida: Optional[Path] = None) -> Path:
+    """Solo seguridad, para bajar desde su pestaña.
+
+    Dos hojas porque son dos preguntas distintas y dos fuentes distintas: cuánto
+    (SNIC, denuncias) y cómo opera (prensa local, 12 meses). Mezclarlas en una
+    haría parecer que un numero y una cita de diario tienen el mismo peso.
+
+    Va con la hoja de fuentes igual, y por el mismo motivo que en ambiental: sin
+    la advertencia, "alto" en el índice se lee como "peligroso" en vez de "en el
+    tercio superior de los 86".
+    """
+    from openpyxl import Workbook
+
+    libro = Workbook()
+    libro.remove(libro.active)
+    _escribir(libro, "Seguridad", hoja_seguridad())
+    _escribir(libro, "Seguridad - cómo opera", hoja_como_opera(),
+              {"Detalle": 60, "Cita textual": 70, "URL": 50})
+    _hoja_fuentes(libro)
+
+    if salida is None:
+        SALIDA_DIR.mkdir(parents=True, exist_ok=True)
+        salida = SALIDA_DIR / f"MIP_seguridad_{datetime.now().strftime('%Y-%m-%d')}.xlsx"
+    salida.parent.mkdir(parents=True, exist_ok=True)
+    libro.save(salida)
+    return salida
+
+
 def main(argv: Optional[List[str]] = None) -> int:
     parser = argparse.ArgumentParser(description="MIP - Exportar todo a Excel")
     parser.add_argument("--salida", type=Path)

@@ -28,7 +28,7 @@ function leerIncrustado(ruta) {
   return {
     resumen: D.resumen, municipios: D.municipios, turnos: D.turnos,
     "costo-turnos": D.costo_turnos, revision: D.revision, comercial: D.comercial,
-    ambiental: D.ambiental,
+    seguridad: D.seguridad, ambiental: D.ambiental,
     parametros: D.parametros, territorio: D.territorio, acciones: [], tareas: [],
   }[ruta] ?? [];
 }
@@ -55,7 +55,7 @@ $$("#pestanas button").forEach((b) =>
 function cargarVista(vista) {
   ({ panel: verPanel, municipios: verMunicipios, turnos: verTurnos,
      territorio: verTerritorio, impacto: verImpacto, comercial: verComercial,
-     ambiental: verAmbiental,
+     seguridad: verSeguridad, ambiental: verAmbiental,
      revision: verRevision, acciones: verAcciones }[vista] || (() => {}))();
 }
 
@@ -675,6 +675,134 @@ function pintarComercial() {
           <div class="origen"><a href="${esc(o.url)}" target="_blank" rel="noopener">${esc(o.url)}</a></div>
         </div>`).join("")}
     </div>`).join("");
+}
+
+/* ---------------------------------------------------------------- Seguridad */
+let SEGURIDAD = null;
+
+const NIVELES_SEGURIDAD = [
+  ["bajo", "Bajo"], ["medio", "Medio"], ["alto", "Alto"], ["sin_dato", "Sin dato"],
+];
+
+async function verSeguridad() {
+  if (!SEGURIDAD) SEGURIDAD = await api("seguridad");
+  const d = SEGURIDAD;
+
+  if (!d || !d.hay_datos) {
+    $("#seguridad-contenido").innerHTML =
+      '<p class="nota">Todavía no se calculó. Corré <code>python src/seguridad/motor_seguridad.py --todos</code>.</p>';
+    return;
+  }
+
+  // El Excel lo genera el servidor (openpyxl); sin servidor no hay quien lo
+  // arme, asi que en el HTML exportado el boton baja un CSV armado en el
+  // navegador con los mismos datos. El PDF si necesita fpdf2 corriendo del
+  // otro lado y no tiene equivalente en el navegador: ahi el boton se
+  // explica en vez de quedar como un link roto.
+  const botonExcel = $("#seguridad-excel");
+  if (botonExcel && ESTATICO && !botonExcel.dataset.listo) {
+    botonExcel.dataset.listo = "1";
+    botonExcel.textContent = "Descargar CSV";
+    botonExcel.removeAttribute("href");
+    botonExcel.style.cursor = "pointer";
+    botonExcel.addEventListener("click", bajarSeguridadCSV);
+  }
+  const botonPdf = $("#seguridad-pdf");
+  if (botonPdf && ESTATICO && !botonPdf.dataset.listo) {
+    botonPdf.dataset.listo = "1";
+    botonPdf.textContent = "Informe PDF (requiere servidor)";
+    botonPdf.removeAttribute("href");
+    botonPdf.classList.add("deshabilitado");
+    botonPdf.addEventListener("click", (e) => e.preventDefault());
+  }
+
+  const nivel = $("#seguridad-nivel");
+  const aspecto = $("#seguridad-aspecto");
+  if (!nivel.options.length) {
+    nivel.innerHTML = `<option value="">Todos los niveles (${d.total})</option>` +
+      d.niveles.map((n) => `<option value="${esc(n.nivel)}">${esc(n.nivel)} — ${n.n}</option>`).join("");
+    aspecto.innerHTML = `<option value="">Cualquier aspecto</option>` +
+      d.aspectos.map((a) => `<option value="${esc(a.clave)}">${esc(a.etiqueta)} — ${a.n} confirmados</option>`).join("");
+    nivel.addEventListener("change", pintarSeguridad);
+    aspecto.addEventListener("change", pintarSeguridad);
+  }
+  pintarSeguridad();
+}
+
+function pintarSeguridad() {
+  const d = SEGURIDAD;
+  const nivel = $("#seguridad-nivel").value;
+  const aspecto = $("#seguridad-aspecto").value;
+
+  // Los dos ejes salen de fuentes distintas (SNIC / prensa) y se muestran
+  // siempre juntos, no uno u otro segun un selector: son la misma pregunta
+  // completa sobre seguridad, no dos temas separados.
+  $("#seguridad-resumen").innerHTML = `
+    <div class="resumen-doble">
+      <table>
+        <thead><tr><th>Nivel (SNIC)</th><th>Municipios</th></tr></thead>
+        <tbody>${d.niveles.map((n) =>
+          `<tr><td><span class="etiqueta">${esc(n.nivel)}</span></td><td class="num">${n.n}</td></tr>`
+        ).join("")}</tbody>
+      </table>
+      <table>
+        <thead><tr><th>Cómo opera (prensa)</th><th>Confirmados</th></tr></thead>
+        <tbody>${d.aspectos.map((a) =>
+          `<tr><td>${esc(a.etiqueta)}</td><td class="num">${a.n} / ${d.total}</td></tr>`
+        ).join("")}</tbody>
+      </table>
+    </div>`;
+
+  const visibles = d.municipios.filter((m) => {
+    if (nivel && m.nivel !== nivel) return false;
+    if (aspecto && !m.aspectos.some((a) => a.clave === aspecto && a.confirmado)) return false;
+    return true;
+  });
+  $("#seguridad-cuenta").textContent = `${visibles.length} municipios`;
+
+  $("#seguridad-contenido").innerHTML = visibles.map((m) => `
+    <article class="evidencia">
+      <h3>${esc(m.municipio)} <span class="etiqueta">${esc(m.nivel)}</span>
+        ${m.poblacion_estacional ? '<span class="etiqueta alerta">balneario</span>' : ""}</h3>
+      <p class="nota">
+        Tasa índice ${numero(m.tasa_indice)} / 100.000
+        · Homicidios ${numero(m.homicidios)} · Robos ${numero(m.robos)}
+      </p>
+      <p>${m.aspectos.map((a) =>
+        `<span class="etiqueta ${a.confirmado ? "ok" : ""}">${esc(a.etiqueta)}${a.confirmado ? "" : " (sin evidencia)"}</span>`
+      ).join(" ")}</p>
+    </article>`).join("");
+}
+
+function bajarSeguridadCSV() {
+  const d = SEGURIDAD;
+  if (!d || !d.hay_datos) return;
+
+  const claves = d.aspectos.map((a) => a.clave);
+  const cols = ["Municipio", "Nivel", "Tasa índice", "Homicidios", "Tasa homicidios",
+    "Robos", "Tasa robos", "Balneario", ...d.aspectos.map((a) => a.etiqueta)];
+
+  const celda = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`;
+  const filas = [cols.map(celda).join(",")];
+  d.municipios.forEach((m) => {
+    const porClave = Object.fromEntries(m.aspectos.map((a) => [a.clave, a.confirmado]));
+    const fila = [
+      m.municipio, m.nivel, m.tasa_indice, m.homicidios, m.tasa_homicidios,
+      m.robos, m.tasa_robos, m.poblacion_estacional ? "sí" : "",
+      ...claves.map((c) => (porClave[c] ? "sí" : "—")),
+    ];
+    filas.push(fila.map(celda).join(","));
+  });
+
+  // El BOM va como escape, no como caracter literal en el archivo: asi no
+  // depende de que este .js se guarde siempre con la misma codificacion.
+  const blob = new Blob(["﻿" + filas.join("\r\n")], { type: "text/csv;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "mip_seguridad.csv";
+  a.click();
+  URL.revokeObjectURL(url);
 }
 
 /* ---------------------------------------------------------------- Ambiental */
