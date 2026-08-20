@@ -83,7 +83,9 @@ input[type="search"] { min-width: 230px; }
 }
 .boton:hover { border-color: var(--acento); color: var(--acento); }
 .boton.primario { background: var(--acento); border-color: var(--acento); color: #fff; }
-.boton:disabled { opacity: .5; cursor: not-allowed; }
+.boton:disabled, .boton.deshabilitado {
+  opacity: .5; cursor: not-allowed; pointer-events: none;
+}
 
 /* Tablas */
 table { width: 100%; border-collapse: collapse; font-size: 14px; }
@@ -113,6 +115,13 @@ tbody tr:hover { background: var(--panel); cursor: pointer; }
 .evidencia .cita { font-style: italic; color: var(--texto); }
 .evidencia .origen { color: var(--tenue); font-size: 12px; margin-top: 5px; word-break: break-all; }
 .evidencia a { color: var(--acento); }
+
+/* Seguridad: sus dos ejes (SNIC / prensa) van uno al lado del otro cuando
+   entran, y apilados si no — auto-fit evita un @media a mano para esto. */
+.resumen-doble {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px; margin: 12px 0 18px;
+}
 
 .grupo { margin-bottom: 26px; }
 .grupo h3 { margin: 0 0 4px; font-size: 16px; }

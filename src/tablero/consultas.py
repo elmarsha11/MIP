@@ -45,6 +45,7 @@ ASPECTOS_SEGURIDAD = (
     ("allanamientos", "Allanamientos"),
 )
 SQLITE_INDEC = PROJECT_ROOT / "data" / "processed" / "indec" / "censo_2022.sqlite"
+SQLITE_TEMAS = PROJECT_ROOT / "data" / "processed" / "temas" / "temas_86.sqlite"
 
 CANALES_DIGITALES = ("web", "whatsapp", "telegram", "app", "email")
 CANALES_SIN_DIGITAL = ("telefono", "presencial")
@@ -254,11 +255,41 @@ CAPAS_MAPA = {
 CAPA_DE_TIPO = {t: capa for capa, tipos in CAPAS_MAPA.items() for t in tipos}
 
 
+def _limite(municipio: str) -> Optional[dict]:
+    """El contorno del partido, si ya se bajo de OSM.
+
+    Cambia el encuadre del mapa, y no es cosmetico: encuadrar por los puntos
+    hace que un partido censado solo en su casco urbano parezca cubierto entero.
+    Con el contorno se ve el area vacia, que es el dato util.
+    """
+    filas = _filas(
+        SQLITE_TERRITORIO,
+        "SELECT anillos, lat_min, lat_max, lon_min, lon_max FROM limites "
+        "WHERE municipio = ?",
+        (municipio,),
+    )
+    if not filas:
+        return None
+    import json as _json
+
+    f = filas[0]
+    try:
+        anillos = _json.loads(f["anillos"])
+    except (TypeError, ValueError):
+        return None
+    return {
+        "anillos": anillos,
+        "lat_min": f["lat_min"], "lat_max": f["lat_max"],
+        "lon_min": f["lon_min"], "lon_max": f["lon_max"],
+    }
+
+
 def territorio(municipio: str) -> dict:
     """Entidades del municipio, listas para dibujar en un mapa.
 
-    Devuelve tambien el recuadro que las contiene: es lo que permite hacer zoom
-    al municipio sin depender de un servicio de mapas externo.
+    Devuelve el contorno del partido si esta bajado, y el recuadro de las
+    entidades como respaldo: sin contorno el mapa sigue andando, encuadrado por
+    los puntos como antes.
     """
     filas = _filas(
         SQLITE_TERRITORIO,
@@ -286,6 +317,7 @@ def territorio(municipio: str) -> dict:
         "total": len(filas),
         "ubicadas": len(ubicadas),
         "recuadro": recuadro,
+        "limite": _limite(municipio),
         "por_tipo": conteo,
         "entidades": filas,
     }
@@ -543,6 +575,7 @@ def ficha_resumida(nombre: str) -> dict:
             "turnos_url": canal.get("url") if canal else None,
         },
         "digital": {etiqueta: dato(v) for v, etiqueta in FILA_VARIABLE.items()},
+        "ambiental": _ambiental(nombre),
         "sitio_oficial": base.get("sitio_oficial"),
         "sitio_sin_https": base.get("sitio_sin_https"),
         "transporte": {
@@ -552,6 +585,199 @@ def ficha_resumida(nombre: str) -> dict:
             "colectivo": None,
             "falta": "Líneas de colectivo urbano: no relevado todavía",
         },
+    }
+
+
+# ---------------------------------------------------------------------------
+# Ambiental
+# ---------------------------------------------------------------------------
+
+CATEGORIAS_AMBIENTAL = (
+    ("promotores_ambientales", "Promotores ambientales"),
+    ("fiscalizacion_3ra", "Fiscalización 3ra categoría"),
+    ("girsu_residuos", "GIRSU y residuos"),
+    ("areas_arbolado", "Áreas protegidas y arbolado"),
+    ("otras_acciones", "Otras acciones ambientales"),
+)
+
+# Como se lee cada etiqueta derivada. La etiqueta sola no significa nada para
+# quien mira el tablero: "mixta" tiene que decir mixta ENTRE QUIEN Y QUIEN.
+GLOSA_AMBIENTAL = {
+    "mixta": "Provincia fiscaliza 3ra; el municipio controla 1ra y 2da o inspecciona junto a ella",
+    "provincial": "La fiscaliza la Provincia (Ley 11.459); no se describe rol municipal",
+    "municipal": "El texto solo describe control municipal",
+    "sin_clasificar": "El texto no dice quién ejerce el control",
+    "cuerpo_nombrado": "Nombra promotores o promotoras propios",
+    "planta_propia": "Tiene planta de tratamiento, separación o reciclado",
+    "puntos_verdes": "Tiene puntos verdes o puntos limpios",
+    "planta_propia+puntos_verdes": "Tiene planta y además puntos verdes",
+    "reserva_declarada": "Tiene reserva o área protegida declarada",
+    "plan_arbolado": "Tiene plan u ordenanza de arbolado",
+    "reserva_declarada+plan_arbolado": "Tiene reserva declarada y plan de arbolado",
+    "ordenanza_fitosanitarios": "Regula fitosanitarios o agroquímicos",
+    "sin_senal": "El texto no menciona ninguna de las señales buscadas",
+}
+
+
+def _ambiental(nombre: str) -> dict:
+    """El plan ambiental del municipio, tal como lo relevo una persona.
+
+    El texto es lo que manda y viaja siempre entero. El `estado` es una lectura
+    DERIVADA con palabras clave, para que los 86 se puedan comparar: un parrafo
+    en prosa no permite ordenar ni filtrar. Por eso se muestran juntos, y por eso
+    cada etiqueta viene con su glosa.
+    """
+    filas = _filas(
+        SQLITE_TEMAS,
+        "SELECT categoria, texto, estado, fuentes, seccion, poblacion, origen "
+        "FROM plan_ambiental WHERE municipio = ?",
+        (nombre,),
+    )
+    if not filas:
+        return {"hay_datos": False, "motivo": "Sin relevamiento ambiental cargado"}
+
+    por_id = {f["categoria"]: f for f in filas}
+    return {
+        "hay_datos": True,
+        "origen": filas[0]["origen"],
+        "seccion": filas[0]["seccion"],
+        "fuentes": [u.strip() for u in (filas[0]["fuentes"] or "").split(";") if u.strip()],
+        "categorias": [
+            {
+                "id": cid,
+                "etiqueta": etiqueta,
+                "texto": por_id[cid]["texto"],
+                "estado": por_id[cid]["estado"],
+                "glosa": GLOSA_AMBIENTAL.get(por_id[cid]["estado"], ""),
+            }
+            for cid, etiqueta in CATEGORIAS_AMBIENTAL
+            if cid in por_id
+        ],
+    }
+
+
+NIVELES_SEGURIDAD_GLOSA = {
+    "bajo": "Tercio inferior de los 86 en hechos denunciados por 100.000 hab.",
+    "medio": "Tercio medio de los 86",
+    "alto": "Tercio superior de los 86 — relativo, no significa «peligroso»",
+    "sin_dato": "Sin serie del SNIC para este partido",
+}
+
+
+def seguridad() -> dict:
+    """Los 86 comparados en los dos ejes de seguridad: cuánto y cómo opera.
+
+    Cuánto sale del SNIC (denuncias, no delitos; nivel RELATIVO a los 86). Cómo
+    opera sale de la prensa local y son 7 aspectos fijos que aparecen siempre,
+    confirmados o no: si solo se listaran los confirmados, la ausencia se leería
+    como si no existiera la pregunta.
+    """
+    indice = _filas(
+        SQLITE_SEGURIDAD,
+        "SELECT municipio, nivel, tasa_indice, homicidios, tasa_homicidios, "
+        "robos, tasa_robos, tasa_actividad_policial, poblacion_estacional, fuente "
+        "FROM seguridad",
+    )
+    if not indice:
+        return {"hay_datos": False, "municipios": [], "niveles": [], "aspectos": []}
+
+    evidencia_por_municipio: Dict[str, Dict[str, dict]] = {}
+    for f in _filas(
+        SQLITE_OPERATIVOS,
+        "SELECT municipio, aspecto, detalle, cita, medio, url, fecha_nota FROM operativos",
+    ):
+        evidencia_por_municipio.setdefault(f["municipio"], {})[f["aspecto"]] = f
+
+    conteo_nivel: Dict[str, int] = {}
+    conteo_aspecto: Dict[str, int] = {clave: 0 for clave, _ in ASPECTOS_SEGURIDAD}
+    municipios = []
+    for f in indice:
+        nivel = f["nivel"] or "sin_dato"
+        conteo_nivel[nivel] = conteo_nivel.get(nivel, 0) + 1
+        evidencia = evidencia_por_municipio.get(f["municipio"], {})
+
+        aspectos = []
+        for clave, etiqueta in ASPECTOS_SEGURIDAD:
+            e = evidencia.get(clave)
+            if e:
+                conteo_aspecto[clave] += 1
+            aspectos.append({
+                "clave": clave, "etiqueta": etiqueta, "confirmado": bool(e),
+                "cita": e["cita"] if e else None,
+                "url": e["url"] if e else None,
+                "medio": e["medio"] if e else None,
+            })
+
+        municipios.append({
+            "municipio": f["municipio"], "nivel": nivel,
+            "tasa_indice": f["tasa_indice"],
+            "homicidios": f["homicidios"], "tasa_homicidios": f["tasa_homicidios"],
+            "robos": f["robos"], "tasa_robos": f["tasa_robos"],
+            "tasa_actividad_policial": f["tasa_actividad_policial"],
+            "poblacion_estacional": bool(f["poblacion_estacional"]),
+            "fuente": f["fuente"], "aspectos": aspectos,
+        })
+
+    municipios.sort(key=lambda m: m["municipio"])
+    orden_nivel = {"bajo": 0, "medio": 1, "alto": 2, "sin_dato": 3}
+
+    return {
+        "hay_datos": True,
+        "total": len(municipios),
+        "niveles": [
+            {"nivel": n, "n": c, "glosa": NIVELES_SEGURIDAD_GLOSA.get(n, "")}
+            for n, c in sorted(conteo_nivel.items(), key=lambda x: orden_nivel.get(x[0], 9))
+        ],
+        "aspectos": [
+            {"clave": c, "etiqueta": e, "n": conteo_aspecto[c]} for c, e in ASPECTOS_SEGURIDAD
+        ],
+        "municipios": municipios,
+    }
+
+
+def ambiental() -> dict:
+    """Los 86 comparados por categoria, para la vista de conjunto."""
+    filas = _filas(
+        SQLITE_TEMAS,
+        "SELECT municipio, seccion, poblacion, categoria, estado, texto, fuentes "
+        "FROM plan_ambiental",
+    )
+    if not filas:
+        return {"hay_datos": False, "municipios": [], "por_categoria": []}
+
+    municipios: Dict[str, dict] = {}
+    for f in filas:
+        m = municipios.setdefault(
+            f["municipio"],
+            {"municipio": f["municipio"], "seccion": f["seccion"],
+             "poblacion": f["poblacion"], "fuentes": f["fuentes"],
+             "estados": {}, "textos": {}},
+        )
+        m["estados"][f["categoria"]] = f["estado"]
+        m["textos"][f["categoria"]] = f["texto"]
+
+    por_categoria = []
+    for cid, etiqueta in CATEGORIAS_AMBIENTAL:
+        conteo: Dict[str, int] = {}
+        for m in municipios.values():
+            e = m["estados"].get(cid)
+            if e:
+                conteo[e] = conteo.get(e, 0) + 1
+        por_categoria.append({
+            "id": cid,
+            "etiqueta": etiqueta,
+            "estados": [
+                {"estado": e, "n": n, "glosa": GLOSA_AMBIENTAL.get(e, "")}
+                for e, n in sorted(conteo.items(), key=lambda x: -x[1])
+            ],
+        })
+
+    return {
+        "hay_datos": True,
+        "total": len(municipios),
+        "categorias": [{"id": c, "etiqueta": e} for c, e in CATEGORIAS_AMBIENTAL],
+        "por_categoria": por_categoria,
+        "municipios": sorted(municipios.values(), key=lambda m: m["municipio"]),
     }
 
 

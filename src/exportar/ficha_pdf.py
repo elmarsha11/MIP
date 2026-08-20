@@ -31,54 +31,16 @@ for _ruta in (PROJECT_ROOT / "src" / "tablero", PROJECT_ROOT / "src" / "discover
 
 import consultas  # noqa: E402
 
+from pdf_base import GRIS, LINEA, NEGRO, ROJO, _num, crear_pdf  # noqa: E402
+
 SALIDA_DIR = PROJECT_ROOT / "data" / "processed" / "exportes" / "fichas"
-FUENTE_TTF = Path("C:/Windows/Fonts/arial.ttf")
-
-NEGRO = (34, 34, 34)
-GRIS = (110, 110, 110)
-ROJO = (170, 0, 0)
-LINEA = (200, 200, 200)
-
-
-def _num(x, dec: int = 0) -> str:
-    if x is None:
-        return "—"
-    s = f"{x:,.{dec}f}"
-    entero, _, d = s.partition(".")
-    return f"{entero.replace(',', '.')},{d}" if d else entero.replace(",", ".")
 
 
 class Ficha:
     """Envuelve a FPDF con las pocas primitivas que esta ficha necesita."""
 
     def __init__(self, municipio: str):
-        try:
-            from fpdf import FPDF
-        except ImportError as exc:
-            # Un traceback de ImportError no le dice a nadie que hacer, y desde
-            # el tablero aparece como "fallo" a secas. El caso real: se instalo
-            # fpdf2 con un Python y el servidor se levanto con otro, asi que
-            # anda desde la terminal y falla desde el boton.
-            raise SystemExit(
-                "Falta fpdf2, que genera los PDF.\n"
-                f"  Instalalo con ESTE interprete:\n"
-                f"    {sys.executable} -m pip install -r requirements.txt\n"
-                "  Si desde la terminal anda y desde el tablero no, es que el\n"
-                "  servidor se levanto con otro Python: las acciones usan el\n"
-                "  interprete que corre el servidor."
-            ) from exc
-
-        self.pdf = FPDF(format="A4", unit="mm")
-        self.pdf.set_auto_page_break(auto=True, margin=18)
-        # Fuente del sistema con soporte de acentos. La Helvetica que trae fpdf
-        # es latin-1 y rompe con "Chascomús" o "Nápoli".
-        if FUENTE_TTF.exists():
-            self.pdf.add_font("cuerpo", "", str(FUENTE_TTF))
-            self.pdf.add_font("cuerpo", "B", str(FUENTE_TTF.with_name("arialbd.ttf")))
-            self.familia = "cuerpo"
-        else:
-            self.familia = "helvetica"
-        self.pdf.add_page()
+        self.pdf, self.familia = crear_pdf("P")
         self.municipio = municipio
 
     def _f(self, tam: int, negrita: bool = False, color=NEGRO):

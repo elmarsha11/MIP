@@ -100,6 +100,10 @@ class Tablero(SimpleHTTPRequestHandler):
                 return self._json(consultas.resumen_territorio())
             if partes[1:2] == ["territorio"] and len(partes) == 3:
                 return self._json(consultas.territorio(partes[2]))
+            if partes[1:] == ["ambiental"]:
+                return self._json(consultas.ambiental())
+            if partes[1:] == ["seguridad"]:
+                return self._json(consultas.seguridad())
             if partes[1:] == ["comercial"]:
                 return self._json(consultas.comercial())
             if partes[1:] == ["revision"]:
@@ -118,7 +122,12 @@ class Tablero(SimpleHTTPRequestHandler):
                 return self._descargar(partes[2])
             if partes[1:2] == ["descargar"] and len(partes) == 4:
                 return self._descargar(partes[2], partes[3])
-        except Exception as exc:  # que un error no tumbe el tablero
+        except (Exception, SystemExit) as exc:  # que un error no tumbe el tablero
+            # SystemExit no hereda de Exception: es lo que tira pdf_base.crear_pdf
+            # cuando falta fpdf2, con un mensaje que dice justamente que instalar.
+            # Sin atraparlo aca ese mensaje nunca llega al navegador —el pedido
+            # queda colgado— y el boton de "Descargar PDF" parece roto en vez de
+            # explicarse.
             return self._json({"error": f"{type(exc).__name__}: {exc}"}, 500)
 
         return self._json({"error": "Ruta desconocida"}, 404)
@@ -174,6 +183,15 @@ class Tablero(SimpleHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(datos)
 
+    def _archivo(self, ruta, nombre: str, tipo: str) -> None:
+        cuerpo = Path(ruta).read_bytes()
+        self.send_response(200)
+        self.send_header("Content-Type", tipo)
+        self.send_header("Content-Disposition", f'attachment; filename="{nombre}"')
+        self.send_header("Content-Length", str(len(cuerpo)))
+        self.end_headers()
+        self.wfile.write(cuerpo)
+
     def _exportar(self, que: str) -> None:
         if que == "municipios.csv":
             return self._csv(consultas.municipios(), "mip_municipios.csv")
@@ -196,6 +214,26 @@ class Tablero(SimpleHTTPRequestHandler):
                 for f in datos.get("municipios", [])
             ]
             return self._csv(filas, "mip_costo_turnos.csv")
+        if que == "ambiental.xlsx":
+            sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "exportar"))
+            from libro_excel import exportar_ambiental
+
+            return self._archivo(exportar_ambiental(), "mip_ambiental.xlsx",
+                                 "application/vnd.openxmlformats-officedocument."
+                                 "spreadsheetml.sheet")
+        if que == "seguridad.xlsx":
+            sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "exportar"))
+            from libro_excel import exportar_seguridad
+
+            return self._archivo(exportar_seguridad(), "mip_seguridad.xlsx",
+                                 "application/vnd.openxmlformats-officedocument."
+                                 "spreadsheetml.sheet")
+        if que == "seguridad.pdf":
+            sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "exportar"))
+            from informe_seguridad_pdf import exportar as exportar_informe_seguridad
+
+            return self._archivo(exportar_informe_seguridad(), "mip_seguridad.pdf",
+                                 "application/pdf")
         return self._json({"error": "Exportacion desconocida"}, 404)
 
 

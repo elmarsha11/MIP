@@ -28,6 +28,7 @@ function leerIncrustado(ruta) {
   return {
     resumen: D.resumen, municipios: D.municipios, turnos: D.turnos,
     "costo-turnos": D.costo_turnos, revision: D.revision, comercial: D.comercial,
+    seguridad: D.seguridad, ambiental: D.ambiental,
     parametros: D.parametros, territorio: D.territorio, acciones: [], tareas: [],
   }[ruta] ?? [];
 }
@@ -54,6 +55,7 @@ $$("#pestanas button").forEach((b) =>
 function cargarVista(vista) {
   ({ panel: verPanel, municipios: verMunicipios, turnos: verTurnos,
      territorio: verTerritorio, impacto: verImpacto, comercial: verComercial,
+     seguridad: verSeguridad, ambiental: verAmbiental,
      revision: verRevision, acciones: verAcciones }[vista] || (() => {}))();
 }
 
@@ -453,7 +455,12 @@ async function pintarTerritorio(municipio) {
 }
 
 function dibujarMapa() {
-  const caja = TERRITORIO.recuadro;
+  const limite = TERRITORIO.limite;
+  // El encuadre sale del CONTORNO del partido si esta bajado, y del recuadro de
+  // los puntos si no. No es lo mismo: encuadrar por los puntos hace que un
+  // partido censado solo en su casco urbano llene el mapa y parezca cubierto
+  // entero. Con el contorno se ve el area vacia, que es el dato util.
+  const caja = limite || TERRITORIO.recuadro;
   if (!caja) {
     $("#mapa-caja").innerHTML = '<p class="nota">Sin entidades ubicadas.</p>';
     return;
@@ -471,6 +478,16 @@ function dibujarMapa() {
 
   const px = (e) => desplX + (e.longitud - caja.lon_min) * factorLon * escala;
   const py = (e) => desplY + (caja.lat_max - e.latitud) * escala;  // norte arriba
+  const proy = (lon, lat) =>
+    `${(desplX + (lon - caja.lon_min) * factorLon * escala).toFixed(1)},` +
+    `${(desplY + (caja.lat_max - lat) * escala).toFixed(1)}`;
+
+  const contorno = limite
+    ? limite.anillos.map((anillo) =>
+        `<polygon class="limite" points="${anillo.map((p) => proy(p[0], p[1])).join(" ")}"
+          fill="#f3f6f9" stroke="#9fb3c8" stroke-width="1.5" stroke-linejoin="round"/>`
+      ).join("")
+    : "";
 
   const visibles = TERRITORIO.entidades.filter(
     (e) => e.latitud != null && CAPAS_VISIBLES.has(e.capa)
@@ -488,6 +505,7 @@ function dibujarMapa() {
   $("#mapa-caja").innerHTML = `
     <svg viewBox="0 0 ${ANCHO} ${ALTO}" role="img" aria-label="Mapa de ${esc(TERRITORIO.municipio)}">
       <rect width="${ANCHO}" height="${ALTO}" fill="transparent"/>
+      ${contorno}
       ${puntos}
     </svg>
     <div class="leyenda">
@@ -657,6 +675,253 @@ function pintarComercial() {
           <div class="origen"><a href="${esc(o.url)}" target="_blank" rel="noopener">${esc(o.url)}</a></div>
         </div>`).join("")}
     </div>`).join("");
+}
+
+/* ---------------------------------------------------------------- Seguridad */
+let SEGURIDAD = null;
+
+const NIVELES_SEGURIDAD = [
+  ["bajo", "Bajo"], ["medio", "Medio"], ["alto", "Alto"], ["sin_dato", "Sin dato"],
+];
+
+async function verSeguridad() {
+  if (!SEGURIDAD) SEGURIDAD = await api("seguridad");
+  const d = SEGURIDAD;
+
+  if (!d || !d.hay_datos) {
+    $("#seguridad-contenido").innerHTML =
+      '<p class="nota">Todavía no se calculó. Corré <code>python src/seguridad/motor_seguridad.py --todos</code>.</p>';
+    return;
+  }
+
+  // El Excel lo genera el servidor (openpyxl); sin servidor no hay quien lo
+  // arme, asi que en el HTML exportado el boton baja un CSV armado en el
+  // navegador con los mismos datos. El PDF si necesita fpdf2 corriendo del
+  // otro lado y no tiene equivalente en el navegador: ahi el boton se
+  // explica en vez de quedar como un link roto.
+  const botonExcel = $("#seguridad-excel");
+  if (botonExcel && ESTATICO && !botonExcel.dataset.listo) {
+    botonExcel.dataset.listo = "1";
+    botonExcel.textContent = "Descargar CSV";
+    botonExcel.removeAttribute("href");
+    botonExcel.style.cursor = "pointer";
+    botonExcel.addEventListener("click", bajarSeguridadCSV);
+  }
+  const botonPdf = $("#seguridad-pdf");
+  if (botonPdf && ESTATICO && !botonPdf.dataset.listo) {
+    botonPdf.dataset.listo = "1";
+    botonPdf.textContent = "Informe PDF (requiere servidor)";
+    botonPdf.removeAttribute("href");
+    botonPdf.classList.add("deshabilitado");
+    botonPdf.addEventListener("click", (e) => e.preventDefault());
+  }
+
+  const nivel = $("#seguridad-nivel");
+  const aspecto = $("#seguridad-aspecto");
+  if (!nivel.options.length) {
+    nivel.innerHTML = `<option value="">Todos los niveles (${d.total})</option>` +
+      d.niveles.map((n) => `<option value="${esc(n.nivel)}">${esc(n.nivel)} — ${n.n}</option>`).join("");
+    aspecto.innerHTML = `<option value="">Cualquier aspecto</option>` +
+      d.aspectos.map((a) => `<option value="${esc(a.clave)}">${esc(a.etiqueta)} — ${a.n} confirmados</option>`).join("");
+    nivel.addEventListener("change", pintarSeguridad);
+    aspecto.addEventListener("change", pintarSeguridad);
+  }
+  pintarSeguridad();
+}
+
+function pintarSeguridad() {
+  const d = SEGURIDAD;
+  const nivel = $("#seguridad-nivel").value;
+  const aspecto = $("#seguridad-aspecto").value;
+
+  // Los dos ejes salen de fuentes distintas (SNIC / prensa) y se muestran
+  // siempre juntos, no uno u otro segun un selector: son la misma pregunta
+  // completa sobre seguridad, no dos temas separados.
+  $("#seguridad-resumen").innerHTML = `
+    <div class="resumen-doble">
+      <table>
+        <thead><tr><th>Nivel (SNIC)</th><th>Municipios</th></tr></thead>
+        <tbody>${d.niveles.map((n) =>
+          `<tr><td><span class="etiqueta">${esc(n.nivel)}</span></td><td class="num">${n.n}</td></tr>`
+        ).join("")}</tbody>
+      </table>
+      <table>
+        <thead><tr><th>Cómo opera (prensa)</th><th>Confirmados</th></tr></thead>
+        <tbody>${d.aspectos.map((a) =>
+          `<tr><td>${esc(a.etiqueta)}</td><td class="num">${a.n} / ${d.total}</td></tr>`
+        ).join("")}</tbody>
+      </table>
+    </div>`;
+
+  const visibles = d.municipios.filter((m) => {
+    if (nivel && m.nivel !== nivel) return false;
+    if (aspecto && !m.aspectos.some((a) => a.clave === aspecto && a.confirmado)) return false;
+    return true;
+  });
+  $("#seguridad-cuenta").textContent = `${visibles.length} municipios`;
+
+  $("#seguridad-contenido").innerHTML = visibles.map((m) => `
+    <article class="evidencia">
+      <h3>${esc(m.municipio)} <span class="etiqueta">${esc(m.nivel)}</span>
+        ${m.poblacion_estacional ? '<span class="etiqueta alerta">balneario</span>' : ""}</h3>
+      <p class="nota">
+        Tasa índice ${numero(m.tasa_indice)} / 100.000
+        · Homicidios ${numero(m.homicidios)} · Robos ${numero(m.robos)}
+      </p>
+      <p>${m.aspectos.map((a) =>
+        `<span class="etiqueta ${a.confirmado ? "ok" : ""}">${esc(a.etiqueta)}${a.confirmado ? "" : " (sin evidencia)"}</span>`
+      ).join(" ")}</p>
+    </article>`).join("");
+}
+
+function bajarSeguridadCSV() {
+  const d = SEGURIDAD;
+  if (!d || !d.hay_datos) return;
+
+  const claves = d.aspectos.map((a) => a.clave);
+  const cols = ["Municipio", "Nivel", "Tasa índice", "Homicidios", "Tasa homicidios",
+    "Robos", "Tasa robos", "Balneario", ...d.aspectos.map((a) => a.etiqueta)];
+
+  const celda = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`;
+  const filas = [cols.map(celda).join(",")];
+  d.municipios.forEach((m) => {
+    const porClave = Object.fromEntries(m.aspectos.map((a) => [a.clave, a.confirmado]));
+    const fila = [
+      m.municipio, m.nivel, m.tasa_indice, m.homicidios, m.tasa_homicidios,
+      m.robos, m.tasa_robos, m.poblacion_estacional ? "sí" : "",
+      ...claves.map((c) => (porClave[c] ? "sí" : "—")),
+    ];
+    filas.push(fila.map(celda).join(","));
+  });
+
+  // El BOM va como escape, no como caracter literal en el archivo: asi no
+  // depende de que este .js se guarde siempre con la misma codificacion.
+  const blob = new Blob(["﻿" + filas.join("\r\n")], { type: "text/csv;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "mip_seguridad.csv";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+/* ---------------------------------------------------------------- Ambiental */
+let AMBIENTAL = null;
+
+async function verAmbiental() {
+  if (!AMBIENTAL) AMBIENTAL = await api("ambiental");
+  const d = AMBIENTAL;
+
+  if (!d || !d.hay_datos) {
+    $("#ambiental-contenido").innerHTML =
+      '<p class="nota">Todavía no se importó. Corré <code>python src/temas/plan_ambiental.py --importar</code>.</p>';
+    return;
+  }
+
+  // Con servidor el boton baja un .xlsx de verdad. Sin servidor —en el HTML
+  // exportado— no hay quien lo genere, pero esconder el boton dejaba al archivo
+  // que uno REENVIA sin forma de sacar los datos, que es justo cuando mas hace
+  // falta. Asi que ahi baja un CSV armado en el navegador con los datos ya
+  // incrustados. Se abre en Excel igual.
+  const botonExcel = $("#ambiental-excel");
+  if (botonExcel && ESTATICO && !botonExcel.dataset.listo) {
+    botonExcel.dataset.listo = "1";
+    botonExcel.textContent = "Descargar CSV";
+    botonExcel.removeAttribute("href");
+    botonExcel.style.cursor = "pointer";
+    botonExcel.addEventListener("click", bajarAmbientalCSV);
+  }
+
+  const cat = $("#ambiental-categoria");
+  if (!cat.options.length) {
+    cat.innerHTML = d.categorias
+      .map((c) => `<option value="${esc(c.id)}">${esc(c.etiqueta)}</option>`)
+      .join("");
+    cat.addEventListener("change", () => { llenarEstadosAmbiental(); pintarAmbiental(); });
+    $("#ambiental-estado").addEventListener("change", pintarAmbiental);
+    llenarEstadosAmbiental();
+  }
+  pintarAmbiental();
+}
+
+function llenarEstadosAmbiental() {
+  const d = AMBIENTAL;
+  const cid = $("#ambiental-categoria").value;
+  const c = d.por_categoria.find((x) => x.id === cid);
+  $("#ambiental-estado").innerHTML =
+    `<option value="">Todas las etiquetas (${d.total} municipios)</option>` +
+    (c ? c.estados.map((e) =>
+      `<option value="${esc(e.estado)}">${esc(e.estado)} — ${e.n}</option>`).join("") : "");
+}
+
+function pintarAmbiental() {
+  const d = AMBIENTAL;
+  const cid = $("#ambiental-categoria").value;
+  const filtro = $("#ambiental-estado").value;
+  const cat = d.por_categoria.find((x) => x.id === cid);
+
+  // El reparto de la categoría elegida va antes de la lista: dice de un vistazo
+  // cómo se distribuyen los 86 y qué significa cada etiqueta. La etiqueta sola
+  // no le dice nada a quien mira — "mixta" entre quién y quién.
+  $("#ambiental-resumen").innerHTML = cat
+    ? '<table><thead><tr><th>Etiqueta</th><th>Municipios</th><th>Qué significa</th></tr></thead><tbody>' +
+      cat.estados.map((e) =>
+        `<tr><td><span class="etiqueta">${esc(e.estado)}</span></td><td class="num">${e.n}</td>` +
+        `<td class="nota">${esc(e.glosa)}</td></tr>`).join("") +
+      "</tbody></table>"
+    : "";
+
+  const visibles = d.municipios.filter(
+    (m) => m.textos[cid] && (!filtro || m.estados[cid] === filtro)
+  );
+  $("#ambiental-cuenta").textContent = `${visibles.length} municipios`;
+
+  $("#ambiental-contenido").innerHTML = visibles.map((m) => {
+    const fuentes = String(m.fuentes || "").split(";").map((u) => u.trim()).filter(Boolean);
+    return `<div class="evidencia">
+      <div><strong>${esc(m.municipio)}</strong>
+        <span class="etiqueta">${esc(m.estados[cid] || "")}</span></div>
+      <div class="origen">${esc(m.textos[cid])}</div>
+      <div class="origen">${
+        fuentes.map((u) =>
+          u.startsWith("http")
+            ? `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(u)}</a>`
+            : esc(u)
+        ).join(" · ") || "—"
+      }</div>
+    </div>`;
+  }).join("");
+}
+
+function bajarAmbientalCSV() {
+  const d = AMBIENTAL;
+  if (!d || !d.hay_datos) return;
+
+  // Mismo orden de columnas que el Excel: texto y etiqueta juntos, categoria
+  // por categoria, para que los dos archivos se lean igual.
+  const cols = ["Municipio", "Sección", "Población"];
+  d.categorias.forEach((c) => cols.push(c.etiqueta, c.etiqueta + " — etiqueta"));
+  cols.push("Fuentes oficiales");
+
+  const celda = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`;
+  const filas = [cols.map(celda).join(",")];
+  d.municipios.forEach((m) => {
+    const fila = [m.municipio, m.seccion, m.poblacion];
+    d.categorias.forEach((c) => fila.push(m.textos[c.id] || "", m.estados[c.id] || ""));
+    fila.push(m.fuentes || "");
+    filas.push(fila.map(celda).join(","));
+  });
+
+  // El BOM es lo que hace que Excel en Windows no rompa los acentos.
+  const blob = new Blob(["\ufeff" + filas.join("\r\n")], {
+    type: "text/csv;charset=utf-8",
+  });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "mip_ambiental.csv";
+  a.click();
+  URL.revokeObjectURL(url);
 }
 
 /* ----------------------------------------------------------------- Revisión */
